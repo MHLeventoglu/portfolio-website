@@ -1,0 +1,145 @@
+/* Skeleton Loading Styles */
+
+.skeleton-box {
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.05) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-card {
+  pointer-events: none;
+}
+
+.skeleton-card .project-content,
+.skeleton-card .timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeleton-card .project-tags,
+.skeleton-card .blog-tags {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.skeleton-card .project-links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Spacing utilities for skeleton */
+.skeleton-box.mb-xs {
+  margin-bottom: 0.25rem;
+}
+
+.skeleton-box.mb-sm {
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-box.mb-md {
+  margin-bottom: 1rem;
+}
+
+.skeleton-box.mb-lg {
+  margin-bottom: 1.5rem;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  min-height: 200px;
+  grid-column: 1 / -1;
+}
+
+.empty-state .empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* Skeleton image placeholder */
+.skeleton-image {
+  overflow: hidden;
+}
+
+.skeleton-image .skeleton-box {
+  display: block;
+}
+
+/* Bio skeleton */
+.bio-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Contact form skeleton */
+.skeleton-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  pointer-events: none;
+}
+
+.skeleton-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Coming soon state */
+.form-coming-soon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+}
+
+.coming-soon-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.coming-soon-icon {
+  font-size: 3rem;
+}
+
+.coming-soon-content h3 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.coming-soon-content p {
+  color: var(--text-secondary);
+  max-width: 280px;
+}
+
+.coming-soon-content .btn {
+  margin-top: 0.5rem;
+}
