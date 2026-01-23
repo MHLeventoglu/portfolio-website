@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <!-- Main gradient matching site theme -->
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="50%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    
+    <!-- Reverse gradient -->
+    <linearGradient id="reverseGradient" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="50%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    
+    <!-- Background gradient -->
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.2"/>
+      <stop offset="70%" stop-color="#06b6d4" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+    
+    <!-- Inner fill gradient -->
+    <radialGradient id="innerFill" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1a1a25"/>
+      <stop offset="100%" stop-color="#0a0a0f"/>
+    </radialGradient>
+    
+    <!-- Filter for glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Stronger glow -->
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Subtle shadow -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer glow ring -->
+  <circle cx="100" cy="100" r="92" fill="none" stroke="url(#mainGradient)" stroke-width="1" opacity="0.3" filter="url(#strongGlow)"/>
+  
+  <!-- Main outer circle -->
+  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#mainGradient)" stroke-width="3" filter="url(#glow)"/>
+  
+  <!-- Inner circle with dark fill -->
+  <circle cx="100" cy="100" r="75" fill="url(#innerFill)" stroke="url(#reverseGradient)" stroke-width="1.5" opacity="0.9"/>
+  
+  <!-- Decorative arc segments -->
+  <path 
+    d="M 100 18 A 82 82 0 0 1 170 60" 
+    fill="none" 
+    stroke="#8b5cf6" 
+    stroke-width="2" 
+    stroke-linecap="round"
+    opacity="0.6"
+    filter="url(#glow)"
+  />
+  <path 
+    d="M 170 140 A 82 82 0 0 1 100 182" 
+    fill="none" 
+    stroke="#06b6d4" 
+    stroke-width="2" 
+    stroke-linecap="round"
+    opacity="0.6"
+    filter="url(#glow)"
+  />
+  <path 
+    d="M 30 60 A 82 82 0 0 1 30 140" 
+    fill="none" 
+    stroke="#ec4899" 
+    stroke-width="2" 
+    stroke-linecap="round"
+    opacity="0.6"
+    filter="url(#glow)"
+  />
+  
+  <!-- Corner accent dots on the arcs -->
+  <circle cx="100" cy="18" r="3" fill="#8b5cf6" filter="url(#glow)"/>
+  <circle cx="170" cy="60" r="3" fill="#8b5cf6" filter="url(#glow)"/>
+  <circle cx="170" cy="140" r="3" fill="#06b6d4" filter="url(#glow)"/>
+  <circle cx="100" cy="182" r="3" fill="#06b6d4" filter="url(#glow)"/>
+  <circle cx="30" cy="60" r="3" fill="#ec4899" filter="url(#glow)"/>
+  <circle cx="30" cy="140" r="3" fill="#ec4899" filter="url(#glow)"/>
+  
+  <!-- MHL Text -->
+  <text 
+    x="100" 
+    y="108" 
+    text-anchor="middle" 
+    dominant-baseline="middle"
+    font-family="'Inter', 'SF Pro Display', -apple-system, sans-serif"
+    font-weight="800"
+    font-size="46"
+    fill="url(#mainGradient)"
+    filter="url(#shadow)"
+    letter-spacing="-1"
+  >
+    MHL
+  </text>
+  
+  <!-- Subtle inner ring -->
+  <circle cx="100" cy="100" r="60" fill="none" stroke="url(#mainGradient)" stroke-width="0.5" opacity="0.3"/>
+  
+  <!-- Tech circuit accents -->
+  <line x1="45" y1="100" x2="35" y2="100" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="155" y1="100" x2="165" y2="100" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="100" y1="45" x2="100" y2="35" stroke="#ec4899" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="100" y1="155" x2="100" y2="165" stroke="url(#mainGradient)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+</svg>
