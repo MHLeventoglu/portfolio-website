@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { Save, ArrowLeft, Eye, Edit3, Trash2, Plus, X, Loader } from 'lucide-react'
+import { Save, ArrowLeft, Eye, Edit3, Trash2, Plus, X, Loader, Upload, ImageIcon } from 'lucide-react'
 import { useData } from '../../context/DataContext'
+import { uploadImage, deleteImage } from '../../lib/storage'
 import './BlogEditor.css'
 
 export default function BlogEditor() {
@@ -19,10 +20,13 @@ export default function BlogEditor() {
   const [tagInput, setTagInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [imageUploading, setImageUploading] = useState(false)
+  const coverInputRef = useRef(null)
   const [formData, setFormData] = useState({
     title: '',
     excerpt: '',
     content: '',
+    cover_image: '',
     tags: []
   })
 
@@ -35,6 +39,7 @@ export default function BlogEditor() {
         title: existingPost.title,
         excerpt: existingPost.excerpt,
         content: existingPost.content,
+        cover_image: existingPost.cover_image || '',
         tags: existingPost.tags
       })
     }
@@ -59,6 +64,38 @@ export default function BlogEditor() {
     })
   }
 
+  const handleCoverUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setImageUploading(true)
+    try {
+      // Delete old cover if exists
+      if (formData.cover_image) {
+        await deleteImage(formData.cover_image)
+      }
+      const path = `blog/cover-${Date.now()}`
+      const url = await uploadImage(file, path)
+      setFormData(prev => ({ ...prev, cover_image: url }))
+    } catch (err) {
+      setError('Kapak resmi yüklenemedi: ' + err.message)
+    } finally {
+      setImageUploading(false)
+      if (coverInputRef.current) coverInputRef.current.value = ''
+    }
+  }
+
+  const handleCoverRemove = async () => {
+    if (formData.cover_image) {
+      try {
+        await deleteImage(formData.cover_image)
+      } catch {
+        // ignore delete errors
+      }
+    }
+    setFormData(prev => ({ ...prev, cover_image: '' }))
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -81,6 +118,10 @@ export default function BlogEditor() {
   const handleDelete = async () => {
     setLoading(true)
     try {
+      // Delete cover image from storage
+      if (existingPost?.cover_image) {
+        await deleteImage(existingPost.cover_image)
+      }
       await deletePost(id)
       navigate('/admin/blog')
     } catch (err) {
@@ -138,6 +179,61 @@ export default function BlogEditor() {
                 onChange={handleChange}
                 required
               />
+            </div>
+
+            {/* Cover Image Upload */}
+            <div className="form-group">
+              <label>Kapak Resmi</label>
+              <div className="cover-image-upload">
+                {formData.cover_image ? (
+                  <div className="cover-image-preview">
+                    <img src={formData.cover_image} alt="Cover" />
+                    <div className="cover-image-overlay">
+                      <button
+                        type="button"
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => coverInputRef.current?.click()}
+                        disabled={imageUploading}
+                      >
+                        <Upload size={14} />
+                        Değiştir
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-danger btn-sm"
+                        onClick={handleCoverRemove}
+                        disabled={imageUploading}
+                      >
+                        <Trash2 size={14} />
+                        Kaldır
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    className="cover-upload-placeholder"
+                    onClick={() => coverInputRef.current?.click()}
+                    disabled={imageUploading}
+                  >
+                    {imageUploading ? (
+                      <Loader size={24} className="spin" />
+                    ) : (
+                      <>
+                        <ImageIcon size={32} />
+                        <span>Kapak resmi yükle</span>
+                      </>
+                    )}
+                  </button>
+                )}
+                <input
+                  ref={coverInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleCoverUpload}
+                  style={{ display: 'none' }}
+                />
+              </div>
             </div>
 
             <div className="form-group">

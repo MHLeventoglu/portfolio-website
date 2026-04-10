@@ -66,6 +66,20 @@
     gap: 4px;
 }
 
+.blog-post-cover {
+    margin-top: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.blog-post-cover img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+}
+
 .blog-post-content {
     font-size: 1.1rem;
 }

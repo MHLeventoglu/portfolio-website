@@ -154,7 +154,7 @@ export default function Hero() {
             <div className="hero-image-glow"></div>
             <div className="hero-image-border"></div>
             <img 
-              src="https://media.licdn.com/dms/image/v2/D4D03AQFBvgiGsZ6jIQ/profile-displayphoto-crop_800_800/B4DZv0q6f5IAAI-/0/1769336450059?e=1770854400&v=beta&t=DeiwwHZRZ8EJgODV-I2j0xpTdKuZ2Rfae3RB2wXjPS8" 
+              src={profile.image_url || "https://media.licdn.com/dms/image/v2/D4D03AQFBvgiGsZ6jIQ/profile-displayphoto-crop_800_800/B4DZv0q6f5IAAI-/0/1769336450059?e=1770854400&v=beta&t=DeiwwHZRZ8EJgODV-I2j0xpTdKuZ2Rfae3RB2wXjPS8"} 
               alt={profile.name}
               className="hero-image"
             />

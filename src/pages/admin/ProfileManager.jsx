@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Save, User, MapPin, GraduationCap, Mail, Phone, Globe, Github, Linkedin, CheckCircle } from 'lucide-react'
+import { Save, User, MapPin, GraduationCap, Mail, Phone, Globe, Github, Linkedin, CheckCircle, Upload, Trash2, Camera } from 'lucide-react'
 import { useData } from '../../context/DataContext'
+import { uploadImage, deleteImage } from '../../lib/storage'
 import './ProfileManager.css'
 
 export default function ProfileManager() {
-  const { profile, setProfile, useSupabase } = useData()
+  const { profile, setProfile, updateProfileImage, useSupabase } = useData()
   const [formData, setFormData] = useState({})
   const [saved, setSaved] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [imageUploading, setImageUploading] = useState(false)
+  const fileInputRef = useRef(null)
 
   useEffect(() => {
     setFormData({
@@ -33,6 +36,41 @@ export default function ProfileManager() {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
     setSaved(false)
+  }
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setImageUploading(true)
+    try {
+      // Delete old image if exists
+      if (profile.image_url) {
+        await deleteImage(profile.image_url)
+      }
+      const url = await uploadImage(file, 'profile/avatar')
+      await updateProfileImage(url)
+    } catch (error) {
+      console.error('Image upload failed:', error)
+      alert('Resim yüklenemedi: ' + error.message)
+    } finally {
+      setImageUploading(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
+
+  const handleImageRemove = async () => {
+    setImageUploading(true)
+    try {
+      if (profile.image_url) {
+        await deleteImage(profile.image_url)
+      }
+      await updateProfileImage('')
+    } catch (error) {
+      console.error('Image remove failed:', error)
+    } finally {
+      setImageUploading(false)
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -130,6 +168,67 @@ export default function ProfileManager() {
       </header>
 
       <form onSubmit={handleSubmit} className="profile-form">
+        {/* Profile Image Section */}
+        <motion.section
+          className="form-section glass-card"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+        >
+          <div className="section-header">
+            <Camera size={20} />
+            <h2>Profil Fotoğrafı</h2>
+          </div>
+
+          <div className="profile-image-upload">
+            <div className="profile-image-preview">
+              {profile.image_url ? (
+                <img src={profile.image_url} alt="Profil" />
+              ) : (
+                <div className="image-placeholder-icon">
+                  <User size={48} />
+                </div>
+              )}
+              {imageUploading && (
+                <div className="image-upload-overlay">
+                  <span className="loading-spinner"></span>
+                </div>
+              )}
+            </div>
+            <div className="profile-image-actions">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                style={{ display: 'none' }}
+                id="profile-image-input"
+              />
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={imageUploading}
+              >
+                <Upload size={16} />
+                {profile.image_url ? 'Değiştir' : 'Yükle'}
+              </button>
+              {profile.image_url && (
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={handleImageRemove}
+                  disabled={imageUploading}
+                >
+                  <Trash2 size={16} />
+                  Kaldır
+                </button>
+              )}
+              <p className="image-hint">PNG, JPG veya WebP. Maks 2MB.</p>
+            </div>
+          </div>
+        </motion.section>
+
         {/* Personal Info Section */}
         <motion.section 
           className="form-section glass-card"

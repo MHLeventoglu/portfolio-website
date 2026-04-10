@@ -93,6 +93,7 @@ export function DataProvider({ children }) {
         
         setProfile({
           ...profileRow,
+          image_url: profileRow.image_url || '',
           gradYear: profileRow.grad_year,
           social: {
             github: profileRow.github,
@@ -246,6 +247,7 @@ export function DataProvider({ children }) {
           slug,
           excerpt: post.excerpt,
           content: post.content,
+          cover_image: post.cover_image || null,
           tags: post.tags
         }])
         .select()
@@ -374,6 +376,20 @@ export function DataProvider({ children }) {
   }
 
   // ============================================
+  // PROFILE IMAGE
+  // ============================================
+  const updateProfileImage = async (imageUrl) => {
+    if (useSupabase) {
+      const { error } = await supabase
+        .from('profile')
+        .update({ image_url: imageUrl })
+        .eq('id', 1)
+      if (error) throw error
+    }
+    setProfile(prev => ({ ...prev, image_url: imageUrl }))
+  }
+
+  // ============================================
   // CONTEXT VALUE
   // ============================================
   const value = {
@@ -403,6 +419,7 @@ export function DataProvider({ children }) {
     // Profile & Skills
     profile,
     setProfile,
+    updateProfileImage,
     addSkill,
     updateSkill,
     deleteSkill,

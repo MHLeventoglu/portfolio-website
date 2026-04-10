@@ -100,6 +100,66 @@
     }
 }
 
+/* Profile Image Upload */
+.profile-image-upload {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+.profile-image-preview {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--glass-border);
+    flex-shrink: 0;
+    background: var(--glass-bg);
+}
+
+.profile-image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-placeholder-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.image-upload-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.profile-image-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.profile-image-actions .btn {
+    width: fit-content;
+}
+
+.image-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: var(--spacing-xs);
+}
+
 @media (max-width: 768px) {
     .form-grid {
         grid-template-columns: 1fr;
@@ -115,5 +175,14 @@
 
     .manager-header .btn {
         width: 100%;
+    }
+
+    .profile-image-upload {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-image-actions {
+        align-items: center;
     }
 }

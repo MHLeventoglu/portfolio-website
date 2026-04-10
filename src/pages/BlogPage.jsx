@@ -50,6 +50,11 @@ export default function BlogPage() {
               whileHover={{ x: 5 }}
             >
               <Link to={`/blog/${post.slug}`} className="blog-item-link">
+                {post.cover_image && (
+                  <div className="blog-item-cover">
+                    <img src={post.cover_image} alt={post.title} />
+                  </div>
+                )}
                 <div className="blog-item-meta">
                   <span className="blog-date">
                     <Calendar size={14} />

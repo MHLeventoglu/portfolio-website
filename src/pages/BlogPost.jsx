@@ -83,6 +83,12 @@ export default function BlogPost() {
               </span>
             ))}
           </div>
+
+          {post.cover_image && (
+            <div className="blog-post-cover">
+              <img src={post.cover_image} alt={post.title} />
+            </div>
+          )}
         </header>
 
         <div className="blog-post-content markdown-content">
