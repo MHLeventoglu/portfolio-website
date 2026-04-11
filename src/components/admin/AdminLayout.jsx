@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { LayoutDashboard, FileText, FolderKanban, Wrench, User, LogOut, Home } from 'lucide-react'
+import { LayoutDashboard, FileText, FolderKanban, Wrench, User, LogOut, Home, Briefcase } from 'lucide-react'
 import { useData } from '../../context/DataContext'
 import './AdminLayout.css'
 
@@ -10,6 +10,7 @@ const sidebarLinks = [
   { to: '/admin/blog', icon: FileText, label: 'Blog Yazıları' },
   { to: '/admin/projects', icon: FolderKanban, label: 'Projeler' },
   { to: '/admin/skills', icon: Wrench, label: 'Yetenekler' },
+  { to: '/admin/experiences', icon: Briefcase, label: 'Deneyimler' },
 ]
 
 export default function AdminLayout() {

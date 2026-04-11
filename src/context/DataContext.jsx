@@ -9,22 +9,132 @@ export function DataProvider({ children }) {
   const [user, setUser] = useState(null)
   const [projects, setProjects] = useState([])
   const [posts, setPosts] = useState([])
+  const [experiences, setExperiences] = useState([])
   // Initialize profile with empty bio and skills - these only come from Supabase
   const [profile, setProfile] = useState({ ...profileData, bio: '', skills: [] })
   const [loading, setLoading] = useState(true)
   const [projectsLoading, setProjectsLoading] = useState(true)
   const [postsLoading, setPostsLoading] = useState(true)
   const [skillsLoading, setSkillsLoading] = useState(true)
+  const [experiencesLoading, setExperiencesLoading] = useState(true)
   const [useSupabase, setUseSupabase] = useState(false)
+
+  // ============================================
+  // LOAD FROM SUPABASE
+  // ============================================
+  const loadFromSupabase = async () => {
+    setProjectsLoading(true)
+    setPostsLoading(true)
+    setSkillsLoading(true)
+    setExperiencesLoading(true)
+
+    // Load projects
+    try {
+      const { data: projectsData, error: projectsError } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false })
+      if (projectsError) throw projectsError
+      setProjects(projectsData || [])
+    } catch (err) {
+      console.error('Error loading projects:', err)
+    } finally {
+      setProjectsLoading(false)
+    }
+
+    // Load posts
+    try {
+      const { data: postsData, error: postsError } = await supabase
+        .from('posts')
+        .select('*')
+        .order('created_at', { ascending: false })
+      if (postsError) throw postsError
+      setPosts(postsData || [])
+    } catch (err) {
+      console.error('Error loading posts:', err)
+    } finally {
+      setPostsLoading(false)
+    }
+
+    // Load profile & skills
+    try {
+      const { data: profileRow, error: profileError } = await supabase
+        .from('profile')
+        .select('*')
+        .single()
+
+      if (profileError) {
+        console.warn('Profile not found or error:', profileError.message)
+        setSkillsLoading(false)
+      } else if (profileRow) {
+        const { data: skillsData } = await supabase
+          .from('skills')
+          .select('*')
+          .order('category', { ascending: true })
+
+        setProfile({
+          ...profileRow,
+          image_url: profileRow.image_url || '',
+          gradYear: profileRow.grad_year,
+          social: {
+            github: profileRow.github,
+            linkedin: profileRow.linkedin,
+            website: profileRow.website
+          },
+          skills: skillsData || []
+        })
+        setSkillsLoading(false)
+      } else {
+        setSkillsLoading(false)
+      }
+    } catch (err) {
+      console.error('Error loading profile/skills:', err)
+      setSkillsLoading(false)
+    }
+
+    // Load experiences (independent - always runs)
+    try {
+      const { data: experiencesData, error: experiencesError } = await supabase
+        .from('experiences')
+        .select('*')
+        .order('sort_order', { ascending: true })
+      if (experiencesError) throw experiencesError
+      setExperiences(experiencesData || [])
+    } catch (err) {
+      console.error('Error loading experiences:', err)
+    } finally {
+      setExperiencesLoading(false)
+    }
+  }
+
+  // ============================================
+  // LOAD FROM LOCALSTORAGE (fallback)
+  // ============================================
+  const loadFromLocalStorage = () => {
+    const savedProfile = localStorage.getItem('portfolio_profile')
+    const savedAuth = localStorage.getItem('portfolio_auth')
+
+    // Projects, posts, skills, experiences - always empty when no Supabase
+    setProjects([])
+    setExperiences([])
+    setPosts([])
+
+    // Profile can use localStorage or default, but bio and skills must be empty (come from Supabase only)
+    const baseProfile = savedProfile ? JSON.parse(savedProfile) : profileData
+    setProfile({ ...baseProfile, bio: '', skills: [] })
+    setIsAuthenticated(savedAuth === 'true')
+
+    // KEEP LOADING STATES TRUE - show skeleton permanently when no Supabase
+  }
 
   // Check if Supabase is configured and load data
   useEffect(() => {
     const initializeData = async () => {
       setLoading(true)
-      
+
       if (isSupabaseConfigured()) {
         setUseSupabase(true)
-        
+
         // Check auth session
         const { data: { session } } = await supabase.auth.getSession()
         if (session) {
@@ -44,96 +154,16 @@ export function DataProvider({ children }) {
         // Fallback to localStorage
         loadFromLocalStorage()
       }
-      
+
       setLoading(false)
     }
 
     initializeData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Load data from Supabase
-  const loadFromSupabase = async () => {
-    setProjectsLoading(true)
-    setPostsLoading(true)
-    setSkillsLoading(true)
-    
-    try {
-      // Load projects
-      const { data: projectsData, error: projectsError } = await supabase
-        .from('projects')
-        .select('*')
-        .order('created_at', { ascending: false })
-      
-      if (projectsError) throw projectsError
-      setProjects(projectsData || [])
-      setProjectsLoading(false)
 
-      // Load posts
-      const { data: postsData, error: postsError } = await supabase
-        .from('posts')
-        .select('*')
-        .order('created_at', { ascending: false })
-      
-      if (postsError) throw postsError
-      setPosts(postsData || [])
-      setPostsLoading(false)
 
-      // Load profile
-      const { data: profileRow, error: profileError } = await supabase
-        .from('profile')
-        .select('*')
-        .single()
-      
-      if (profileRow) {
-        // Load skills
-        const { data: skillsData } = await supabase
-          .from('skills')
-          .select('*')
-          .order('category', { ascending: true })
-        
-        setProfile({
-          ...profileRow,
-          image_url: profileRow.image_url || '',
-          gradYear: profileRow.grad_year,
-          social: {
-            github: profileRow.github,
-            linkedin: profileRow.linkedin,
-            website: profileRow.website
-          },
-          skills: skillsData || []
-        })
-        setSkillsLoading(false)
-      } else {
-        setSkillsLoading(false)
-      }
-    } catch (error) {
-      console.error('Error loading from Supabase:', error)
-      // Keep empty arrays on error - show skeleton/empty state
-      setProjectsLoading(false)
-      setPostsLoading(false)
-      setSkillsLoading(false)
-    }
-  }
-
-  // Load data from localStorage (fallback - only for profile and auth)
-  // When Supabase is not configured, keep loading states TRUE to show skeleton permanently
-  const loadFromLocalStorage = () => {
-    const savedProfile = localStorage.getItem('portfolio_profile')
-    const savedAuth = localStorage.getItem('portfolio_auth')
-    
-    // Projects, posts, skills - always empty when no Supabase
-    setProjects([])
-    setPosts([])
-    
-    // Profile can use localStorage or default, but bio and skills must be empty (come from Supabase only)
-    const baseProfile = savedProfile ? JSON.parse(savedProfile) : profileData
-    setProfile({ ...baseProfile, bio: '', skills: [] })
-    setIsAuthenticated(savedAuth === 'true')
-    
-    // KEEP LOADING STATES TRUE - show skeleton permanently when no Supabase
-    // This indicates data is not available without Supabase connection
-    // projectsLoading, postsLoading, skillsLoading remain true (their initial state)
-  }
 
   // Save profile to localStorage (for admin edits when no Supabase)
   useEffect(() => {
@@ -376,6 +406,63 @@ export function DataProvider({ children }) {
   }
 
   // ============================================
+  // EXPERIENCE CRUD
+  // ============================================
+  const addExperience = async (experience) => {
+    if (useSupabase) {
+      const { data, error } = await supabase
+        .from('experiences')
+        .insert([{
+          title: experience.title,
+          subtitle: experience.subtitle,
+          description: experience.description,
+          date_range: experience.date_range,
+          icon: experience.icon || 'briefcase',
+          sort_order: experience.sort_order || 0
+        }])
+        .select()
+        .single()
+      
+      if (error) throw error
+      setExperiences(prev => [...prev, data].sort((a, b) => a.sort_order - b.sort_order))
+      return data
+    } else {
+      const newExperience = {
+        ...experience,
+        id: Date.now().toString(),
+        created_at: new Date().toISOString()
+      }
+      setExperiences(prev => [...prev, newExperience])
+      return newExperience
+    }
+  }
+
+  const updateExperience = async (id, updates) => {
+    if (useSupabase) {
+      const { error } = await supabase
+        .from('experiences')
+        .update(updates)
+        .eq('id', id)
+      
+      if (error) throw error
+    }
+    setExperiences(prev => prev.map(e => e.id === id ? { ...e, ...updates } : e)
+      .sort((a, b) => a.sort_order - b.sort_order))
+  }
+
+  const deleteExperience = async (id) => {
+    if (useSupabase) {
+      const { error } = await supabase
+        .from('experiences')
+        .delete()
+        .eq('id', id)
+      
+      if (error) throw error
+    }
+    setExperiences(prev => prev.filter(e => e.id !== id))
+  }
+
+  // ============================================
   // PROFILE IMAGE
   // ============================================
   const updateProfileImage = async (imageUrl) => {
@@ -400,6 +487,7 @@ export function DataProvider({ children }) {
     projectsLoading,
     postsLoading,
     skillsLoading,
+    experiencesLoading,
     useSupabase,
     // Auth
     login,
@@ -423,6 +511,11 @@ export function DataProvider({ children }) {
     addSkill,
     updateSkill,
     deleteSkill,
+    // Experiences
+    experiences,
+    addExperience,
+    updateExperience,
+    deleteExperience,
     // Refresh
     refresh: useSupabase ? loadFromSupabase : loadFromLocalStorage
   }

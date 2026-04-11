@@ -11,32 +11,13 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0 }
 }
 
-const timeline = [
-  {
-    year: "2022 - 2027",
-    title: "Bilgisayar Mühendisliği Lisans",
-    subtitle: "İstanbul Üniversitesi-Cerrahpaşa",
-    description: "GPA: 3.51 - Web, Yapay Zeka ve Robotik alanlarında uzmanlaşma",
-    icon: GraduationCap
-  },
-  {
-    year: "Temmuz 2025 - Eylül 2025",
-    title: "Robotik Stajyeri",
-    subtitle: "Utience Teknoloji AŞ",
-    description: "Otonom AMR platformu geliştirme, ROS2, Gazebo ve SLAM sistemleri",
-    icon: Briefcase
-  },
-  {
-    year: "Kasım 2024 - Şimdi",
-    title: "Yazılım Geliştirici & Bilgisayar Görü",
-    subtitle: "GökmenUAV (Öğrenci Takımı)",
-    description: "YOLO tabanlı nesne tespit modeli eğitimi, Teknofest Yapay Zeka yarışması",
-    icon: Briefcase
-  }
-]
+const iconMap = {
+  graduation: GraduationCap,
+  briefcase: Briefcase
+}
 
 export default function About() {
-  const { profile, loading, useSupabase } = useData()
+  const { profile, loading, experiences, experiencesLoading } = useData()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   
@@ -132,28 +113,49 @@ export default function About() {
       >
         <h3 className="timeline-title">Deneyim</h3>
         <div className="timeline-items">
-          {timeline.map((item, index) => (
-            <motion.div
-              key={index}
-              className="timeline-item glass-card"
-              initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-            >
-              <div className="timeline-icon">
-                <item.icon size={20} />
-              </div>
-              <div className="timeline-content">
-                <span className="timeline-year">
-                  <Calendar size={14} />
-                  {item.year}
-                </span>
-                <h4>{item.title}</h4>
-                <span className="timeline-subtitle">{item.subtitle}</span>
-                <p>{item.description}</p>
-              </div>
-            </motion.div>
-          ))}
+          {experiencesLoading ? (
+            <>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="timeline-item glass-card">
+                  <div className="timeline-icon">
+                    <Briefcase size={20} />
+                  </div>
+                  <div className="timeline-content">
+                    <SkeletonBox width="40%" height="14px" className="mb-xs" />
+                    <SkeletonBox width="70%" height="18px" className="mb-xs" />
+                    <SkeletonBox width="55%" height="14px" className="mb-xs" />
+                    <SkeletonBox width="90%" height="14px" />
+                  </div>
+                </div>
+              ))}
+            </>
+          ) : experiences.length > 0 ? (
+            experiences.map((item, index) => {
+              const IconComponent = iconMap[item.icon] || Briefcase
+              return (
+                <motion.div
+                  key={item.id}
+                  className="timeline-item glass-card"
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                >
+                  <div className="timeline-icon">
+                    <IconComponent size={20} />
+                  </div>
+                  <div className="timeline-content">
+                    <span className="timeline-year">
+                      <Calendar size={14} />
+                      {item.date_range}
+                    </span>
+                    <h4>{item.title}</h4>
+                    <span className="timeline-subtitle">{item.subtitle}</span>
+                    <p>{item.description}</p>
+                  </div>
+                </motion.div>
+              )
+            })
+          ) : null}
         </div>
       </motion.div>
     </section>

@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion'
-import { FileText, FolderKanban, Eye, TrendingUp, Plus } from 'lucide-react'
+import { FileText, FolderKanban, Eye, TrendingUp, Plus, Briefcase } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useData } from '../../context/DataContext'
 import './Dashboard.css'
 
 export default function AdminDashboard() {
-  const { posts, projects, profile } = useData()
+  const { posts, projects, profile, experiences } = useData()
 
   const stats = [
     { 
@@ -27,7 +27,14 @@ export default function AdminDashboard() {
       value: profile.skills.length, 
       icon: TrendingUp, 
       color: '#10b981',
-      link: null
+      link: '/admin/skills'
+    },
+    { 
+      label: 'Experiences', 
+      value: experiences.length, 
+      icon: Briefcase, 
+      color: '#f59e0b',
+      link: '/admin/experiences'
     },
   ]
 

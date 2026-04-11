@@ -9,6 +9,7 @@ import AdminDashboard from './pages/admin/Dashboard'
 import AdminBlogEditor from './pages/admin/BlogEditor'
 import AdminProjects from './pages/admin/ProjectsManager'
 import AdminSkills from './pages/admin/SkillsManager'
+import AdminExperiences from './pages/admin/ExperienceManager'
 import AdminProfile from './pages/admin/ProfileManager'
 import AdminLayout from './components/admin/AdminLayout'
 import ProtectedRoute from './components/admin/ProtectedRoute'
@@ -36,6 +37,7 @@ function App() {
           <Route path="blog/:id" element={<AdminBlogEditor />} />
           <Route path="projects" element={<AdminProjects />} />
           <Route path="skills" element={<AdminSkills />} />
+          <Route path="experiences" element={<AdminExperiences />} />
         </Route>
       </Routes>
     </AnimatePresence>
