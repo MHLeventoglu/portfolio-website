@@ -3,7 +3,7 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { GraduationCap, MapPin, Calendar, Briefcase } from 'lucide-react'
 import { useData } from '../../context/DataContext'
-import { SkeletonBox } from '../ui/Skeleton'
+import { SkeletonBox, ProfileInfoCardSkeleton, AboutDetailSkeleton } from '../ui/Skeleton'
 import './About.css'
 
 const fadeInUp = {
@@ -17,12 +17,11 @@ const iconMap = {
 }
 
 export default function About() {
-  const { profile, loading, experiences, experiencesLoading } = useData()
+  const { profile, profileLoading, loading, experiences, experiencesLoading } = useData()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   
-  // Show skeleton for bio when loading or when bio is empty (no Supabase data)
-  const showBioSkeleton = loading || !profile.bio
+  const showBioSkeleton = loading || profileLoading || !profile.bio
 
   return (
     <section id="about" className="section about" ref={ref}>
@@ -53,14 +52,27 @@ export default function About() {
           </div>
           
           <div className="about-info-cards">
-            <div className="info-card glass-card">
-              <MapPin size={18} />
-              <span>{profile.location}</span>
-            </div>
-            <div className="info-card glass-card">
-              <GraduationCap size={18} />
-              <span>{profile.university}</span>
-            </div>
+            {profileLoading ? (
+              <>
+                <ProfileInfoCardSkeleton />
+                <ProfileInfoCardSkeleton />
+              </>
+            ) : (
+              <>
+                {profile.location && (
+                  <div className="info-card glass-card">
+                    <MapPin size={18} />
+                    <span>{profile.location}</span>
+                  </div>
+                )}
+                {profile.university && (
+                  <div className="info-card glass-card">
+                    <GraduationCap size={18} />
+                    <span>{profile.university}</span>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </motion.div>
 
@@ -87,18 +99,34 @@ export default function About() {
           </div>
 
           <div className="about-details">
-            <div className="detail-item">
-              <span className="detail-label">Bölüm</span>
-              <span className="detail-value">{profile.degree}</span>
-            </div>
-            <div className="detail-item">
-              <span className="detail-label">Mezuniyet</span>
-              <span className="detail-value">{profile.gradYear}</span>
-            </div>
-            <div className="detail-item">
-              <span className="detail-label">GPA</span>
-              <span className="detail-value">{profile.gpa}</span>
-            </div>
+            {profileLoading ? (
+              <>
+                <AboutDetailSkeleton />
+                <AboutDetailSkeleton />
+                <AboutDetailSkeleton />
+              </>
+            ) : (
+              <>
+                {profile.degree && (
+                  <div className="detail-item">
+                    <span className="detail-label">Bölüm</span>
+                    <span className="detail-value">{profile.degree}</span>
+                  </div>
+                )}
+                {profile.gradYear && (
+                  <div className="detail-item">
+                    <span className="detail-label">Mezuniyet</span>
+                    <span className="detail-value">{profile.gradYear}</span>
+                  </div>
+                )}
+                {profile.gpa && (
+                  <div className="detail-item">
+                    <span className="detail-label">GPA</span>
+                    <span className="detail-value">{profile.gpa}</span>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </motion.div>
       </div>

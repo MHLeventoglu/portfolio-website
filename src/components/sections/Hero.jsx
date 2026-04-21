@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
-import { ArrowDown, Github, Linkedin, Mail, Download, MapPin, GraduationCap } from 'lucide-react'
+import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
 import { useData } from '../../context/DataContext'
+import { HeroTextSkeleton, HeroImageSkeleton, SkeletonBox } from '../ui/Skeleton'
 import './Hero.css'
 
 // Floating shapes for background animation
@@ -29,11 +30,15 @@ const FloatingShape = ({ delay, duration, size, left, top, color }) => (
 )
 
 export default function Hero() {
-  const { profile } = useData()
+  const { profile, profileLoading, projects, experiences, projectsLoading, experiencesLoading } = useData()
 
   const scrollToAbout = () => {
     document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })
   }
+
+  // Dynamic stats derived from live data
+  const aiProjectCount = projectsLoading ? null : projects.filter(p => p.category === 'Yapay Zeka').length
+  const expCount = experiencesLoading ? null : experiences.length
 
   return (
     <section id="home" className="hero">
@@ -54,93 +59,111 @@ export default function Hero() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <motion.div
-            className="hero-badge"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="badge-dot"></span>
-            <span>Fırsatlara açık</span>
-          </motion.div>
+          {profileLoading ? (
+            <HeroTextSkeleton />
+          ) : (
+            <>
+              <motion.div
+                className="hero-badge"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <span className="badge-dot"></span>
+                <span>Fırsatlara açık</span>
+              </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            Merhaba, ben
-            <br />
-            <span className="gradient-text">{profile.name}</span>
-          </motion.h1>
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
+                Merhaba, ben
+                <br />
+                <span className="gradient-text">{profile.name}</span>
+              </motion.h1>
 
-          <motion.h2
-            className="hero-subtitle"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            {profile.title}
-          </motion.h2>
+              <motion.h2
+                className="hero-subtitle"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                {profile.title}
+              </motion.h2>
 
-          <motion.p
-            className="hero-description"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            {profile.subtitle}
-          </motion.p>
+              <motion.p
+                className="hero-description"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                {profile.subtitle}
+              </motion.p>
 
-          {/* Quick Info Pills */}
-          <motion.div
-            className="hero-info-pills"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-          >
-            <div className="info-pill">
-              <MapPin size={14} />
-              <span>{profile.location}</span>
-            </div>
-            <div className="info-pill">
-              <GraduationCap size={14} />
-              <span>GPA: {profile.gpa}</span>
-            </div>
-          </motion.div>
+              {/* Quick Info Pills */}
+              {(profile.location || profile.gpa) && (
+                <motion.div
+                  className="hero-info-pills"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.35 }}
+                >
+                  {profile.location && (
+                    <div className="info-pill">
+                      <span>📍</span>
+                      <span>{profile.location}</span>
+                    </div>
+                  )}
+                  {profile.gpa && (
+                    <div className="info-pill">
+                      <span>🎓</span>
+                      <span>GPA: {profile.gpa}</span>
+                    </div>
+                  )}
+                </motion.div>
+              )}
 
-          <motion.div
-            className="hero-buttons"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <a href="#projects" className="btn btn-primary">
-              Projelerimi Gör
-            </a>
-            <a href="#contact" className="btn btn-secondary">
-              <Mail size={18} />
-              İletişime Geç
-            </a>
-          </motion.div>
+              <motion.div
+                className="hero-buttons"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <a href="#projects" className="btn btn-primary">
+                  Projelerimi Gör
+                </a>
+                <a href="#contact" className="btn btn-secondary">
+                  <Mail size={18} />
+                  İletişime Geç
+                </a>
+              </motion.div>
 
-          {/* Social Links */}
-          <motion.div
-            className="hero-socials"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-          >
-            <a href={profile.social.github} target="_blank" rel="noopener noreferrer" className="social-link">
-              <Github size={20} />
-            </a>
-            <a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer" className="social-link">
-              <Linkedin size={20} />
-            </a>
-            <a href={`mailto:${profile.email}`} className="social-link">
-              <Mail size={20} />
-            </a>
-          </motion.div>
+              {/* Social Links */}
+              <motion.div
+                className="hero-socials"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
+                {profile.social?.github && (
+                  <a href={profile.social.github} target="_blank" rel="noopener noreferrer" className="social-link">
+                    <Github size={20} />
+                  </a>
+                )}
+                {profile.social?.linkedin && (
+                  <a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer" className="social-link">
+                    <Linkedin size={20} />
+                  </a>
+                )}
+                {profile.email && (
+                  <a href={`mailto:${profile.email}`} className="social-link">
+                    <Mail size={20} />
+                  </a>
+                )}
+              </motion.div>
+            </>
+          )}
         </motion.div>
 
         {/* Right: Profile Image */}
@@ -151,41 +174,59 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="hero-image-wrapper">
-            <div className="hero-image-glow"></div>
-            <div className="hero-image-border"></div>
-            <img 
-              src={profile.image_url || "https://media.licdn.com/dms/image/v2/D4D03AQFBvgiGsZ6jIQ/profile-displayphoto-crop_800_800/B4DZv0q6f5IAAI-/0/1769336450059?e=1770854400&v=beta&t=DeiwwHZRZ8EJgODV-I2j0xpTdKuZ2Rfae3RB2wXjPS8"} 
-              alt={profile.name}
-              className="hero-image"
-            />
-            
-            {/* Floating Cards around image */}
-            <motion.div 
-              className="floating-card card-experience glass-card"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <span className="floating-card-value">3+</span>
-              <span className="floating-card-label">Yıl Deneyim</span>
-            </motion.div>
-            
-            <motion.div 
-              className="floating-card card-gpa glass-card"
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            >
-              <span className="floating-card-value">{profile.gpa}</span>
-              <span className="floating-card-label">GPA</span>
-            </motion.div>
+            {profileLoading ? (
+              <HeroImageSkeleton />
+            ) : (
+              <>
+                <div className="hero-image-glow"></div>
+                <div className="hero-image-border"></div>
+                {profile.image_url ? (
+                  <img 
+                    src={profile.image_url}
+                    alt={profile.name}
+                    className="hero-image"
+                  />
+                ) : (
+                  <div className="hero-image-placeholder">
+                    <span>👨‍💻</span>
+                  </div>
+                )}
+              </>
+            )}
 
-            <motion.div 
-              className="floating-card card-projects glass-card"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            >
-              <span className="floating-card-value">5+</span>
-              <span className="floating-card-label">AI Proje</span>
-            </motion.div>
+            {/* Floating Cards — only render when data is available */}
+            {!projectsLoading && expCount !== null && (
+              <motion.div 
+                className="floating-card card-experience glass-card"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <span className="floating-card-value">{expCount}+</span>
+                <span className="floating-card-label">Deneyim</span>
+              </motion.div>
+            )}
+
+            {!profileLoading && profile.gpa && (
+              <motion.div 
+                className="floating-card card-gpa glass-card"
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              >
+                <span className="floating-card-value">{profile.gpa}</span>
+                <span className="floating-card-label">GPA</span>
+              </motion.div>
+            )}
+
+            {!projectsLoading && aiProjectCount !== null && (
+              <motion.div 
+                className="floating-card card-projects glass-card"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              >
+                <span className="floating-card-value">{aiProjectCount}+</span>
+                <span className="floating-card-label">AI Proje</span>
+              </motion.div>
+            )}
           </div>
         </motion.div>
       </div>

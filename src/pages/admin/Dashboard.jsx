@@ -2,10 +2,11 @@ import { motion } from 'framer-motion'
 import { FileText, FolderKanban, Eye, TrendingUp, Plus, Briefcase } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useData } from '../../context/DataContext'
+import { DashboardWelcomeSkeleton } from '../../components/ui/Skeleton'
 import './Dashboard.css'
 
 export default function AdminDashboard() {
-  const { posts, projects, profile, experiences } = useData()
+  const { posts, projects, profile, profileLoading, experiences } = useData()
 
   const stats = [
     { 
@@ -44,10 +45,14 @@ export default function AdminDashboard() {
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <div>
-          <h1>Welcome back, <span className="gradient-text">{profile.name.split(' ')[0]}</span>!</h1>
-          <p>Here's what's happening with your portfolio</p>
-        </div>
+        {profileLoading ? (
+          <DashboardWelcomeSkeleton />
+        ) : (
+          <div>
+            <h1>Welcome back, <span className="gradient-text">{profile.name?.split(' ')[0] || 'Admin'}</span>!</h1>
+            <p>Here's what's happening with your portfolio</p>
+          </div>
+        )}
       </header>
 
       {/* Stats Grid */}
@@ -105,7 +110,7 @@ export default function AdminDashboard() {
                 <div className="item-info">
                   <h4>{post.title}</h4>
                   <span className="item-date">
-                    {new Date(post.createdAt).toLocaleDateString()}
+                    {new Date(post.created_at || post.createdAt).toLocaleDateString()}
                   </span>
                 </div>
                 <div className="item-tags">

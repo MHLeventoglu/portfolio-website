@@ -3,7 +3,7 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { Send, Mail, MapPin, Github, Linkedin, Twitter } from 'lucide-react'
 import { useData } from '../../context/DataContext'
-import { SkeletonBox } from '../ui/Skeleton'
+import { SkeletonBox, ContactInfoSkeleton, SocialIconSkeleton } from '../ui/Skeleton'
 import './Contact.css'
 
 // Contact form skeleton component
@@ -28,11 +28,10 @@ function ContactFormSkeleton() {
 }
 
 export default function Contact() {
-  const { profile, useSupabase, loading } = useData()
+  const { profile, profileLoading, useSupabase, loading } = useData()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
-  // Show skeleton when Supabase is configured (form needs backend)
   const showFormSkeleton = useSupabase && loading
 
   return (
@@ -54,58 +53,85 @@ export default function Contact() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <div className="info-item glass-card">
-            <div className="info-icon">
-              <Mail size={24} />
-            </div>
-            <div>
-              <h4>E-posta</h4>
-              <a href={`mailto:${profile.email}`}>{profile.email}</a>
-            </div>
-          </div>
+          {profileLoading ? (
+            <>
+              <ContactInfoSkeleton />
+              <ContactInfoSkeleton />
+              <div className="social-links">
+                <h4>Benimle bağlantı kurun</h4>
+                <div className="social-icons">
+                  <SocialIconSkeleton />
+                  <SocialIconSkeleton />
+                  <SocialIconSkeleton />
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {profile.email && (
+                <div className="info-item glass-card">
+                  <div className="info-icon">
+                    <Mail size={24} />
+                  </div>
+                  <div>
+                    <h4>E-posta</h4>
+                    <a href={`mailto:${profile.email}`}>{profile.email}</a>
+                  </div>
+                </div>
+              )}
 
-          <div className="info-item glass-card">
-            <div className="info-icon">
-              <MapPin size={24} />
-            </div>
-            <div>
-              <h4>Konum</h4>
-              <span>{profile.location}</span>
-            </div>
-          </div>
+              {profile.location && (
+                <div className="info-item glass-card">
+                  <div className="info-icon">
+                    <MapPin size={24} />
+                  </div>
+                  <div>
+                    <h4>Konum</h4>
+                    <span>{profile.location}</span>
+                  </div>
+                </div>
+              )}
 
-          <div className="social-links">
-            <h4>Benimle bağlantı kurun</h4>
-            <div className="social-icons">
-              <a 
-                href={profile.social.github} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="social-icon glass-card"
-                aria-label="GitHub"
-              >
-                <Github size={20} />
-              </a>
-              <a 
-                href={profile.social.linkedin} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="social-icon glass-card"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={20} />
-              </a>
-              <a 
-                href={profile.social.twitter} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="social-icon glass-card"
-                aria-label="Twitter"
-              >
-                <Twitter size={20} />
-              </a>
-            </div>
-          </div>
+              <div className="social-links">
+                <h4>Benimle bağlantı kurun</h4>
+                <div className="social-icons">
+                  {profile.social?.github && (
+                    <a 
+                      href={profile.social.github} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="social-icon glass-card"
+                      aria-label="GitHub"
+                    >
+                      <Github size={20} />
+                    </a>
+                  )}
+                  {profile.social?.linkedin && (
+                    <a 
+                      href={profile.social.linkedin} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="social-icon glass-card"
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin size={20} />
+                    </a>
+                  )}
+                  {profile.social?.twitter && (
+                    <a 
+                      href={profile.social.twitter} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="social-icon glass-card"
+                      aria-label="Twitter"
+                    >
+                      <Twitter size={20} />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </motion.div>
 
         <motion.div
@@ -121,10 +147,12 @@ export default function Contact() {
                 <span className="coming-soon-icon">🚧</span>
                 <h3>Yakında Aktif</h3>
                 <p>İletişim formu henüz yapım aşamasında. Şimdilik e-posta ile ulaşabilirsiniz.</p>
-                <a href={`mailto:${profile.email}`} className="btn btn-primary">
-                  <Mail size={18} />
-                  E-posta Gönder
-                </a>
+                {profile.email && (
+                  <a href={`mailto:${profile.email}`} className="btn btn-primary">
+                    <Mail size={18} />
+                    E-posta Gönder
+                  </a>
+                )}
               </div>
             </div>
           )}

@@ -65,7 +65,7 @@ export default function BlogPost() {
           <div className="blog-post-meta">
             <span className="meta-item">
               <Calendar size={16} />
-              {formatDate(post.createdAt)}
+              {formatDate(post.created_at || post.createdAt)}
             </span>
             <span className="meta-item">
               <Clock size={16} />

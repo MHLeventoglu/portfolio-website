@@ -61,7 +61,7 @@ export default function Blog() {
                 <div className="blog-card-header">
                   <div className="blog-date">
                     <Calendar size={14} />
-                    {formatDate(post.createdAt)}
+                    {formatDate(post.created_at || post.createdAt)}
                   </div>
                 </div>
                 

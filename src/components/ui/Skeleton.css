@@ -143,3 +143,36 @@
 .coming-soon-content .btn {
   margin-top: 0.5rem;
 }
+
+/* ── Hero skeleton layout ─────────────────────────────────────────────── */
+
+.hero-skeleton-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hero-skeleton-pills {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.hero-skeleton-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-skeleton-socials {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.hero-image-skeleton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

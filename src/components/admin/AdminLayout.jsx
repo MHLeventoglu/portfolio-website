@@ -2,6 +2,7 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { LayoutDashboard, FileText, FolderKanban, Wrench, User, LogOut, Home, Briefcase } from 'lucide-react'
 import { useData } from '../../context/DataContext'
+import { AdminNameSkeleton } from '../ui/Skeleton'
 import './AdminLayout.css'
 
 const sidebarLinks = [
@@ -14,7 +15,7 @@ const sidebarLinks = [
 ]
 
 export default function AdminLayout() {
-  const { logout, profile } = useData()
+  const { logout, profile, profileLoading } = useData()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -29,10 +30,14 @@ export default function AdminLayout() {
           <div className="admin-avatar">
             <span>👨‍💻</span>
           </div>
-          <div className="admin-info">
-            <h3>{profile.name}</h3>
-            <span>Admin Panel</span>
-          </div>
+          {profileLoading ? (
+            <AdminNameSkeleton />
+          ) : (
+            <div className="admin-info">
+              <h3>{profile.name}</h3>
+              <span>Admin Panel</span>
+            </div>
+          )}
         </div>
 
         <nav className="sidebar-nav">

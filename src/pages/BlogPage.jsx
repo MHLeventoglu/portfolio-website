@@ -2,11 +2,12 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Calendar, ArrowLeft, ArrowRight, Tag } from 'lucide-react'
 import { useData } from '../context/DataContext'
+import { BlogListItemSkeleton } from '../components/ui/Skeleton'
 import Footer from '../components/common/Footer'
 import './BlogPage.css'
 
 export default function BlogPage() {
-  const { posts } = useData()
+  const { posts, postsLoading } = useData()
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('tr-TR', {
@@ -40,55 +41,60 @@ export default function BlogPage() {
         </div>
 
         <div className="blog-list">
-          {posts.map((post, index) => (
-            <motion.article
-              key={post.id}
-              className="blog-item glass-card"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              whileHover={{ x: 5 }}
-            >
-              <Link to={`/blog/${post.slug}`} className="blog-item-link">
-                {post.cover_image && (
-                  <div className="blog-item-cover">
-                    <img src={post.cover_image} alt={post.title} />
+          {postsLoading ? (
+            // Show skeleton list while loading
+            [...Array(3)].map((_, index) => (
+              <BlogListItemSkeleton key={index} />
+            ))
+          ) : posts.length === 0 ? (
+            <div className="no-results">
+              <p>Henüz blog yazısı yok</p>
+            </div>
+          ) : (
+            posts.map((post, index) => (
+              <motion.article
+                key={post.id}
+                className="blog-item glass-card"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                whileHover={{ x: 5 }}
+              >
+                <Link to={`/blog/${post.slug}`} className="blog-item-link">
+                  {post.cover_image && (
+                    <div className="blog-item-cover">
+                      <img src={post.cover_image} alt={post.title} />
+                    </div>
+                  )}
+                  <div className="blog-item-meta">
+                    <span className="blog-date">
+                      <Calendar size={14} />
+                      {formatDate(post.created_at || post.createdAt)}
+                    </span>
+                    <span className="reading-time">{getReadingTime(post.content)} dk okuma</span>
                   </div>
-                )}
-                <div className="blog-item-meta">
-                  <span className="blog-date">
-                    <Calendar size={14} />
-                    {formatDate(post.createdAt)}
-                  </span>
-                  <span className="reading-time">{getReadingTime(post.content)} dk okuma</span>
-                </div>
-                
-                <h2>{post.title}</h2>
-                <p>{post.excerpt}</p>
-                
-                <div className="blog-item-footer">
-                  <div className="blog-tags">
-                    {post.tags.map(tag => (
-                      <span key={tag} className="tag">
-                        <Tag size={10} />
-                        {tag}
-                      </span>
-                    ))}
+                  
+                  <h2>{post.title}</h2>
+                  <p>{post.excerpt}</p>
+                  
+                  <div className="blog-item-footer">
+                    <div className="blog-tags">
+                      {post.tags.map(tag => (
+                        <span key={tag} className="tag">
+                          <Tag size={10} />
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="read-more">
+                      Devamını Oku <ArrowRight size={16} />
+                    </span>
                   </div>
-                  <span className="read-more">
-                    Devamını Oku <ArrowRight size={16} />
-                  </span>
-                </div>
-              </Link>
-            </motion.article>
-          ))}
+                </Link>
+              </motion.article>
+            ))
+          )}
         </div>
-
-        {posts.length === 0 && (
-          <div className="no-results">
-            <p>Henüz blog yazısı yok</p>
-          </div>
-        )}
       </main>
       <Footer />
     </>

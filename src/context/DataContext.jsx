@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
-import { sampleProjects, samplePosts, profileData } from '../data/sampleData'
 
 const DataContext = createContext()
 
@@ -10,9 +9,26 @@ export function DataProvider({ children }) {
   const [projects, setProjects] = useState([])
   const [posts, setPosts] = useState([])
   const [experiences, setExperiences] = useState([])
-  // Initialize profile with empty bio and skills - these only come from Supabase
-  const [profile, setProfile] = useState({ ...profileData, bio: '', skills: [] })
+  // Profile starts fully empty - all fields come from Supabase only
+  const emptyProfile = {
+    name: '',
+    title: '',
+    subtitle: '',
+    bio: '',
+    email: '',
+    phone: '',
+    location: '',
+    university: '',
+    degree: '',
+    gradYear: '',
+    gpa: '',
+    image_url: '',
+    social: { github: '', linkedin: '', twitter: '', website: '' },
+    skills: []
+  }
+  const [profile, setProfile] = useState(emptyProfile)
   const [loading, setLoading] = useState(true)
+  const [profileLoading, setProfileLoading] = useState(true)
   const [projectsLoading, setProjectsLoading] = useState(true)
   const [postsLoading, setPostsLoading] = useState(true)
   const [skillsLoading, setSkillsLoading] = useState(true)
@@ -23,6 +39,7 @@ export function DataProvider({ children }) {
   // LOAD FROM SUPABASE
   // ============================================
   const loadFromSupabase = async () => {
+    setProfileLoading(true)
     setProjectsLoading(true)
     setPostsLoading(true)
     setSkillsLoading(true)
@@ -66,6 +83,7 @@ export function DataProvider({ children }) {
       if (profileError) {
         console.warn('Profile not found or error:', profileError.message)
         setSkillsLoading(false)
+        setProfileLoading(false)
       } else if (profileRow) {
         const { data: skillsData } = await supabase
           .from('skills')
@@ -77,19 +95,23 @@ export function DataProvider({ children }) {
           image_url: profileRow.image_url || '',
           gradYear: profileRow.grad_year,
           social: {
-            github: profileRow.github,
-            linkedin: profileRow.linkedin,
-            website: profileRow.website
+            github: profileRow.github || '',
+            linkedin: profileRow.linkedin || '',
+            twitter: profileRow.twitter || '',
+            website: profileRow.website || ''
           },
           skills: skillsData || []
         })
         setSkillsLoading(false)
+        setProfileLoading(false)
       } else {
         setSkillsLoading(false)
+        setProfileLoading(false)
       }
     } catch (err) {
       console.error('Error loading profile/skills:', err)
       setSkillsLoading(false)
+      setProfileLoading(false)
     }
 
     // Load experiences (independent - always runs)
@@ -111,20 +133,15 @@ export function DataProvider({ children }) {
   // LOAD FROM LOCALSTORAGE (fallback)
   // ============================================
   const loadFromLocalStorage = () => {
-    const savedProfile = localStorage.getItem('portfolio_profile')
     const savedAuth = localStorage.getItem('portfolio_auth')
 
-    // Projects, posts, skills, experiences - always empty when no Supabase
+    // Projects, posts, skills, experiences, profile - all empty when no Supabase
     setProjects([])
     setExperiences([])
     setPosts([])
-
-    // Profile can use localStorage or default, but bio and skills must be empty (come from Supabase only)
-    const baseProfile = savedProfile ? JSON.parse(savedProfile) : profileData
-    setProfile({ ...baseProfile, bio: '', skills: [] })
+    // Profile stays empty - all data must come from Supabase
+    // profileLoading stays true to show skeletons permanently when no Supabase
     setIsAuthenticated(savedAuth === 'true')
-
-    // KEEP LOADING STATES TRUE - show skeleton permanently when no Supabase
   }
 
   // Check if Supabase is configured and load data
@@ -165,12 +182,7 @@ export function DataProvider({ children }) {
 
 
 
-  // Save profile to localStorage (for admin edits when no Supabase)
-  useEffect(() => {
-    if (!useSupabase && profile.skills) {
-      localStorage.setItem('portfolio_profile', JSON.stringify(profile))
-    }
-  }, [profile, useSupabase])
+
 
   // ============================================
   // AUTH FUNCTIONS
@@ -484,6 +496,7 @@ export function DataProvider({ children }) {
     isAuthenticated,
     user,
     loading,
+    profileLoading,
     projectsLoading,
     postsLoading,
     skillsLoading,
