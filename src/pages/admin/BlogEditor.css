@@ -129,7 +129,7 @@
 .cover-upload-placeholder:hover {
     border-color: var(--accent-primary);
     color: var(--accent-primary);
-    background: rgba(139, 92, 246, 0.05);
+    background: rgba(15, 188, 169, 0.05);
 }
 
 .cover-image-preview {

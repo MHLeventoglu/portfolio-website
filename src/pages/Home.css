@@ -1,0 +1,46 @@
+/* Full-width section bands — background contrast + crisp dividers for rhythm */
+.band {
+    position: relative;
+    border-top: 1px solid var(--line-strong);
+}
+
+.band-a {
+    background: var(--paper);
+}
+
+.band-b {
+    background: var(--paper-2);
+}
+
+/* Faint static dot texture across every band (the "dotty" motif, cheap) */
+.band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(var(--line) 1px, transparent 1.4px);
+    background-size: 26px 26px;
+    opacity: 0.6;
+    -webkit-mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000, transparent 75%);
+    mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000, transparent 75%);
+}
+
+.band > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Corner ticks on each band edge for the "engineered" Silana feel */
+.band::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    border-left: 1px solid var(--accent);
+    border-top: 1px solid var(--accent);
+    opacity: 0.6;
+    pointer-events: none;
+}

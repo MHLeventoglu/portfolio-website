@@ -1,136 +1,90 @@
-import { motion, AnimatePresence } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
 import { useData } from '../../context/DataContext'
-import { SkillCardSkeleton, EmptyState } from '../ui/Skeleton'
+import { useLang } from '../../context/LanguageContext'
+import { SkeletonBox } from '../ui/Skeleton'
+import SectionHeader from '../ui/SectionHeader'
+import Marquee from '../ui/Marquee'
 import './Skills.css'
-
-const categoryIcons = {
-  "Programlama": "💻",
-  "Yapay Zeka": "🧠",
-  "Web": "🌐",
-  "Robotik": "🤖",
-  "Araçlar": "🔧"
-}
 
 export default function Skills() {
   const { profile, skillsLoading } = useData()
+  const { t } = useLang()
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [activeCategory, setActiveCategory] = useState('all')
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   const skills = profile?.skills || []
-  const categories = ['all', ...new Set(skills.map(s => s.category))]
-  const filteredSkills = activeCategory === 'all' 
-    ? skills 
-    : skills.filter(s => s.category === activeCategory)
-  
-  // Show only first 6 skills when collapsed
-  const displaySkills = isExpanded ? filteredSkills : filteredSkills.slice(0, 6)
+  const categories = [...new Set(skills.map(s => s.category))]
 
   return (
     <section id="skills" className="section skills" ref={ref}>
-      <motion.div
-        className="section-title"
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5 }}
-      >
-        <h2>Yetenekler & <span className="gradient-text">Teknolojiler</span></h2>
-        <p>Fikirleri hayata geçirmek için kullandığım teknolojiler</p>
-      </motion.div>
+      <SectionHeader index="02" label={t('skills.eyebrow')} title={t('skills.title')} />
 
-      <motion.div
-        className="skills-categories"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.1 }}
-      >
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            className={`category-btn ${activeCategory === cat ? 'active' : ''}`}
-            onClick={() => setActiveCategory(cat)}
-          >
-            {cat === 'all' ? '✨ Tümü' : `${categoryIcons[cat] || '📦'} ${cat}`}
-          </button>
-        ))}
-      </motion.div>
-
-      <AnimatePresence mode="wait">
-        <motion.div 
-          className={`skills-grid ${!isExpanded ? 'collapsed' : ''}`}
-          layout
-          key={activeCategory}
-        >
-          {skillsLoading || displaySkills.length === 0 ? (
-            // Show skeleton loading when loading or no data
-            [...Array(6)].map((_, index) => (
-              <SkillCardSkeleton key={index} />
-            ))
-          ) : (
-            // Show actual skills
-            displaySkills.map((skill, index) => (
-              <motion.div
-                key={skill.name}
-                className="skill-card glass-card"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.3, delay: 0.1 + index * 0.03 }}
-                layout
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="skill-header">
-                  <span className="skill-name">{skill.name}</span>
-                  <span className="skill-category">{categoryIcons[skill.category]}</span>
+      <div className="skill-groups">
+        {skillsLoading || skills.length === 0 ? (
+          [...Array(3)].map((_, i) => (
+            <div key={i} className="skill-cat">
+              <div className="rule" />
+              <SkeletonBox width="140px" height="26px" />
+              <div className="skill-items">
+                {[...Array(4)].map((__, j) => (
+                  <div key={j} className="skill-item">
+                    <SkeletonBox width="100%" height="16px" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          categories.map((cat, ci) => {
+            const items = skills.filter(s => s.category === cat)
+            return (
+              <div key={cat} className="skill-cat">
+                <div className="rule" />
+                <div className="skill-cat-head">
+                  <span className="skill-cat-index">{String(ci + 1).padStart(2, '0')}</span>
+                  <h3 className="skill-cat-name">{cat}</h3>
+                  <span className="skill-cat-count">{items.length}</span>
                 </div>
-                <div className="skill-bar-container">
-                  <motion.div
-                    className="skill-bar"
-                    initial={{ width: 0 }}
-                    animate={isInView ? { width: `${skill.level}%` } : {}}
-                    transition={{ duration: 1, delay: 0.3 + index * 0.03, ease: "easeOut" }}
-                  />
+                <div className="skill-items">
+                  {items.map((skill, i) => (
+                    <motion.div
+                      key={skill.name}
+                      className="skill-item"
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.4, delay: 0.05 + i * 0.03 }}
+                    >
+                      <div className="skill-item-top">
+                        <span className="skill-item-name">{skill.name}</span>
+                        <span className="skill-item-lvl">{skill.level}</span>
+                      </div>
+                      <div className="skill-track">
+                        <motion.span
+                          className="skill-fill"
+                          initial={{ scaleX: 0 }}
+                          animate={isInView ? { scaleX: skill.level / 100 } : {}}
+                          transition={{ duration: 1, delay: 0.2 + i * 0.03, ease: [0.22, 1, 0.36, 1] }}
+                        />
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-                <span className="skill-level">{skill.level}%</span>
-              </motion.div>
-            ))
-          )}
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Expand/Collapse Button */}
-      {filteredSkills.length > 6 && (
-        <motion.button
-          className="expand-btn glass-card"
-          onClick={() => setIsExpanded(!isExpanded)}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.5 }}
-          whileHover={{ scale: 1.02 }}
-        >
-          {isExpanded ? (
-            <>
-              <span>Daha Az Göster</span>
-              <ChevronUp size={20} />
-            </>
-          ) : (
-            <>
-              <span>Tümünü Göster ({filteredSkills.length})</span>
-              <ChevronDown size={20} />
-            </>
-          )}
-        </motion.button>
-      )}
-
-      {/* Decorative Elements */}
-      <div className="skills-decoration">
-        <div className="orbit">
-          <div className="orbit-dot"></div>
-        </div>
+              </div>
+            )
+          })
+        )}
       </div>
+
+      {skills.length > 0 && (
+        <div className="skills-marquee">
+          <Marquee speed={44}>
+            {skills.map((s) => (
+              <span key={s.name} className="skills-kw">{s.name}<span className="skills-kw-dot">•</span></span>
+            ))}
+          </Marquee>
+        </div>
+      )}
     </section>
   )
 }

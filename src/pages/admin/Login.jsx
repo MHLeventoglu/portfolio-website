@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, Mail } from 'lucide-react'
+import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, Mail, ShieldCheck, Info } from 'lucide-react'
 import { useData } from '../../context/DataContext'
 import './Login.css'
 
@@ -140,9 +140,9 @@ export default function AdminLogin() {
 
         <div className="login-hint">
           {useSupabase ? (
-            <p>🔒 Supabase kimlik doğrulama aktif</p>
+            <p><ShieldCheck size={15} /> Supabase kimlik doğrulama aktif</p>
           ) : (
-            <p>💡 İpucu: Varsayılan şifre <code>admin123</code></p>
+            <p><Info size={15} /> İpucu: Varsayılan şifre <code>admin123</code></p>
           )}
         </div>
       </motion.div>

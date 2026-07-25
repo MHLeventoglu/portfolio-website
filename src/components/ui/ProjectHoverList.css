@@ -1,0 +1,134 @@
+.hover-list {
+  position: relative;
+}
+
+.hover-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem 1fr auto auto;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg) 0;
+  transition: padding-left var(--transition-fast);
+}
+
+.hover-row > .rule {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.hover-row:hover {
+  padding-left: var(--spacing-md);
+}
+
+.hover-index {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-3);
+  transition: color var(--transition-fast);
+}
+
+.hover-row:hover .hover-index {
+  color: var(--accent);
+}
+
+/* Inline thumbnail — mobile only */
+.hover-row-thumb {
+  display: none;
+  width: 64px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.hover-row-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hover-title {
+  font-size: clamp(1.5rem, 4vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.hover-row:hover .hover-title {
+  color: var(--accent);
+}
+
+.hover-cat {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.hover-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.hover-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-full);
+  color: var(--ink);
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.hover-action:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Floating cursor preview */
+.hover-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 340px;
+  height: 240px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 40;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.hover-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 768px) {
+  .hover-row {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'index title'
+      'thumb meta';
+    gap: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .hover-index { grid-area: index; }
+  .hover-title { grid-area: title; }
+  .hover-row-thumb { display: block; grid-area: thumb; }
+  .hover-cat { grid-area: meta; }
+  .hover-actions {
+    grid-column: 1 / -1;
+    margin-top: var(--spacing-sm);
+  }
+}

@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { LayoutDashboard, FileText, FolderKanban, Wrench, User, LogOut, Home, Briefcase } from 'lucide-react'
+import { LayoutDashboard, FileText, FolderKanban, Wrench, User, LogOut, Home, Briefcase, Terminal } from 'lucide-react'
 import { useData } from '../../context/DataContext'
 import { AdminNameSkeleton } from '../ui/Skeleton'
 import './AdminLayout.css'
@@ -28,14 +28,14 @@ export default function AdminLayout() {
       <aside className="admin-sidebar glass-card">
         <div className="sidebar-header">
           <div className="admin-avatar">
-            <span>👨‍💻</span>
+            <Terminal size={22} />
           </div>
           {profileLoading ? (
             <AdminNameSkeleton />
           ) : (
             <div className="admin-info">
-              <h3>{profile.name}</h3>
-              <span>Admin Panel</span>
+              <h3>{profile.name || 'Admin'}</h3>
+              <span>Yönetim Paneli</span>
             </div>
           )}
         </div>
@@ -48,8 +48,19 @@ export default function AdminLayout() {
               end={link.end}
               className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
             >
-              <link.icon size={20} />
-              {link.label}
+              {({ isActive }) => (
+                <>
+                  {isActive && (
+                    <motion.span
+                      className="sidebar-indicator"
+                      layoutId="admin-sidebar-indicator"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <link.icon size={20} />
+                  <span className="sidebar-link-text">{link.label}</span>
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
@@ -57,11 +68,11 @@ export default function AdminLayout() {
         <div className="sidebar-footer">
           <NavLink to="/" className="sidebar-link">
             <Home size={20} />
-            View Site
+            <span className="sidebar-link-text">Siteyi Gör</span>
           </NavLink>
           <button className="sidebar-link logout-btn" onClick={handleLogout}>
             <LogOut size={20} />
-            Logout
+            <span className="sidebar-link-text">Çıkış Yap</span>
           </button>
         </div>
       </aside>

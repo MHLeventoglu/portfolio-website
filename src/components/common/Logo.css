@@ -1,0 +1,45 @@
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-mark {
+    display: block;
+    flex-shrink: 0;
+}
+
+.logo-bg {
+    fill: var(--ink);
+}
+
+.logo-wave {
+    stroke: var(--accent);
+    opacity: 0.45;
+    transition: opacity var(--transition-normal);
+}
+
+.logo-dot {
+    fill: var(--accent);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform var(--transition-normal);
+}
+
+/* Hover: dots pulse up the wave */
+.logo:hover .logo-dot-1 { transform: translateY(-2px); }
+.logo:hover .logo-dot-2 { transform: translateY(-3px) scale(1.15); }
+.logo:hover .logo-dot-3 { transform: translateY(-2px); }
+.logo:hover .logo-wave { opacity: 0.8; }
+
+.logo-word {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+}
+
+.logo-word-dot {
+    color: var(--accent);
+}

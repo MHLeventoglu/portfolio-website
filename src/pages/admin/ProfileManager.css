@@ -131,7 +131,7 @@
     align-items: center;
     justify-content: center;
     color: var(--text-muted);
-    background: rgba(139, 92, 246, 0.1);
+    background: rgba(15, 188, 169, 0.1);
 }
 
 .image-upload-overlay {

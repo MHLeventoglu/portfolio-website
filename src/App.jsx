@@ -16,8 +16,9 @@ import ProtectedRoute from './components/admin/ProtectedRoute'
 
 function App() {
   return (
-    <AnimatePresence mode="wait">
-      <Routes>
+    <>
+      <AnimatePresence mode="wait">
+        <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<ProjectsPage />} />
@@ -39,8 +40,9 @@ function App() {
           <Route path="skills" element={<AdminSkills />} />
           <Route path="experiences" element={<AdminExperiences />} />
         </Route>
-      </Routes>
-    </AnimatePresence>
+        </Routes>
+      </AnimatePresence>
+    </>
   )
 }
 

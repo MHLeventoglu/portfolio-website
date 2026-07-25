@@ -3,130 +3,98 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ExternalLink, Github, ArrowLeft, Search } from 'lucide-react'
 import { useData } from '../context/DataContext'
-import { ProjectsPageCardSkeleton } from '../components/ui/Skeleton'
+import { useLang } from '../context/LanguageContext'
+import { SkeletonBox } from '../components/ui/Skeleton'
+import ProjectHoverList from '../components/ui/ProjectHoverList'
 import Footer from '../components/common/Footer'
 import './ProjectsPage.css'
 
 export default function ProjectsPage() {
   const { projects, projectsLoading } = useData()
+  const { t } = useLang()
   const [activeCategory, setActiveCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
 
   const categories = ['all', ...new Set(projects.map(p => p.category))]
-  
-  const filteredProjects = projects.filter(project => {
+
+  const filtered = projects.filter(project => {
     const matchesCategory = activeCategory === 'all' || project.category === activeCategory
-    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         project.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+    const q = searchQuery.toLowerCase()
+    const matchesSearch = project.title.toLowerCase().includes(q) ||
+      project.description.toLowerCase().includes(q) ||
+      project.tags.some(tag => tag.toLowerCase().includes(q))
     return matchesCategory && matchesSearch
   })
 
   return (
     <>
       <main className="projects-page">
-        <div className="page-header">
-          <Link to="/" className="back-link">
-            <ArrowLeft size={20} />
-            Ana Sayfa
-          </Link>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            Tüm <span className="gradient-text">Projeler</span>
-          </motion.h1>
-          <p>Yapay zeka, robotik ve web geliştirme projelerim</p>
-        </div>
+        <header className="page-head">
+          <Link to="/" className="back-link"><ArrowLeft size={18} /> {t('common.back')}</Link>
+          <span className="eyebrow">{t('projectsPage.eyebrow')}</span>
+          <h1 className="page-title display">{t('projectsPage.title')}</h1>
+          <p className="page-sub">{t('projectsPage.sub')}</p>
+        </header>
 
-        {/* Filters only shown when data is loaded */}
         {!projectsLoading && (
           <div className="page-filters">
-            <div className="search-box">
+            <div className="filter-search">
               <Search size={18} />
               <input
                 type="text"
-                placeholder="Proje ara..."
+                placeholder={t('projectsPage.search')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="input-field"
+                aria-label={t('projectsPage.search')}
               />
             </div>
-            
-            <div className="category-filters">
-              {categories.map((cat) => (
+            <div className="filter-cats">
+              {categories.map(cat => (
                 <button
                   key={cat}
-                  className={`category-btn ${activeCategory === cat ? 'active' : ''}`}
+                  className={`filter-btn ${activeCategory === cat ? 'active' : ''}`}
                   onClick={() => setActiveCategory(cat)}
                 >
-                  {cat === 'all' ? 'Tümü' : cat}
+                  {cat === 'all' ? t('projectsPage.all') : cat}
                 </button>
               ))}
             </div>
           </div>
         )}
 
-        <motion.div 
-          className="projects-grid-full"
-          layout
-        >
-          {projectsLoading ? (
-            // Show skeleton cards while loading
-            [...Array(4)].map((_, index) => (
-              <ProjectsPageCardSkeleton key={index} />
-            ))
-          ) : filteredProjects.length === 0 ? (
-            <div className="no-results">
-              <p>Sonuç bulunamadı</p>
-            </div>
-          ) : (
-            filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className={`project-card-full glass-card ${project.featured ? 'featured' : ''}`}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                layout
-                whileHover={{ y: -5 }}
-              >
-                {project.image && (
-                  <div className="project-image">
-                    <img src={project.image} alt={project.title} />
-                    {project.featured && <span className="featured-badge">⭐ Öne Çıkan</span>}
-                  </div>
-                )}
-                <div className="project-content">
-                  <div className="project-header">
-                    <h3>{project.title}</h3>
-                    <span className="project-category">{project.category}</span>
-                  </div>
-                  <p>{project.description}</p>
-                  <div className="project-tags">
-                    {project.tags.map(tag => (
-                      <span key={tag} className="tag">{tag}</span>
-                    ))}
-                  </div>
-                  <div className="project-links">
-                    {project.github && (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                        <Github size={16} />
-                        Kodu Gör
-                      </a>
-                    )}
-                    {project.demo && (
-                      <a href={project.demo} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                        <ExternalLink size={16} />
-                        Canlı Demo
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))
-          )}
-        </motion.div>
+        {projectsLoading ? (
+          <div className="page-loading">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="loading-row">
+                <SkeletonBox width="40px" height="18px" />
+                <SkeletonBox width="50%" height="34px" />
+              </div>
+            ))}
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="no-results"><p>{t('projectsPage.none')}</p></div>
+        ) : (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
+            <ProjectHoverList
+              items={filtered}
+              renderActions={(p) => (
+                <>
+                  {p.github && (
+                    <a href={p.github} target="_blank" rel="noopener noreferrer" className="hover-action" aria-label="Kod">
+                      <Github size={16} />
+                    </a>
+                  )}
+                  {p.demo && (
+                    <a href={p.demo} target="_blank" rel="noopener noreferrer" className="hover-action" aria-label="Demo">
+                      <ExternalLink size={16} />
+                    </a>
+                  )}
+                </>
+              )}
+            />
+          </motion.div>
+        )}
       </main>
       <Footer />
     </>

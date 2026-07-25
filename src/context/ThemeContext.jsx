@@ -6,7 +6,7 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     // Load saved theme or default to dark
     const saved = localStorage.getItem('portfolio_theme')
-    return saved || 'dark'
+    return saved || 'light'
   })
 
   useEffect(() => {

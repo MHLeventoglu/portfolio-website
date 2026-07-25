@@ -254,7 +254,7 @@ select.input-field {
 }
 
 .action-btn.edit:hover {
-    background: rgba(139, 92, 246, 0.2);
+    background: rgba(15, 188, 169, 0.2);
     color: var(--accent-primary);
 }
 
