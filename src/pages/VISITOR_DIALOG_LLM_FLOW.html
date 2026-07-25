@@ -1,0 +1,522 @@
+<!DOCTYPE html><html><head>
+      <title>VISITOR_DIALOG_LLM_FLOW</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////home/mhlev/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.24/crossnote/dependencies/katex/katex.min.css">
+      
+      
+      
+      <script type="text/javascript" src="file:////home/mhlev/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.24/crossnote/dependencies/mermaid/mermaid.min.js" charset="UTF-8"></script>
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="visitor-dialog--stt--llm--sistem-tepkisi-akışı">Visitor Dialog — STT → LLM → Sistem Tepkisi Akışı </h1>
+<p>Bu döküman tek bir soruya odaklanır:</p>
+<blockquote>
+<p><strong>Bir STT çıktısı geldiğinde, LLM'e ulaşana kadar hangi filtrelerden<br>
+geçer; PromptBuilder hangi koşula göre hangi prompt'u inşa eder; hangi<br>
+durumda farklı bir agent kontrolü devreye girer; LLM hangi girdiye<br>
+hangi response'u döner; sistem bu response'a nasıl tepki verir?</strong></p>
+</blockquote>
+<p>Diğer akışlar (oturum açılışı, timer expired, validation arka plan task'ı,<br>
+terminal state aksiyonları) bu dökümanın <strong>kapsamı dışındadır</strong> — onlar<br>
+için bkz. <a href="VISITOR_DIALOG_FLOW.md">VISITOR_DIALOG_FLOW.md</a>.</p>
+<hr>
+<h2 id="uçtan-uca-diyagram">Uçtan Uca Diyagram </h2>
+<div class="mermaid">flowchart TD
+    STT([stt.transcript]):::entry
+
+    STT --&gt; G1{ctx None veya terminal?}:::dec
+    G1 -- Evet --&gt; X1([drop]):::ign
+    G1 -- Hayır --&gt; G2{state == VALIDATING?}:::dec
+    G2 -- Evet --&gt; X2([drop]):::ign
+    G2 -- Hayır --&gt; G3{text boş?}:::dec
+    G3 -- Evet --&gt; X3([drop]):::ign
+    G3 -- Hayır --&gt; RST["silence timer iptal&lt;br/&gt;silence_count = 0"]:::act
+    RST --&gt; ROUTE{state == ON_HOLD?}:::dec
+
+    ROUTE -- Evet --&gt; KW{"Kademe-1 — _has_resume_signal?&lt;br/&gt;digit VEYA kelime başlangıcı:&lt;br/&gt;tamam / devam / hazırım / geldim&lt;br/&gt;geldik / bitti / oldu / tamamdır&lt;br/&gt;blok / daire / numara / kat"}:::dec
+    KW -- Hayır --&gt; SKIP1["history'e eklenmez&lt;br/&gt;on_hold_timer yeniden arm"]:::act
+    SKIP1 --&gt; WAIT_HOLD([ON_HOLD bekle]):::wait
+
+    KW -- Evet --&gt; CLF["Kademe-2 — HoldClassifier&lt;br/&gt;AYRI LLM AGENT&lt;br/&gt;temp=0  max_tokens=50&lt;br/&gt;bkz. PROMPT-C"]:::llm
+    CLF --&gt; CR{directed_at_agent?}:::dec
+    CR -- false --&gt; SKIP2["history'e eklenmez&lt;br/&gt;on_hold_timer yeniden arm"]:::act
+    SKIP2 --&gt; WAIT_HOLD
+
+    CR -- true --&gt; RESUME["on_hold_timer iptal&lt;br/&gt;FSM: SPEECH_RECEIVED → _previous_state"]:::act
+    RESUME --&gt; ADD
+
+    ROUTE -- Hayır --&gt; ADD["ctx.history.append&lt;br/&gt;role: user  content: text"]:::act
+    ADD --&gt; BUILD["PromptBuilder.build_system_prompt ctx&lt;br/&gt;→ dinamik PROMPT-A  bkz. subgraph"]:::act
+    BUILD --&gt; LLM["Ana Dialog LLM&lt;br/&gt;chat.completions.create&lt;br/&gt;messages = system + ctx.history&lt;br/&gt;response_format = json_object"]:::llm
+    LLM --&gt; EXT["EntityExtractor.extract&lt;br/&gt;JSON parse + null normalize&lt;br/&gt;→ ExtractedEntities + reply"]:::act
+
+    LLM -- "LLMError / ExtractionError" --&gt; ERR{ON_HOLD çıkışı?}:::dec
+    ERR -- Hayır --&gt; ERR_FAIL["FSM: ERROR → FAILED&lt;br/&gt;dialog.failed"]:::evout
+    ERR -- Evet --&gt; ERR_HOLD["history.pop  turn_count -= 1&lt;br/&gt;FSM: INTENT_HOLD → ON_HOLD&lt;br/&gt;on_hold_timer başla"]:::act
+    ERR_HOLD --&gt; WAIT_HOLD
+
+    EXT --&gt; RST_SIG["entities.reset_signals&lt;br/&gt;tek-kullanımlık bool sıfırla"]:::act
+    RST_SIG --&gt; PCANC{"pure cancel?&lt;br/&gt;should_reset_session = true&lt;br/&gt;AND block = null&lt;br/&gt;AND apartment = null"}:::dec
+    PCANC -- Evet --&gt; RES["ctx_mgr.reset_entities&lt;br/&gt;block = None  apartment = None"]:::act
+    PCANC -- Hayır --&gt; APPL["ctx_mgr.apply_entities kümülatif&lt;br/&gt;non-None alanları yaz"]:::act
+    RES --&gt; DET
+    APPL --&gt; DET
+
+    DET{Mevcut state}:::dec
+
+    DET -- "GREETING / COLLECTING_INFO" --&gt; RGC{Sinyal?}:::dec
+    RGC -- "hold_detected=true" --&gt; T_HOLD1[INTENT_HOLD]:::act
+    RGC -- "is_complete + format ok" --&gt; T_COMP1[ENTITIES_COMPLETE]:::act
+    RGC -- diğer --&gt; T_PART1[ENTITIES_PARTIAL]:::act
+
+    DET -- CONFIRMING --&gt; RCF{Sinyal?}:::dec
+    RCF -- "hold_detected=true" --&gt; T_HOLD2[INTENT_HOLD]:::act
+    RCF -- "should_grant_access=true" --&gt; T_CONF[INTENT_CONFIRM]:::act
+    RCF -- "yeni block/apt + tam + fmt ok" --&gt; T_COMP2[ENTITIES_COMPLETE]:::act
+    RCF -- "yeni block/apt + eksik" --&gt; T_PART2[ENTITIES_PARTIAL]:::act
+    RCF -- "tüm sinyal false + ctx tam" --&gt; T_COMP3["ENTITIES_COMPLETE re-ask"]:::act
+    RCF -- "pure cancel sonrası" --&gt; T_CANC[INTENT_CANCEL]:::act
+
+    T_HOLD1 --&gt; SE_HOLD
+    T_HOLD2 --&gt; SE_HOLD
+    T_COMP1 --&gt; SE_TALK
+    T_PART1 --&gt; SE_TALK
+    T_COMP2 --&gt; SE_TALK
+    T_PART2 --&gt; SE_TALK
+    T_COMP3 --&gt; SE_TALK
+    T_CANC  --&gt; SE_TALK
+    T_CONF  --&gt; SE_VAL
+
+    SE_TALK["State entry — GREETING / COLLECTING / CONFIRMING&lt;br/&gt;dialog.reply = LLM reply alanı&lt;br/&gt;history.append assistant"]:::evout
+    SE_HOLD["State entry — ON_HOLD&lt;br/&gt;dialog.reply = statik on_hold_msg&lt;br/&gt;silence timer iptal  on_hold_timer başla&lt;br/&gt;LLM reply kullanılmaz"]:::evout
+    SE_VAL["State entry — VALIDATING&lt;br/&gt;dialog.reply = statik awaiting_resident_msg&lt;br/&gt;silence timer iptal  validate task başla&lt;br/&gt;LLM reply kullanılmaz"]:::evout
+
+    SE_TALK --&gt; FIN(["audio.tts_done → silence timer arm&lt;br/&gt;→ bir sonraki stt.transcript"]):::wait
+    SE_HOLD --&gt; WAIT_HOLD
+    SE_VAL --&gt; FIN_V([VALIDATING — kapsam dışı]):::wait
+
+    subgraph PROMPT_A ["PROMPT-A · build_system_prompt — koşullu birleştirme"]
+        direction TB
+        PA1["BASE — sabit&lt;br/&gt;identity + blok/daire format kuralları&lt;br/&gt;GİRİŞ İZNİ VERME"]:::prompt
+        PA_SW{ctx.flow_state}:::dec
+        PA2["GREETING / COLLECTING_INFO — block veya apt boş&lt;br/&gt;Şu an şu bilgileri toplaman gerekiyor: eksikler"]:::prompt
+        PA3["GREETING / COLLECTING_INFO — ikisi de dolu&lt;br/&gt;Tüm bilgiler toplandı. Özetleyip doğruluğunu sor."]:::prompt
+        PA4["CONFIRMING&lt;br/&gt;Ziyaretçi X Blok Y daireye gitmek istiyor.&lt;br/&gt;Bilgileri doğru anlayıp anlamadığını sor."]:::prompt
+        PA5["ENTITY HINT — koşullu&lt;br/&gt;block veya apt doluysa&lt;br/&gt;Toplanan bilgiler: blok=X daire=Y"]:::prompt
+        PA6["OUTPUT FORMAT — sabit&lt;br/&gt;JSON: block  apartment  hold_detected&lt;br/&gt;should_grant_access  should_reset_session  reply&lt;br/&gt;+ sinyal kuralları"]:::prompt
+        PA7["messages = system + ctx.history kümülatif"]:::prompt
+        PA1 --&gt; PA_SW
+        PA_SW -- "block veya apt boş" --&gt; PA2
+        PA_SW -- "ikisi dolu" --&gt; PA3
+        PA_SW -- CONFIRMING --&gt; PA4
+        PA2 --&gt; PA5
+        PA3 --&gt; PA5
+        PA4 --&gt; PA5
+        PA5 --&gt; PA6
+        PA6 --&gt; PA7
+    end
+
+    subgraph PROMPT_C ["PROMPT-C · HoldClassifier — sabit, tek-shot"]
+        direction TB
+        PC1["SYSTEM — sabit&lt;br/&gt;Konuşan kişi SANA mı hitap ediyor?&lt;br/&gt;Çıktı: directed_at_agent true veya false&lt;br/&gt;few-shot örnekler dahil"]:::prompt
+        PC2["USER — tek mesaj: STT transcript&lt;br/&gt;ctx.history kullanılmaz"]:::prompt
+        PC3["CFG: temperature=0  max_tokens=50  retries=2&lt;br/&gt;Hata → false güvenli default"]:::prompt
+        PC1 --&gt; PC2 --&gt; PC3
+    end
+
+    classDef entry  fill:#c8e6c9,stroke:#2e7d32,color:#1b5e20
+    classDef wait   fill:#dcedc8,stroke:#558b2f,color:#33691e
+    classDef act    fill:#bbdefb,stroke:#1565c0,color:#0d47a1
+    classDef dec    fill:#fff9c4,stroke:#f9a825,color:#f57f17
+    classDef llm    fill:#e1bee7,stroke:#6a1b9a,color:#4a148c,stroke-width:2px
+    classDef evout  fill:#ffcdd2,stroke:#c62828,color:#b71c1c
+    classDef ign    fill:#eeeeee,stroke:#9e9e9e,color:#616161
+    classDef prompt fill:#ffe0b2,stroke:#e65100,color:#bf360c
+</div><hr>
+<h2 id="1-stt--llm-arası-filtreler-uçtan-uca-tek-bakış">1) STT → LLM Arası Filtreler (Uçtan Uca Tek Bakış) </h2>
+<table>
+<thead>
+<tr>
+<th>Adım</th>
+<th>Konum</th>
+<th>Geçemezse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>F1.</strong> ctx kuruldu mu, FSM terminal değil mi</td>
+<td><code>_on_stt_transcript</code> ilk satırlar</td>
+<td>drop</td>
+</tr>
+<tr>
+<td><strong>F2.</strong> state VALIDATING değil mi</td>
+<td>aynı handler</td>
+<td>drop (V5 notu: ileride buffer'lanabilir)</td>
+</tr>
+<tr>
+<td><strong>F3.</strong> <code>text.strip()</code> boş değil mi</td>
+<td>aynı handler</td>
+<td>drop</td>
+</tr>
+<tr>
+<td><strong>F4.</strong> silence timer iptal + count=0</td>
+<td>yan etki</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>F5 (sadece ON_HOLD'da).</strong> <code>_has_resume_signal</code> regex</td>
+<td>deterministik, ücretsiz</td>
+<td>drop + <code>on_hold_timer</code> rearm; <strong>history'e yazılmaz</strong></td>
+</tr>
+<tr>
+<td><strong>F6 (sadece ON_HOLD'da).</strong> <code>HoldClassifier.classify</code> (ayrı LLM, PROMPT-C)</td>
+<td>LLM çağrısı, <code>temp=0</code>, <code>max_tokens=50</code></td>
+<td>drop + <code>on_hold_timer</code> rearm; <strong>history'e yazılmaz</strong></td>
+</tr>
+<tr>
+<td><strong>F7.</strong> <code>ctx.history.append({user, text})</code></td>
+<td>kümülatif</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>F8.</strong> <code>PromptBuilder.build_system_prompt(ctx)</code> (PROMPT-A)</td>
+<td>dinamik</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>F9.</strong> Ana Dialog LLM <code>chat.completions.create</code></td>
+<td><code>response_format=json_object</code></td>
+<td>LLMError → ON_HOLD çıkışındaysa retry, değilse FSM <code>ERROR → FAILED</code></td>
+</tr>
+<tr>
+<td><strong>F10.</strong> <code>EntityExtractor.extract(raw)</code></td>
+<td>JSON parse</td>
+<td>ExtractionError → aynı: F9'la aynı dallanma</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-farklı-agent-kontrolü-hangi-koşulda-devreye-girer">2) Farklı Agent Kontrolü Hangi Koşulda Devreye Girer? </h2>
+<p><strong>Yalnızca state == ON_HOLD</strong> iken ve <strong>F5 (deterministik resume sinyali)</strong> geçtikten sonra:</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>state == ON_HOLD
+  AND text içinde digit VEYA resume keyword (tamam/devam/hazırım/
+      geldim/geldik/bitti/oldu/tamamdır/blok/daire/numara/kat) var
+        ↓
+  HoldClassifier.classify(text)  ← AYRI LLM (PROMPT-C, sabit, temp=0)
+        ↓
+  directed_at_agent ?
+    true  → ON_HOLD'dan çık (FSM SPEECH_RECEIVED → _previous_state)
+            sonra ana LLM çağrılır (PROMPT-A ile)
+    false → ON_HOLD'da kal, history'e yazma, on_hold_timer rearm
+</code></pre><p>ON_HOLD dışındaki hiçbir state'te HoldClassifier devreye <strong>girmez</strong> — STT<br>
+transcript doğrudan ana LLM hattına akar.</p>
+<hr>
+<h2 id="3-promptbuilder-hangi-koşullarda-hangi-promptu-üretir">3) PromptBuilder Hangi Koşullarda Hangi Prompt'u Üretir? </h2>
+<p>PROMPT-A <strong>5 parça birleşmiş</strong> bir string'tir. Sırayla:</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>[BASE]  +  [STATE-bloğu]  +  [ENTITY HINT]  +  '\n\n'  +  [OUTPUT FORMAT]
+</code></pre><p><strong>[BASE]</strong> koşulsuz, her çağrıda aynı.</p>
+<p><strong>[STATE-bloğu]</strong> <code>ctx.flow_state</code> ve <code>ctx.entities</code>'e göre dallanır:</p>
+<table>
+<thead>
+<tr>
+<th><code>ctx.flow_state</code></th>
+<th>Ek koşul</th>
+<th>Eklenen blok</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GREETING</code> veya <code>COLLECTING_INFO</code></td>
+<td><code>block</code> boş VEYA <code>apartment</code> boş</td>
+<td><code>"Şu an şu bilgileri toplaman gerekiyor: &lt;eksik olanların listesi&gt;"</code> (eksik olan alanlar dinamik dökülür)</td>
+</tr>
+<tr>
+<td><code>GREETING</code> veya <code>COLLECTING_INFO</code></td>
+<td>her ikisi de dolu</td>
+<td><code>"Tüm bilgiler toplandı. Şimdi yapman gereken tek şey bilgileri kullanıcıya özetleyip doğruluğunu sormaktır. Giriş izni verme."</code></td>
+</tr>
+<tr>
+<td><code>CONFIRMING</code></td>
+<td>—</td>
+<td><code>"Ziyaretçi {block} Blok {apartment}. daireye gitmek istiyor. Bilgileri doğru anlayıp anlamadığını sor."</code></td>
+</tr>
+<tr>
+<td><code>VALIDATING</code></td>
+<td>—</td>
+<td><code>"Adres sisteme doğrulanıyor. Kullanıcıyı beklemesi için bilgilendir."</code> (pratikte tetiklenmez — VALIDATING'de transcript drop edilir)</td>
+</tr>
+<tr>
+<td>diğer</td>
+<td>—</td>
+<td>boş string</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[ENTITY HINT]</strong> koşullu:</p>
+<table>
+<thead>
+<tr>
+<th>Koşul</th>
+<th>Eklenen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>block</code> dolu VE <code>apartment</code> dolu</td>
+<td><code>"Toplanan bilgiler: blok=X, daire=Y."</code></td>
+</tr>
+<tr>
+<td>sadece <code>block</code> dolu</td>
+<td><code>"Toplanan bilgiler: blok=X."</code></td>
+</tr>
+<tr>
+<td>sadece <code>apartment</code> dolu</td>
+<td><code>"Toplanan bilgiler: daire=Y."</code></td>
+</tr>
+<tr>
+<td>ikisi de boş</td>
+<td>boş string</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[OUTPUT FORMAT]</strong> koşulsuz, her çağrıda aynı: kesin JSON şeması +<br>
+sinyallerin ne zaman <code>true</code> yapılacağı kuralları.</p>
+<p><strong>Silence retry override (<code>inject_directive</code>)</strong> — bu döküman kapsamı<br>
+dışı; bkz. <a href="VISITOR_DIALOG_FLOW.md">VISITOR_DIALOG_FLOW.md</a>.</p>
+<hr>
+<h2 id="4-hangi-girdi--hangi-llm-response--hangi-reaksiyon">4) Hangi Girdi → Hangi LLM Response → Hangi Reaksiyon </h2>
+<h3 id="41-ana-dialog-llm-prompt-a-cevap-şeması">4.1. Ana Dialog LLM (PROMPT-A) Cevap Şeması </h3>
+<pre data-role="codeBlock" data-info="jsonc" class="language-jsonc jsonc"><code>{
+  "block":               "&lt;string|null&gt;",   // örn "A", "B", "12"
+  "apartment":           "&lt;string|null&gt;",   // örn "5", "12" (pozitif tam sayı string)
+  "hold_detected":       &lt;bool&gt;,            // "bekle/dur/bir dakika/wait"
+  "should_grant_access": &lt;bool&gt;,            // SADECE açık onay (proaktif yasak)
+  "should_reset_session":&lt;bool&gt;,            // "hayır/yanlış/iptal"
+  "reply":               "&lt;string&gt;"         // TTS edilecek kullanıcıya yanıt
+}
+</code></pre><h3 id="42-tipik-girdi--response--trigger--state-tablosu">4.2. Tipik Girdi → Response → Trigger → State Tablosu </h3>
+<table>
+<thead>
+<tr>
+<th>Aktif state + ctx.entities</th>
+<th>Kullanıcı girdisi</th>
+<th>LLM tipik response</th>
+<th><code>_determine_trigger</code></th>
+<th>Yeni state</th>
+<th>Side-effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GREETING, ctx boş</td>
+<td>"Merhaba A blok 5. daire"</td>
+<td><code>block:"A", apartment:"5", reply:"A Blok 5. daireye gitmek istiyorsunuz, doğru mu?"</code></td>
+<td>ENTITIES_COMPLETE (fast-track)</td>
+<td><strong>CONFIRMING</strong></td>
+<td><code>dialog.reply</code> LLM reply</td>
+</tr>
+<tr>
+<td>GREETING, ctx boş</td>
+<td>"B blok"</td>
+<td><code>block:"B", apartment:null, reply:"B Blok hangi dairesine?"</code></td>
+<td>ENTITIES_PARTIAL</td>
+<td><strong>COLLECTING_INFO</strong></td>
+<td><code>dialog.reply</code> LLM reply</td>
+</tr>
+<tr>
+<td>COLLECTING_INFO, block="B"</td>
+<td>"5. daire"</td>
+<td><code>block:null, apartment:"5", reply:"B Blok 5. daire, doğru mu?"</code></td>
+<td>ENTITIES_COMPLETE (apply sonrası kümülatif tam)</td>
+<td><strong>CONFIRMING</strong></td>
+<td><code>dialog.reply</code> LLM reply</td>
+</tr>
+<tr>
+<td>COLLECTING_INFO, block="A"</td>
+<td>"daire 0"</td>
+<td><code>block:null, apartment:"0"</code></td>
+<td><code>validate_format</code> False (apartment ≥ 1 değil) → ENTITIES_PARTIAL</td>
+<td><strong>COLLECTING_INFO</strong></td>
+<td><code>dialog.reply</code> LLM reply</td>
+</tr>
+<tr>
+<td>herhangi (ON_HOLD dışı)</td>
+<td>"Bir dakika"</td>
+<td><code>hold_detected:true, reply:"Tabii, sizi bekliyorum."</code></td>
+<td>INTENT_HOLD</td>
+<td><strong>ON_HOLD</strong></td>
+<td>silence timer iptal + <code>on_hold_timer</code> start + statik <code>on_hold_msg</code> (LLM reply yok sayılır)</td>
+</tr>
+<tr>
+<td>CONFIRMING, ctx tam</td>
+<td>"evet" / "doğru" / "tamam"</td>
+<td><code>should_grant_access:true, reply:"Anlaşıldı."</code></td>
+<td>INTENT_CONFIRM</td>
+<td><strong>VALIDATING</strong></td>
+<td>silence timer iptal + statik <code>awaiting_resident_msg</code> + arka plan validate task</td>
+</tr>
+<tr>
+<td>CONFIRMING, ctx tam</td>
+<td>"hayır"</td>
+<td><code>should_reset_session:true, block:null, apartment:null, reply:"Özür dilerim, bilgileri tekrar alabilir miyim?"</code></td>
+<td>reset_entities → INTENT_CANCEL</td>
+<td><strong>COLLECTING_INFO</strong> (pure cancel)</td>
+<td><code>dialog.reply</code> LLM reply</td>
+</tr>
+<tr>
+<td>CONFIRMING, ctx tam ("A","5")</td>
+<td>"Hayır A blok değil C blok"</td>
+<td><code>block:"C", apartment:null, should_reset_session:true, reply:"C Blok hangi daire?"</code></td>
+<td>block dolu → reset_entities ÇALIŞMAZ; apply ile block="C", apartment kümülatif "5" → tam + format ok → ENTITIES_COMPLETE (yeni adres)</td>
+<td><strong>CONFIRMING</strong> (yeni özet+sor)</td>
+<td><code>dialog.reply</code> LLM reply</td>
+</tr>
+<tr>
+<td>CONFIRMING, ctx tam</td>
+<td>"Hmm" / belirsiz</td>
+<td>tüm sinyaller false, block=null, apartment=null, <code>reply:"{block} Blok {apt}. daireye gitmek istiyorsunuz, doğru mu?"</code></td>
+<td>yeni alan yok + ctx tam → ENTITIES_COMPLETE (re-ask)</td>
+<td><strong>CONFIRMING</strong> (self-loop)</td>
+<td><code>dialog.reply</code> LLM reply</td>
+</tr>
+<tr>
+<td>ON_HOLD, prev=COLLECTING_INFO</td>
+<td>"tamam hazırım"</td>
+<td>(önce HoldClassifier <code>true</code>) sonra ana LLM: <code>reply:"Hangi blok ve dairedesiniz?"</code></td>
+<td>(FSM önce SPEECH_RECEIVED → COLLECTING_INFO) sonra ENTITIES_PARTIAL (ctx hâlâ eksik)</td>
+<td><strong>COLLECTING_INFO</strong></td>
+<td><code>dialog.reply</code> LLM reply</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-holdclassifier-prompt-c-cevap-şeması">4.3. HoldClassifier (PROMPT-C) Cevap Şeması </h3>
+<pre data-role="codeBlock" data-info="jsonc" class="language-jsonc jsonc"><code>{ "directed_at_agent": &lt;bool&gt; }
+</code></pre><table>
+<thead>
+<tr>
+<th>Kullanıcı girdisi</th>
+<th>Classifier response</th>
+<th>Reaksiyon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"tamam hazırım" / "geldim"</td>
+<td><code>true</code></td>
+<td>ON_HOLD'dan çık → ana LLM çağrılır (PROMPT-A)</td>
+</tr>
+<tr>
+<td>"A blok 5"</td>
+<td><code>true</code></td>
+<td>ON_HOLD'dan çık → ana LLM çağrılır</td>
+</tr>
+<tr>
+<td>"Abone olmayı unutmayın"</td>
+<td><code>false</code></td>
+<td>ON_HOLD'da kal — history'e yazılmaz</td>
+</tr>
+<tr>
+<td>"İzlediğiniz için teşekkürler"</td>
+<td><code>false</code></td>
+<td>ON_HOLD'da kal</td>
+</tr>
+<tr>
+<td>Exception (LLM hatası)</td>
+<td><code>false</code> (güvenli default)</td>
+<td>ON_HOLD'da kal</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="5-önemli-davranışsal-notlar">5) Önemli Davranışsal Notlar </h2>
+<ul>
+<li><strong><code>should_grant_access</code> proaktif yapılamaz.</strong> PROMPT-A output kuralında<br>
+açıkça "bilgi tamamlanınca proaktif true yapma; kullanıcının onayını<br>
+bekle" der. Bu yüzden <code>is_complete=True</code> ile <code>should_grant_access=True</code><br>
+aynı turda gelmez; iki ayrı tur yaşanır (CONFIRMING'e geç → kullanıcı<br>
+"evet" der → VALIDATING'e geç).</li>
+<li><strong>Pure cancel ≠ düzeltme.</strong> CONFIRMING'de <code>should_reset_session=True</code><br>
+geldiğinde reset_entities <strong>yalnızca block ve apartment ikisi de null<br>
+ise</strong> çalışır. Eğer kullanıcı yeni bir block veya apartment söyledi ise<br>
+reset olmaz, <code>apply</code> çalışır → bu "düzeltme" yoluna düşer.</li>
+<li><strong>ON_HOLD'da history'e yazma kuralı.</strong> F5 veya F6 elerse <code>ctx.history</code><br>
+<strong>kirletilmez</strong>. Bu sayede ON_HOLD sırasında geçen TV/telefon konuşması<br>
+ana LLM'in bağlamına sızmaz.</li>
+<li><strong>ON_HOLD çıkışında LLM hatası FAILED yapmaz.</strong> ON_HOLD'dan çıkıp ana<br>
+LLM çağrılır ve hata olursa <code>history.pop</code> + FSM <code>INTENT_HOLD</code> ile<br>
+ON_HOLD'a geri dönülür; ziyaretçi tekrar konuştuğunda yeniden denenir.</li>
+<li><strong>VALIDATING'de transcript yok sayılır.</strong> F2 nedeniyle bu state'te<br>
+hiçbir LLM çağrısı tetiklenmez; bu yüzden PROMPT-A'nın VALIDATING<br>
+state-bloğu pratikte boş yere durur (kod yine de tanımlar).</li>
+<li><strong>ON_HOLD / VALIDATING girişinde LLM <code>reply</code> kullanılmaz.</strong> State entry<br>
+bu iki durumda <strong>statik mesaj</strong> yayımlar (<code>on_hold_msg</code> /<br>
+<code>awaiting_resident_msg</code>). LLM'in ürettiği <code>reply</code> alanı çöpe gider.<br>
+Kullanıcıya konuşulan tek kanal olan <code>dialog.reply</code> topic'i bu<br>
+durumlarda LLM tarafından değil, sabit metin tarafından beslenir.</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('div.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>

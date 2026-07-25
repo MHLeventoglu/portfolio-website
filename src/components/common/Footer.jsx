@@ -1,76 +1,68 @@
-import { Github, Linkedin, Twitter, Heart } from 'lucide-react'
+import { Github, Linkedin, Twitter, ArrowUp } from 'lucide-react'
 import { useData } from '../../context/DataContext'
-import { FooterBrandSkeleton, SkeletonBox } from '../ui/Skeleton'
+import { useLang } from '../../context/LanguageContext'
+import Marquee from '../ui/Marquee'
 import './Footer.css'
 
 export default function Footer() {
-  const { profile, profileLoading } = useData()
+  const { profile } = useData()
+  const { t } = useLang()
   const currentYear = new Date().getFullYear()
+  const name = profile.name || 'Muaz Leventoğlu'
+
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  const marqueeItems = [name, 'Digital by design', 'Yapay Zeka & Robotik', 'Portföy']
 
   return (
     <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-top">
-          {profileLoading ? (
-            <FooterBrandSkeleton />
-          ) : (
-            <div className="footer-brand">
-              <h3 className="gradient-text">{profile.name}</h3>
-              <p>{profile.title}</p>
-            </div>
-          )}
-          
-          <div className="footer-links">
-            <a href="#home">Ana Sayfa</a>
+      <div className="footer-marquee" aria-hidden="true">
+        <Marquee speed={26}>
+          {marqueeItems.map((item, i) => (
+            <span key={i} className="footer-mark">{item}<span className="footer-mark-dot">✳</span></span>
+          ))}
+        </Marquee>
+      </div>
+
+      <div className="footer-inner">
+        <div className="footer-cols">
+          <div className="footer-col footer-brand">
+            <span className="wordmark">{name}<span className="wordmark-dot">.</span></span>
+            <p>{profile.title || t('footer.role')}</p>
+          </div>
+
+          <div className="footer-col">
+            <span className="footer-col-label">{t('footer.menu')}</span>
             <a href="#about">Hakkımda</a>
             <a href="#projects">Projeler</a>
             <a href="#blog">Blog</a>
             <a href="#contact">İletişim</a>
           </div>
 
-          <div className="footer-social">
-            {profileLoading ? (
-              <>
-                <SkeletonBox width="36px" height="36px" borderRadius="50%" />
-                <SkeletonBox width="36px" height="36px" borderRadius="50%" />
-                <SkeletonBox width="36px" height="36px" borderRadius="50%" />
-              </>
-            ) : (
-              <>
-                {profile.social?.github && (
-                  <a href={profile.social.github} target="_blank" rel="noopener noreferrer" className="social-link" aria-label="GitHub">
-                    <Github size={20} />
-                  </a>
-                )}
-                {profile.social?.linkedin && (
-                  <a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
-                    <Linkedin size={20} />
-                  </a>
-                )}
-                {profile.social?.twitter && (
-                  <a href={profile.social.twitter} target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Twitter">
-                    <Twitter size={20} />
-                  </a>
-                )}
-              </>
+          <div className="footer-col">
+            <span className="footer-col-label">{t('footer.links')}</span>
+            {profile.social?.github && (
+              <a href={profile.social.github} target="_blank" rel="noopener noreferrer" className="footer-social-link"><Github size={15} /> GitHub</a>
+            )}
+            {profile.social?.linkedin && (
+              <a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer" className="footer-social-link"><Linkedin size={15} /> LinkedIn</a>
+            )}
+            {profile.social?.twitter && (
+              <a href={profile.social.twitter} target="_blank" rel="noopener noreferrer" className="footer-social-link"><Twitter size={15} /> Twitter</a>
+            )}
+            {profile.email && (
+              <a href={`mailto:${profile.email}`} className="footer-social-link">{t('footer.email')}</a>
             )}
           </div>
         </div>
 
+        <div className="rule" />
+
         <div className="footer-bottom">
-          <p>
-            © {currentYear}{' '}
-            {profileLoading ? (
-              <SkeletonBox width="140px" height="14px" borderRadius="4px" style={{ display: 'inline-block', verticalAlign: 'middle' }} />
-            ) : (
-              profile.name
-            )}
-            . Made with <Heart size={14} className="heart-icon" /> and lots of ☕
-          </p>
+          <span className="footer-copy">© {currentYear} {name} — {t('footer.rights')}</span>
+          <button className="footer-top-btn" onClick={scrollTop}>{t('footer.top')} <ArrowUp size={15} /></button>
         </div>
       </div>
-
-      <div className="footer-glow"></div>
     </footer>
   )
 }

@@ -114,7 +114,7 @@
     border-radius: 50%;
     background: var(--accent-primary);
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 10px rgba(15, 188, 169, 0.5);
 }
 
 .range-input::-moz-range-thumb {
@@ -217,7 +217,7 @@
 }
 
 .action-btn.edit:hover {
-    background: rgba(139, 92, 246, 0.2);
+    background: rgba(15, 188, 169, 0.2);
     color: var(--accent-primary);
 }
 

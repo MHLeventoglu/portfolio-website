@@ -135,7 +135,7 @@ export function HeroTextSkeleton() {
 export function HeroImageSkeleton() {
   return (
     <div className="hero-image-skeleton">
-      <SkeletonBox width="300px" height="300px" borderRadius="50%" />
+      <SkeletonBox width="320px" height="400px" borderRadius="30px" />
     </div>
   )
 }

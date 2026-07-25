@@ -7,6 +7,7 @@ import Skills from '../components/sections/Skills'
 import Projects from '../components/sections/Projects'
 import Blog from '../components/sections/Blog'
 import Contact from '../components/sections/Contact'
+import './Home.css'
 
 export default function Home() {
   return (
@@ -19,10 +20,10 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Blog />
+        <div className="band band-a"><About /></div>
+        <div className="band band-b"><Skills /></div>
+        <div className="band band-a"><Projects /></div>
+        <div className="band band-b"><Blog /></div>
         <Contact />
       </main>
       <Footer />

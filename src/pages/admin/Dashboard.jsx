@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FileText, FolderKanban, Eye, TrendingUp, Plus, Briefcase } from 'lucide-react'
+import { FileText, FolderKanban, Eye, TrendingUp, Plus, Briefcase, Star } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useData } from '../../context/DataContext'
 import { DashboardWelcomeSkeleton } from '../../components/ui/Skeleton'
@@ -13,28 +13,28 @@ export default function AdminDashboard() {
       label: 'Blog Posts', 
       value: posts.length, 
       icon: FileText, 
-      color: '#8b5cf6',
+      color: '#0fbca9',
       link: '/admin/blog'
     },
     { 
       label: 'Projects', 
       value: projects.length, 
       icon: FolderKanban, 
-      color: '#06b6d4',
+      color: '#0fbca9',
       link: '/admin/projects'
     },
     { 
       label: 'Skills', 
       value: profile.skills.length, 
-      icon: TrendingUp, 
-      color: '#10b981',
+      icon: TrendingUp,
+      color: '#0fbca9',
       link: '/admin/skills'
     },
     { 
       label: 'Experiences', 
       value: experiences.length, 
       icon: Briefcase, 
-      color: '#f59e0b',
+      color: '#0fbca9',
       link: '/admin/experiences'
     },
   ]
@@ -135,7 +135,11 @@ export default function AdminDashboard() {
                   <h4>{project.title}</h4>
                   <span className="item-category">{project.category}</span>
                 </div>
-                {project.featured && <span className="featured-tag">⭐ Featured</span>}
+                {project.featured && (
+                  <span className="featured-tag">
+                    <Star size={12} fill="currentColor" /> Öne Çıkan
+                  </span>
+                )}
               </div>
             ))}
           </div>

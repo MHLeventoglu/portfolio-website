@@ -1,94 +1,80 @@
 import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ExternalLink, Github, ArrowRight } from 'lucide-react'
+import { ExternalLink, Github, ArrowUpRight } from 'lucide-react'
 import { useData } from '../../context/DataContext'
-import { ProjectCardSkeleton, EmptyState } from '../ui/Skeleton'
+import { useLang } from '../../context/LanguageContext'
+import { SkeletonBox } from '../ui/Skeleton'
+import SectionHeader from '../ui/SectionHeader'
 import './Projects.css'
 
 export default function Projects() {
   const { projects, projectsLoading } = useData()
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-
-  // Show only featured projects on homepage
-  const featuredProjects = projects.filter(p => p.featured).slice(0, 3)
+  const { t } = useLang()
+  const featured = projects.filter(p => p.featured).slice(0, 3)
 
   return (
-    <section id="projects" className="section projects" ref={ref}>
-      <motion.div
-        className="section-title"
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5 }}
-      >
-        <h2>Öne Çıkan <span className="gradient-text">Projeler</span></h2>
-        <p>Yapay zeka ve yazılım geliştirme alanındaki çalışmalarım</p>
-      </motion.div>
+    <section id="projects" className="section projects">
+      <SectionHeader index="03" label={t('projects.eyebrow')} title={t('projects.title')} />
 
-      <motion.div className="projects-grid" layout>
-        {projectsLoading || featuredProjects.length === 0 ? (
-          // Show skeleton loading when loading or no data
-          [...Array(3)].map((_, index) => (
-            <ProjectCardSkeleton key={index} />
+      <div className="proj-blocks">
+        {projectsLoading || featured.length === 0 ? (
+          [...Array(2)].map((_, i) => (
+            <div key={i} className="proj-block">
+              <SkeletonBox width="100%" height="360px" borderRadius="10px" />
+              <div className="proj-content">
+                <SkeletonBox width="60%" height="34px" className="mb-md" />
+                <SkeletonBox width="100%" height="16px" className="mb-sm" />
+                <SkeletonBox width="80%" height="16px" />
+              </div>
+            </div>
           ))
         ) : (
-          // Show actual projects
-          featuredProjects.map((project, index) => (
-            <motion.div
+          featured.map((project, i) => (
+            <motion.article
               key={project.id}
-              className="project-card glass-card featured"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
-              layout
-              whileHover={{ y: -8 }}
+              className={`proj-block ${i % 2 === 1 ? 'reverse' : ''}`}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="project-image">
-                <img src={project.image} alt={project.title} />
-                <span className="featured-badge">⭐ Öne Çıkan</span>
+              <div className="proj-media">
+                <img src={project.image} alt={project.title} loading="lazy" />
+                <span className="proj-tag-featured">{t('projects.featured')}</span>
               </div>
-              <div className="project-content">
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <div className="project-tags">
-                  {project.tags.slice(0, 4).map(tag => (
+              <div className="proj-content">
+                <span className="proj-index">{String(i + 1).padStart(2, '0')} — {project.category}</span>
+                <h3 className="proj-title">{project.title}</h3>
+                <p className="proj-desc">{project.description}</p>
+                <div className="proj-tags">
+                  {project.tags.slice(0, 5).map(tag => (
                     <span key={tag} className="tag">{tag}</span>
                   ))}
                 </div>
-                <div className="project-links">
+                <div className="proj-links">
                   {project.github && (
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
-                      <Github size={18} />
-                      <span>Kod</span>
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="proj-link">
+                      <Github size={16} /> Kod
                     </a>
                   )}
                   {project.demo && (
-                    <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link primary">
-                      <ExternalLink size={18} />
-                      <span>Demo</span>
+                    <a href={project.demo} target="_blank" rel="noopener noreferrer" className="proj-link">
+                      <ExternalLink size={16} /> Demo
                     </a>
                   )}
                 </div>
               </div>
-            </motion.div>
+            </motion.article>
           ))
         )}
-      </motion.div>
+      </div>
 
-      {/* View All Button */}
-      <motion.div
-        className="section-footer"
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ delay: 0.5 }}
-      >
-        <Link to="/projects" className="btn btn-secondary">
-          Tüm Projeleri Gör
-          <ArrowRight size={18} />
+      <div className="proj-all">
+        <div className="rule" />
+        <Link to="/projects" className="proj-all-link">
+          {t('projects.viewAll')} <ArrowUpRight size={22} />
         </Link>
-      </motion.div>
+      </div>
     </section>
   )
 }
