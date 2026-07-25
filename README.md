@@ -1,6 +1,8 @@
 # 🚀 Personal Portfolio Website
 [🌐Link](https://mhlev.com)
 
+
+![preview](https://github.com/MHLeventoglu/portfolio-website/blob/main/Screenshot%20from%202026-07-25%2014-16-46.png?raw=true)
 Modern, responsive portfolio website built with React + Vite + Supabase. Features a stunning glassmorphism design with smooth animations and dynamic data loading.
 
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react)
