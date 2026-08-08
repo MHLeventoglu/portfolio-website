@@ -2,7 +2,7 @@
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    padding: 3px;
+    padding: 0px;
     border: 1px solid var(--line-strong);
     border-radius: var(--radius-full);
 }
@@ -36,6 +36,7 @@
     position: absolute;
     inset: 0;
     border-radius: var(--radius-full);
+    border: 3px solid;
     background: var(--accent);
     z-index: 0;
 }
