@@ -1,16 +1,16 @@
 /* Shared paper / ink / teal tokens come directly from the portfolio theme. */
 .admin-theme {
   color-scheme: light;
-  --admin-clear: color-mix(in srgb, var(--paper-3) 28%, transparent);
-  --admin-surface: color-mix(in srgb, var(--paper-3) 52%, transparent);
-  --admin-raised: color-mix(in srgb, var(--paper-3) 88%, transparent);
-  --admin-tint: color-mix(in srgb, var(--accent) 10%, transparent);
-  --admin-track: color-mix(in srgb, var(--ink) 7%, transparent);
-  --admin-overlay: color-mix(in srgb, var(--ink) 28%, transparent);
-  --admin-edge: color-mix(in srgb, var(--ink) 9%, transparent);
-  --admin-highlight: rgba(255, 255, 255, 0.72);
-  --admin-shadow: 0 16px 48px color-mix(in srgb, var(--ink) 5%, transparent);
-  --admin-shadow-hover: 0 20px 48px color-mix(in srgb, var(--accent-deep) 11%, transparent);
+  --admin-clear: var(--surface-clear);
+  --admin-surface: var(--surface-glass);
+  --admin-raised: var(--surface-raised);
+  --admin-tint: var(--surface-tint);
+  --admin-track: var(--surface-track);
+  --admin-overlay: var(--surface-overlay);
+  --admin-edge: var(--surface-edge);
+  --admin-highlight: var(--surface-highlight);
+  --admin-shadow: var(--surface-shadow);
+  --admin-shadow-hover: var(--surface-shadow-hover);
   --admin-danger: #ad2941;
   --glass-bg: var(--admin-surface);
   --glass-bg-hover: var(--admin-tint);
@@ -32,10 +32,10 @@
 
 [data-theme='dark'] .admin-theme {
   color-scheme: dark;
-  --admin-surface: color-mix(in srgb, var(--paper-3) 44%, transparent);
-  --admin-raised: color-mix(in srgb, var(--paper-3) 94%, transparent);
-  --admin-highlight: rgba(255, 255, 255, 0.07);
-  --admin-overlay: rgba(0, 0, 0, 0.55);
+  --admin-surface: var(--surface-glass);
+  --admin-raised: var(--surface-raised);
+  --admin-highlight: var(--surface-highlight);
+  --admin-overlay: var(--surface-overlay);
   --admin-danger: #ff9bac;
 }
 
@@ -50,11 +50,6 @@
 .admin-theme button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 .admin-theme [hidden] { display: none !important; }
 
-.admin-ambient { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; contain: strict; }
-.admin-ambient > span { position: absolute; width: min(75vw, 1050px); aspect-ratio: 1; top: -45%; right: -14%; border-radius: 50%; background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 17%, transparent), transparent 68%); animation: admin-ambient-drift 24s ease-in-out infinite alternate; }
-.admin-ambient > span:last-child { width: min(70vw, 900px); top: 30%; left: -25%; background: radial-gradient(ellipse, color-mix(in srgb, var(--accent-bright) 11%, transparent), transparent 66%); animation-delay: -12s; animation-duration: 30s; }
-.admin-ambient::after { content: ''; position: absolute; inset: 0; opacity: 0.3; background-image: radial-gradient(var(--line) 0.7px, transparent 0.7px); background-size: 26px 26px; mask-image: linear-gradient(transparent, #000 30%, transparent); }
-@keyframes admin-ambient-drift { from { transform: translate3d(-3%, 0, 0) scale(0.96); } to { transform: translate3d(8%, 14%, 0) scale(1.08); } }
 @keyframes admin-surface-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes admin-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
 

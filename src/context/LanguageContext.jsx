@@ -10,7 +10,7 @@ const translations = {
     skills: { eyebrow: 'Yetenekler', title: 'Fikirleri hayata döndüren teknolojiler.' },
     projects: { eyebrow: 'Seçili İşler', title: 'Öne çıkan projeler.', viewAll: 'Tüm projeleri gör', featured: 'Öne çıkan' },
     blog: { eyebrow: 'Günlük', title: 'Son yazılar.', viewAll: 'Tüm yazıları gör' },
-    contact: { eyebrow: 'İletişim', line1: 'Birlikte bir şeyler', line2: 'inşa edelim.', cta: 'İletişime Geç' },
+    contact: { eyebrow: 'İletişim', line1: 'Benimle çalışmak', line2: 'ister misiniz?', cta: 'İletişime Geç' },
     footer: { menu: 'Menü', links: 'Bağlantılar', rights: 'Tüm hakları saklıdır', top: 'Başa dön', email: 'E-posta', role: 'Bilgisayar Mühendisi' },
     projectsPage: { eyebrow: 'Portföy', title: 'Projeler', sub: 'Yapay zeka, robotik ve web geliştirme çalışmaları.', search: 'Proje ara...', all: 'Tümü', none: 'Sonuç bulunamadı' },
     blogPage: { eyebrow: 'Günlük', title: 'Blog', sub: 'Yapay zeka, robotik ve yazılım mühendisliği üzerine notlar.', none: 'Henüz blog yazısı yok', read: 'dk' },

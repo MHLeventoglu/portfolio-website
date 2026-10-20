@@ -15,7 +15,7 @@ export default function Hero() {
   const ref = useRef(null)
   const reduce = useReducedMotion()
 
-  const scrollToAbout = () => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })
+  const scrollToAbout = () => document.querySelector('#about')?.scrollIntoView({ behavior: reduce ? 'instant' : 'smooth' })
 
   const aiProjectCount = projectsLoading ? null : projects.filter(p => p.category === 'AI/ML').length
   const expCount = experiencesLoading ? null : experiences.length
@@ -97,7 +97,7 @@ export default function Hero() {
             </motion.div>
             <figcaption className="hero-figure-cap">
               <span>fig.01 — {profile.location || 'İstanbul, TR'}</span>
-              <span className="hero-figure-avail">● açık</span>
+              <span className="hero-figure-avail">● {t('hero.avail')}</span>
             </figcaption>
           </motion.figure>
         </div>
@@ -119,7 +119,7 @@ export default function Hero() {
         <motion.span animate={reduce ? {} : { y: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>
           <ArrowDown size={18} />
         </motion.span>
-        Kaydır
+        {t('hero.scroll')}
       </button>
     </section>
   )

@@ -9,16 +9,6 @@
     border-bottom: 1px solid transparent;
 }
 
-/* Over the dark hero (before scroll): flip nav tokens light */
-.navbar:not(.scrolled) {
-    --ink: #f4f3ef;
-    --ink-2: #cfcec6;
-    --ink-3: #a8a69d;
-    --paper: #08090c;
-    --line: rgba(244, 243, 239, 0.16);
-    --line-strong: rgba(244, 243, 239, 0.3);
-}
-
 .navbar.scrolled {
     background: color-mix(in srgb, var(--paper) 82%, transparent);
     backdrop-filter: blur(12px);

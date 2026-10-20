@@ -1,4 +1,6 @@
 import { Github, Linkedin, Twitter, ArrowUp } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { useReducedMotion } from 'framer-motion'
 import { useData } from '../../context/DataContext'
 import { useLang } from '../../context/LanguageContext'
 import Marquee from '../ui/Marquee'
@@ -7,10 +9,11 @@ import './Footer.css'
 export default function Footer() {
   const { profile } = useData()
   const { t } = useLang()
+  const reduce = useReducedMotion()
   const currentYear = new Date().getFullYear()
   const name = profile.name || 'Muaz Leventoğlu'
 
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: reduce ? 'instant' : 'smooth' })
 
   const marqueeItems = [name, 'Digital by design', 'Yapay Zeka & Robotik', 'Portföy']
 
@@ -33,10 +36,10 @@ export default function Footer() {
 
           <div className="footer-col">
             <span className="footer-col-label">{t('footer.menu')}</span>
-            <a href="#about">Hakkımda</a>
-            <a href="#projects">Projeler</a>
-            <a href="#blog">Blog</a>
-            <a href="#contact">İletişim</a>
+            <Link to="/#about">{t('nav.about')}</Link>
+            <Link to="/#projects">{t('nav.projects')}</Link>
+            <Link to="/#blog">{t('nav.blog')}</Link>
+            <Link to="/#contact">{t('nav.contact')}</Link>
           </div>
 
           <div className="footer-col">

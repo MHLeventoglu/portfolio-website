@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, Mail, ShieldCheck, Info, Command, ArrowUpRight } from 'lucide-react'
 import { useData } from '../../context/DataContext'
 import AdminThemeToggle from '../../components/admin/AdminThemeToggle'
+import AmbientBackground from '../../components/ui/AmbientBackground'
 import './Login.css'
 
 export default function AdminLogin() {
@@ -54,7 +55,7 @@ export default function AdminLogin() {
 
   return (
     <div className="login-page admin-theme">
-      <div className="admin-ambient" aria-hidden="true"><span /><span /></div>
+      <AmbientBackground className="admin-ambient" />
       <header className="login-topbar">
         <Link to="/" className="login-brand"><Command size={22} /><span>MHL <strong>STUDIO</strong></span></Link>
         <div className="login-topbar-actions"><AdminThemeToggle /><Link to="/">Portfolyoya dön <ArrowUpRight size={14} /></Link></div>

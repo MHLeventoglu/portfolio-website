@@ -6,6 +6,8 @@ import { DataProvider } from './context/DataContext.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { LanguageProvider } from './context/LanguageContext.jsx'
 import './index.css'
+import './styles/surfaces.css'
+import './styles/Portfolio.css'
 import './components/admin/AdminTheme.css'
 
 createRoot(document.getElementById('root')).render(

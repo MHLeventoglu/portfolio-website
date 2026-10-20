@@ -1,0 +1,22 @@
+/* One material system for the portfolio and its management workspace. */
+:root {
+  color-scheme: light;
+  --surface-clear: color-mix(in srgb, var(--paper-3) 28%, transparent);
+  --surface-glass: color-mix(in srgb, var(--paper-3) 52%, transparent);
+  --surface-raised: color-mix(in srgb, var(--paper-3) 88%, transparent);
+  --surface-tint: color-mix(in srgb, var(--accent) 10%, transparent);
+  --surface-track: color-mix(in srgb, var(--ink) 7%, transparent);
+  --surface-edge: color-mix(in srgb, var(--ink) 9%, transparent);
+  --surface-highlight: rgba(255, 255, 255, 0.72);
+  --surface-shadow: 0 16px 48px color-mix(in srgb, var(--ink) 5%, transparent);
+  --surface-shadow-hover: 0 20px 48px color-mix(in srgb, var(--accent-deep) 11%, transparent);
+  --surface-overlay: color-mix(in srgb, var(--ink) 28%, transparent);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --surface-glass: color-mix(in srgb, var(--paper-3) 44%, transparent);
+  --surface-raised: color-mix(in srgb, var(--paper-3) 94%, transparent);
+  --surface-highlight: rgba(255, 255, 255, 0.07);
+  --surface-overlay: rgba(0, 0, 0, 0.55);
+}

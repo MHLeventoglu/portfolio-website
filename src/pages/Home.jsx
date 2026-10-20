@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion'
-import Navbar from '../components/common/Navbar'
-import Footer from '../components/common/Footer'
 import Hero from '../components/sections/Hero'
 import About from '../components/sections/About'
 import Skills from '../components/sections/Skills'
@@ -17,7 +15,6 @@ export default function Home() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Navbar />
       <main>
         <Hero />
         <div className="band band-a"><About /></div>
@@ -26,7 +23,6 @@ export default function Home() {
         <div className="band band-b"><Blog /></div>
         <Contact />
       </main>
-      <Footer />
     </motion.div>
   )
 }

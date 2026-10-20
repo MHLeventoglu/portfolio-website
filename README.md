@@ -46,6 +46,18 @@ src/
 └── pages/           # Route pages & admin panel
 ```
 
+## Shared design system
+
+The portfolio combines editorial typography and numbered sections with translucent
+surfaces, teal accents, the original navigation with understated controls, and subtle ambient motion.
+The homepage, project collection, and blog pages share one public layout. Light
+and dark themes and Turkish/English controls remain available on every page.
+
+Shared material tokens live in `src/styles/surfaces.css`; `AmbientBackground`
+provides the same background treatment for the public site and admin workspace.
+Public styling is scoped in `src/styles/Portfolio.css`. Reduced-motion preferences
+disable decorative animation, and touch layouts keep the ambient background static.
+
 ## Admin workspace
 
 The admin panel uses translucent surfaces and the portfolio’s shared paper, ink, and teal palette. It follows the public site’s light/dark preference and includes a theme switch.

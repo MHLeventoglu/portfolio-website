@@ -1,0 +1,6 @@
+.ambient-field { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; contain: strict; }
+.ambient-field > span { position: absolute; width: min(75vw, 1050px); aspect-ratio: 1; top: -45%; right: -14%; border-radius: 50%; background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 17%, transparent), transparent 68%); animation: ambient-drift 24s ease-in-out infinite alternate; }
+.ambient-field > span:last-child { width: min(70vw, 900px); top: 30%; left: -25%; background: radial-gradient(ellipse, color-mix(in srgb, var(--accent-bright) 11%, transparent), transparent 66%); animation-delay: -12s; animation-duration: 30s; }
+.ambient-field::after { content: ''; position: absolute; inset: 0; opacity: 0.3; background-image: radial-gradient(var(--line) 0.7px, transparent 0.7px); background-size: 26px 26px; mask-image: linear-gradient(transparent, #000 30%, transparent); }
+@keyframes ambient-drift { from { transform: translate3d(-3%, 0, 0) scale(0.96); } to { transform: translate3d(8%, 14%, 0) scale(1.08); } }
+@media (hover: none), (prefers-reduced-motion: reduce) { .ambient-field > span { animation: none; } }

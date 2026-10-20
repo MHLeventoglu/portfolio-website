@@ -14,6 +14,7 @@ import AdminExperiences from './pages/admin/ExperienceManager'
 import AdminProfile from './pages/admin/ProfileManager'
 import AdminLayout from './components/admin/AdminLayout'
 import ProtectedRoute from './components/admin/ProtectedRoute'
+import PortfolioLayout from './components/common/PortfolioLayout'
 
 function App() {
   return (
@@ -21,10 +22,12 @@ function App() {
       <AnimatePresence mode="wait">
         <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route element={<PortfolioLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+        </Route>
         
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />

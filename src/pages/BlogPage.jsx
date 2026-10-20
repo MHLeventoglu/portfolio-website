@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { useData } from '../context/DataContext'
 import { useLang } from '../context/LanguageContext'
 import { SkeletonBox } from '../components/ui/Skeleton'
-import Footer from '../components/common/Footer'
 import './BlogPage.css'
 
 export default function BlogPage() {
@@ -68,7 +67,6 @@ export default function BlogPage() {
           )}
         </div>
       </main>
-      <Footer />
     </>
   )
 }

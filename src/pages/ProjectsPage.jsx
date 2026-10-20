@@ -6,7 +6,6 @@ import { useData } from '../context/DataContext'
 import { useLang } from '../context/LanguageContext'
 import { SkeletonBox } from '../components/ui/Skeleton'
 import ProjectHoverList from '../components/ui/ProjectHoverList'
-import Footer from '../components/common/Footer'
 import './ProjectsPage.css'
 
 export default function ProjectsPage() {
@@ -96,7 +95,6 @@ export default function ProjectsPage() {
           </motion.div>
         )}
       </main>
-      <Footer />
     </>
   )
 }

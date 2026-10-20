@@ -4,6 +4,7 @@ import { LayoutDashboard, FileText, FolderKanban, Layers, User, LogOut, ArrowUpR
 import { useData } from '../../context/DataContext'
 import { MotionConfig } from 'framer-motion'
 import AdminThemeToggle from './AdminThemeToggle'
+import AmbientBackground from '../ui/AmbientBackground'
 import './AdminLayout.css'
 
 const navigation = [
@@ -97,7 +98,7 @@ export default function AdminLayout() {
   return (
     <MotionConfig reducedMotion="user">
     <div className="admin-layout admin-theme">
-      <div className="admin-ambient" aria-hidden="true"><span /><span /></div>
+      <AmbientBackground className="admin-ambient" />
       <a className="admin-skip-link" href="#admin-content">İçeriğe geç</a>
       {menuOpen && <div className="admin-menu-backdrop" onClick={() => setMenuOpen(false)} aria-hidden="true" />}
       <aside ref={menuRef} id="admin-navigation" className={`admin-sidebar ${menuOpen ? 'is-open' : ''}`} aria-label="Yönetim menüsü" role={menuOpen ? 'dialog' : undefined} aria-modal={menuOpen || undefined}>

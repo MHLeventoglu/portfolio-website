@@ -3,16 +3,10 @@
     padding-bottom: var(--spacing-4xl);
 }
 
-/* Dark bracketed box (à la Silana image 2) */
+/* Bracketed statement, inheriting the portfolio theme. */
 .contact-box {
-    --paper: #08090c;
-    --ink: #f4f3ef;
-    --ink-2: #b9b8b0;
-    --ink-3: #8b8a81;
-    --accent: #2ee6cf;
-
     position: relative;
-    background: #08090c;
+    background: transparent;
     border: 1px solid rgba(46, 230, 207, 0.22);
     border-radius: var(--radius-md);
     padding: clamp(3rem, 8vw, 7rem) var(--spacing-xl);

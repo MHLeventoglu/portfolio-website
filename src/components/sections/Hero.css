@@ -1,17 +1,6 @@
 .hero {
-    /* Dark scene — flip the local tokens so all descendants go light-on-dark */
-    --paper: #08090c;
-    --paper-2: #14161b;
-    --ink: #f4f3ef;
-    --ink-2: #b9b8b0;
-    --ink-3: #8b8a81;
-    --line: rgba(244, 243, 239, 0.14);
-    --line-strong: rgba(244, 243, 239, 0.28);
-    --accent: #2ee6cf;
-    --accent-deep: #2ee6cf;
-
     position: relative;
-    background: #08090c;
+    background: transparent;
     color: var(--ink);
     padding: calc(var(--nav-h) + var(--spacing-2xl)) var(--spacing-xl) var(--spacing-xl);
     min-height: 100vh;
@@ -21,7 +10,7 @@
     overflow: hidden;
 }
 
-/* Hero content wrapper widths (dark scene spans full width, content centered) */
+/* Center the content while the ambient field spans the viewport. */
 .hero > .hero-top,
 .hero > .hero-body,
 .hero > .hero-marquee,

@@ -7,7 +7,6 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { ArrowLeft, Calendar, Tag, Clock } from 'lucide-react'
 import { useData } from '../context/DataContext'
 import { useLang } from '../context/LanguageContext'
-import Footer from '../components/common/Footer'
 import './BlogPost.css'
 
 export default function BlogPost() {
@@ -44,7 +43,6 @@ export default function BlogPost() {
             {t('post.nfBack')}
           </Link>
         </div>
-        <Footer />
       </motion.div>
     )
   }
@@ -136,7 +134,6 @@ export default function BlogPost() {
           </div>
         </footer>
       </article>
-      <Footer />
     </motion.div>
   )
 }
