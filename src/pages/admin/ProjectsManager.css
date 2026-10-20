@@ -1,8 +1,8 @@
-.projects-manager {
+.admin-layout .projects-manager {
     max-width: 1000px;
 }
 
-.manager-header {
+.admin-layout .manager-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -11,104 +11,104 @@
     gap: var(--spacing-md);
 }
 
-.manager-header h1 {
+.admin-layout .manager-header h1 {
     font-size: 1.75rem;
     margin-bottom: var(--spacing-xs);
 }
 
-.manager-header p {
+.admin-layout .manager-header p {
     color: var(--text-secondary);
 }
 
 /* Project Form */
-.project-form-container {
+.admin-layout .project-form-container {
     margin-bottom: var(--spacing-xl);
     padding: var(--spacing-xl);
     overflow: hidden;
 }
 
-.form-header {
+.admin-layout .form-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--spacing-xl);
 }
 
-.form-header h2 {
+.admin-layout .form-header h2 {
     font-size: 1.25rem;
 }
 
-.close-btn {
+.admin-layout .close-btn {
     color: var(--text-muted);
     padding: var(--spacing-xs);
     transition: color var(--transition-fast);
 }
 
-.close-btn:hover {
+.admin-layout .close-btn:hover {
     color: var(--text-primary);
 }
 
-.project-form {
+.admin-layout .project-form {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
 }
 
-.form-row {
+.admin-layout .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-lg);
 }
 
-.form-group label {
+.admin-layout .form-group label {
     display: block;
     margin-bottom: var(--spacing-sm);
     font-size: 0.9rem;
     color: var(--text-secondary);
 }
 
-select.input-field {
+.admin-layout select.input-field {
     cursor: pointer;
 }
 
 /* Tags Input */
-.tags-input {
+.admin-layout .tags-input {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
 }
 
-.tags-list {
+.admin-layout .tags-list {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-sm);
 }
 
-.editable-tag {
+.admin-layout .editable-tag {
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
-.editable-tag button {
+.admin-layout .editable-tag button {
     color: inherit;
 }
 
-.add-tag {
+.admin-layout .add-tag {
     display: flex;
     gap: var(--spacing-sm);
 }
 
-.add-tag input {
+.admin-layout .add-tag input {
     max-width: 150px;
 }
 
 /* Checkbox */
-.checkbox-group {
+.admin-layout .checkbox-group {
     padding-top: var(--spacing-md);
 }
 
-.checkbox-label {
+.admin-layout .checkbox-label {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -117,17 +117,17 @@ select.input-field {
     font-size: 0.95rem;
 }
 
-.checkbox-label input {
+.admin-layout .checkbox-label input {
     width: 18px;
     height: 18px;
     cursor: pointer;
 }
 
-.checkbox-label svg {
+.admin-layout .checkbox-label svg {
     color: #fbbf24;
 }
 
-.form-actions {
+.admin-layout .form-actions {
     display: flex;
     gap: var(--spacing-md);
     justify-content: flex-end;
@@ -136,32 +136,32 @@ select.input-field {
 }
 
 /* Projects Grid */
-.projects-grid {
+.admin-layout .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: var(--spacing-lg);
 }
 
-.project-card {
+.admin-layout .project-card {
     display: flex;
     flex-direction: column;
     overflow: hidden;
     position: relative;
 }
 
-.project-image {
+.admin-layout .project-image {
     height: 150px;
     position: relative;
     overflow: hidden;
 }
 
-.project-image img {
+.admin-layout .project-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.featured-badge {
+.admin-layout .featured-badge {
     position: absolute;
     top: var(--spacing-sm);
     right: var(--spacing-sm);
@@ -176,7 +176,7 @@ select.input-field {
     color: #fbbf24;
 }
 
-.project-content {
+.admin-layout .project-content {
     padding: var(--spacing-lg);
     flex: 1;
     display: flex;
@@ -184,18 +184,18 @@ select.input-field {
     gap: var(--spacing-sm);
 }
 
-.project-header {
+.admin-layout .project-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: var(--spacing-sm);
 }
 
-.project-header h3 {
+.admin-layout .project-header h3 {
     font-size: 1.1rem;
 }
 
-.project-category {
+.admin-layout .project-category {
     font-size: 0.75rem;
     padding: 2px 8px;
     background: var(--gradient-primary);
@@ -203,46 +203,42 @@ select.input-field {
     white-space: nowrap;
 }
 
-.project-content p {
+.admin-layout .project-content .project-description {
     color: var(--text-secondary);
     font-size: 0.9rem;
     flex: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
-.project-tags {
+.admin-layout .project-tags {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-xs);
     margin-top: var(--spacing-sm);
 }
 
-.project-links {
+.admin-layout .project-links {
     display: flex;
     gap: var(--spacing-sm);
     margin-top: var(--spacing-sm);
 }
 
-.project-links a {
+.admin-layout .project-links a {
     color: var(--text-muted);
     transition: color var(--transition-fast);
 }
 
-.project-links a:hover {
+.admin-layout .project-links a:hover {
     color: var(--accent-primary);
 }
 
-.project-actions {
+.admin-layout .project-actions {
     display: flex;
     gap: var(--spacing-sm);
     padding: var(--spacing-md) var(--spacing-lg);
     border-top: 1px solid var(--glass-border);
 }
 
-.action-btn {
+.admin-layout .action-btn {
     flex: 1;
     display: flex;
     align-items: center;
@@ -253,25 +249,25 @@ select.input-field {
     transition: all var(--transition-fast);
 }
 
-.action-btn.edit:hover {
+.admin-layout .action-btn.edit:hover {
     background: rgba(15, 188, 169, 0.2);
     color: var(--accent-primary);
 }
 
-.action-btn.delete:hover {
+.admin-layout .action-btn.delete:hover {
     background: rgba(239, 68, 68, 0.2);
     color: #f87171;
 }
 
 /* Empty State */
-.empty-state {
+.admin-layout .empty-state {
     padding: var(--spacing-3xl);
     text-align: center;
     color: var(--text-muted);
 }
 
 /* Modal */
-.modal-overlay {
+.admin-layout .modal-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.8);
@@ -281,46 +277,46 @@ select.input-field {
     z-index: 1000;
 }
 
-.delete-modal {
+.admin-layout .delete-modal {
     max-width: 400px;
     padding: var(--spacing-xl);
     text-align: center;
 }
 
-.delete-modal h3 {
+.admin-layout .delete-modal h3 {
     color: #f87171;
     margin-bottom: var(--spacing-md);
 }
 
-.delete-modal p {
+.admin-layout .delete-modal p {
     color: var(--text-secondary);
     margin-bottom: var(--spacing-xl);
 }
 
-.modal-actions {
+.admin-layout .modal-actions {
     display: flex;
     gap: var(--spacing-md);
     justify-content: center;
 }
 
-.btn-danger {
+.admin-layout .btn-danger {
     background: rgba(239, 68, 68, 0.2);
     border: 1px solid rgba(239, 68, 68, 0.3);
     color: #f87171;
 }
 
-.btn-danger:hover {
+.admin-layout .btn-danger:hover {
     background: #ef4444;
     border-color: #ef4444;
     color: white;
 }
 
 @media (max-width: 768px) {
-    .form-row {
+    .admin-layout .form-row {
         grid-template-columns: 1fr;
     }
 
-    .projects-grid {
+    .admin-layout .projects-grid {
         grid-template-columns: 1fr;
     }
 }

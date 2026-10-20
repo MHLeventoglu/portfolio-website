@@ -1,8 +1,8 @@
-.experience-manager {
+.admin-layout .experience-manager {
     max-width: 900px;
 }
 
-.manager-header {
+.admin-layout .manager-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -11,17 +11,17 @@
     gap: var(--spacing-md);
 }
 
-.manager-header h1 {
+.admin-layout .manager-header h1 {
     font-size: 1.75rem;
     margin-bottom: var(--spacing-xs);
 }
 
-.manager-header p {
+.admin-layout .manager-header p {
     color: var(--text-secondary);
 }
 
 /* Error */
-.error-message {
+.admin-layout .error-message {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,69 +33,69 @@
     color: #f87171;
 }
 
-.error-message button {
+.admin-layout .error-message button {
     color: #f87171;
     padding: var(--spacing-xs);
 }
 
 /* Form */
-.experience-form-container {
+.admin-layout .experience-form-container {
     margin-bottom: var(--spacing-xl);
     padding: var(--spacing-xl);
     overflow: hidden;
 }
 
-.form-header {
+.admin-layout .form-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--spacing-xl);
 }
 
-.form-header h2 {
+.admin-layout .form-header h2 {
     font-size: 1.25rem;
 }
 
-.close-btn {
+.admin-layout .close-btn {
     color: var(--text-muted);
     padding: var(--spacing-xs);
     transition: color var(--transition-fast);
 }
 
-.close-btn:hover {
+.admin-layout .close-btn:hover {
     color: var(--text-primary);
 }
 
-.experience-form {
+.admin-layout .experience-form {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
 }
 
-.form-row {
+.admin-layout .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-lg);
 }
 
-.form-row-3 {
+.admin-layout .form-row-3 {
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.form-group label {
+.admin-layout .form-group label {
     display: block;
     margin-bottom: var(--spacing-sm);
     font-size: 0.9rem;
     color: var(--text-secondary);
 }
 
-.textarea-field {
+.admin-layout .textarea-field {
     resize: vertical;
     min-height: 80px;
     font-family: inherit;
 }
 
-.form-actions {
+.admin-layout .form-actions {
     display: flex;
     gap: var(--spacing-md);
     justify-content: flex-end;
@@ -104,13 +104,13 @@
 }
 
 /* Experience List */
-.experience-list {
+.admin-layout .experience-list {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
 }
 
-.experience-item {
+.admin-layout .experience-item {
     display: flex;
     gap: var(--spacing-lg);
     padding: var(--spacing-lg);
@@ -118,15 +118,15 @@
     transition: all var(--transition-fast);
 }
 
-.experience-item:hover {
+.admin-layout .experience-item:hover {
     border-color: var(--accent-primary);
 }
 
-.experience-icon-wrapper {
+.admin-layout .experience-icon-wrapper {
     flex-shrink: 0;
 }
 
-.experience-icon {
+.admin-layout .experience-icon {
     width: 44px;
     height: 44px;
     border-radius: var(--radius-md);
@@ -135,29 +135,29 @@
     justify-content: center;
 }
 
-.experience-icon.work {
+.admin-layout .experience-icon.work {
     background: rgba(15, 188, 169, 0.15);
     color: var(--accent-primary);
 }
 
-.experience-icon.edu {
+.admin-layout .experience-icon.edu {
     background: rgba(15, 188, 169, 0.15);
     color: #0fbca9;
 }
 
-.experience-info {
+.admin-layout .experience-info {
     flex: 1;
     min-width: 0;
 }
 
-.experience-meta {
+.admin-layout .experience-meta {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-xs);
 }
 
-.experience-date {
+.admin-layout .experience-date {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
@@ -165,7 +165,7 @@
     color: var(--text-muted);
 }
 
-.experience-order {
+.admin-layout .experience-order {
     font-size: 0.75rem;
     color: var(--text-muted);
     background: var(--glass-bg);
@@ -173,49 +173,49 @@
     border-radius: var(--radius-full);
 }
 
-.experience-info h3 {
+.admin-layout .experience-info h3 {
     font-size: 1.05rem;
     margin-bottom: 2px;
 }
 
-.experience-subtitle {
+.admin-layout .experience-subtitle {
     font-size: 0.9rem;
     color: var(--accent-primary);
 }
 
-.experience-desc {
+.admin-layout .experience-desc {
     font-size: 0.85rem;
     color: var(--text-secondary);
     margin-top: var(--spacing-xs);
     line-height: 1.5;
 }
 
-.experience-actions {
+.admin-layout .experience-actions {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
     flex-shrink: 0;
 }
 
-.action-btn {
+.admin-layout .action-btn {
     padding: var(--spacing-xs);
     border-radius: var(--radius-sm);
     color: var(--text-muted);
     transition: all var(--transition-fast);
 }
 
-.action-btn.edit:hover {
+.admin-layout .action-btn.edit:hover {
     background: rgba(15, 188, 169, 0.2);
     color: var(--accent-primary);
 }
 
-.action-btn.delete:hover {
+.admin-layout .action-btn.delete:hover {
     background: rgba(239, 68, 68, 0.2);
     color: #f87171;
 }
 
 /* Empty State */
-.empty-state {
+.admin-layout .empty-state {
     padding: var(--spacing-3xl);
     text-align: center;
     color: var(--text-muted);
@@ -226,7 +226,7 @@
 }
 
 /* Modal */
-.modal-overlay {
+.admin-layout .modal-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.8);
@@ -236,51 +236,51 @@
     z-index: 1000;
 }
 
-.delete-modal {
+.admin-layout .delete-modal {
     max-width: 400px;
     padding: var(--spacing-xl);
     text-align: center;
 }
 
-.delete-modal h3 {
+.admin-layout .delete-modal h3 {
     color: #f87171;
     margin-bottom: var(--spacing-md);
 }
 
-.delete-modal p {
+.admin-layout .delete-modal p {
     color: var(--text-secondary);
     margin-bottom: var(--spacing-xl);
 }
 
-.modal-actions {
+.admin-layout .modal-actions {
     display: flex;
     gap: var(--spacing-md);
     justify-content: center;
 }
 
-.btn-danger {
+.admin-layout .btn-danger {
     background: rgba(239, 68, 68, 0.2);
     border: 1px solid rgba(239, 68, 68, 0.3);
     color: #f87171;
 }
 
-.btn-danger:hover {
+.admin-layout .btn-danger:hover {
     background: #ef4444;
     border-color: #ef4444;
     color: white;
 }
 
 @media (max-width: 768px) {
-    .form-row,
-    .form-row-3 {
+    .admin-layout .form-row,
+    .admin-layout .form-row-3 {
         grid-template-columns: 1fr;
     }
 
-    .experience-item {
+    .admin-layout .experience-item {
         flex-direction: column;
     }
 
-    .experience-actions {
+    .admin-layout .experience-actions {
         flex-direction: row;
         align-self: flex-end;
     }

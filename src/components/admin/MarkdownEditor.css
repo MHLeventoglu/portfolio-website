@@ -1,0 +1,35 @@
+.markdown-editor-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.markdown-editor-toolbar span,
+.markdown-editor-help {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.markdown-editor-textarea {
+  font-family: var(--font-mono);
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.markdown-editor-help,
+.markdown-editor-url,
+.markdown-editor-error {
+  margin-top: var(--spacing-sm);
+  overflow-wrap: anywhere;
+}
+
+.markdown-editor-error {
+  color: #d14343;
+}
+
+.markdown-editor button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

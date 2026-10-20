@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring, useReducedMotion } from 'framer-motion'
+import ProjectDescription from './ProjectDescription'
 import './ProjectHoverList.css'
 
 /**
@@ -47,6 +48,9 @@ export default function ProjectHoverList({ items, renderActions }) {
           <h3 className="hover-title">{item.title}</h3>
           <span className="hover-cat">{item.category}</span>
           <div className="hover-actions">{renderActions?.(item)}</div>
+          {item.description && (
+            <ProjectDescription className="hover-description">{item.description}</ProjectDescription>
+          )}
           <div className="rule" />
         </motion.div>
       ))}

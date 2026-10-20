@@ -16,6 +16,7 @@ Modern, responsive portfolio website built with React + Vite + Supabase. Feature
 - **⚡ Fast Performance** - Built with Vite for lightning-fast load times
 - **🔄 Dynamic Content** - All data loaded from Supabase (projects, blog posts, skills)
 - **📝 Blog with Markdown** - Write blog posts in Markdown with syntax highlighting
+- **🖼️ Markdown Images** - Upload images directly into blog content and project descriptions
 - **🎭 Framer Motion** - Smooth page transitions and micro-animations
 
 ## 🛠️ Tech Stack
@@ -44,6 +45,36 @@ src/
 ├── lib/             # Supabase client
 └── pages/           # Route pages & admin panel
 ```
+
+## Admin workspace
+
+The admin panel uses translucent surfaces and the portfolio’s shared paper, ink, and teal palette. It follows the public site’s light/dark preference and includes a theme switch.
+The overview shows actual portfolio totals, a 6/12-month content chart, profile
+completion, recent projects, and recent posts. Select or focus a month on the chart to inspect its exact counts. Global search links directly to
+management pages and individual content. The navigation supports a mobile drawer.
+
+- `/admin` — overview
+- `/admin/blog` — searchable blog library with tag filters
+- `/admin/blog/new` — new Markdown post
+- `/admin/blog/:id` — edit an existing post
+- `/admin/projects`, `/admin/skills`, `/admin/experiences`, `/admin/profile` — portfolio management
+
+Admin styles are scoped to the workspace. No additional dependencies or database
+migrations are required for the redesign.
+
+## Markdown image uploads
+
+In the admin panel, use **Görsel yükle** above a blog's content or a project's description.
+The uploaded image is inserted at the current selection as `![description](public-url)`.
+The last uploaded URL is also shown so it can be copied and reused with regular Markdown.
+PNG, JPEG, WebP, GIF, and AVIF images up to 10 MB are supported.
+
+Uploads use the existing Supabase public `images` bucket under `blog/content/` and
+`projects/content/`. Configure `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, and
+ensure the bucket's upload policies allow your admin users to insert objects at
+these paths. Local storage fallback does not support image uploads. Embedded images
+are stored independently of cover images; removing a Markdown reference does not
+delete its image, so other posts can continue using the same URL.
 
 ## 👤 Author
 

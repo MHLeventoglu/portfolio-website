@@ -6,6 +6,7 @@ import { DataProvider } from './context/DataContext.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { LanguageProvider } from './context/LanguageContext.jsx'
 import './index.css'
+import './components/admin/AdminTheme.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

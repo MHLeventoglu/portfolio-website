@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { IMAGE_TYPES, validateMarkdownImage } from './markdownImages'
 
 const BUCKET = 'images'
 
@@ -32,6 +33,14 @@ export async function uploadImage(file, path) {
 
   // Append cache-busting timestamp
   return `${data.publicUrl}?t=${Date.now()}`
+}
+
+// Content images have immutable, unique paths so other Markdown references stay valid.
+export async function uploadMarkdownImage(file, folder) {
+  validateMarkdownImage(file)
+  if (!supabase) throw new Error('Görsel yüklemek için Supabase Storage bağlantısı gereklidir.')
+  const normalizedFile = new File([file], `image.${IMAGE_TYPES[file.type]}`, { type: file.type })
+  return uploadImage(normalizedFile, `${folder}/content/${crypto.randomUUID()}`)
 }
 
 /**

@@ -101,6 +101,13 @@ export default function SkillsManager() {
         </button>
       </header>
 
+      {error && (
+        <div className="error-message" role="alert">
+          {error}
+          <button type="button" onClick={() => setError('')} aria-label="Hata mesajını kapat"><X size={16} /></button>
+        </div>
+      )}
+
       {/* Filter */}
       <div className="skills-filter">
         <button 

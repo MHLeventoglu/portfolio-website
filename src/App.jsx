@@ -7,6 +7,7 @@ import BlogPage from './pages/BlogPage'
 import AdminLogin from './pages/admin/Login'
 import AdminDashboard from './pages/admin/Dashboard'
 import AdminBlogEditor from './pages/admin/BlogEditor'
+import AdminBlogManager from './pages/admin/BlogManager'
 import AdminProjects from './pages/admin/ProjectsManager'
 import AdminSkills from './pages/admin/SkillsManager'
 import AdminExperiences from './pages/admin/ExperienceManager'
@@ -34,8 +35,9 @@ function App() {
         }>
           <Route index element={<AdminDashboard />} />
           <Route path="profile" element={<AdminProfile />} />
-          <Route path="blog" element={<AdminBlogEditor />} />
-          <Route path="blog/:id" element={<AdminBlogEditor />} />
+          <Route path="blog" element={<AdminBlogManager />} />
+          <Route path="blog/new" element={<AdminBlogEditor key="new-post" />} />
+          <Route path="blog/:id" element={<AdminBlogEditor key="edit-post" />} />
           <Route path="projects" element={<AdminProjects />} />
           <Route path="skills" element={<AdminSkills />} />
           <Route path="experiences" element={<AdminExperiences />} />

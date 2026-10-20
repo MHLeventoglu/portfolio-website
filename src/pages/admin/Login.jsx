@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, Mail, ShieldCheck, Info } from 'lucide-react'
+import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, Mail, ShieldCheck, Info, Command, ArrowUpRight } from 'lucide-react'
 import { useData } from '../../context/DataContext'
+import AdminThemeToggle from '../../components/admin/AdminThemeToggle'
 import './Login.css'
 
 export default function AdminLogin() {
@@ -34,7 +35,7 @@ export default function AdminLogin() {
       } else {
         // Fallback: simple password check
         await new Promise(resolve => setTimeout(resolve, 500))
-        const success = login(email, password)
+        const success = await login(email, password)
         
         if (success) {
           navigate('/admin')
@@ -52,7 +53,21 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="login-page">
+    <div className="login-page admin-theme">
+      <div className="admin-ambient" aria-hidden="true"><span /><span /></div>
+      <header className="login-topbar">
+        <Link to="/" className="login-brand"><Command size={22} /><span>MHL <strong>STUDIO</strong></span></Link>
+        <div className="login-topbar-actions"><AdminThemeToggle /><Link to="/">Portfolyoya dön <ArrowUpRight size={14} /></Link></div>
+      </header>
+      <div className="login-layout">
+      <section className="login-story">
+        <span className="login-story-label">SİZİN HİKÂYENİZ. SİZİN ALANINIZ.</span>
+        <h2>Fikirlerini büyüt.<br /><span>İzini bırak.</span></h2>
+        <p>Projelerin, deneyimlerin ve paylaşmaya değer<br />hikâyelerin için tek bir çalışma alanı.</p>
+        <div className="login-planet" aria-hidden="true"><span /><i /><i /><b /></div>
+        <span className="login-story-footer"><span />Üretmek için tasarlandı.</span>
+      </section>
+      <div className="login-form-area">
       <motion.div
         className="login-card glass-card"
         initial={{ opacity: 0, y: 30, scale: 0.95 }}
@@ -63,14 +78,16 @@ export default function AdminLogin() {
           <div className="login-icon">
             <Lock size={28} />
           </div>
-          <h1>Admin Girişi</h1>
-          <p>Yönetim paneline erişmek için giriş yapın</p>
+          <span className="login-welcome">ÇALIŞMA ALANINIZA HOŞ GELDİNİZ</span>
+          <h1>Tekrar merhaba<span>.</span></h1>
+          <p>Portfolyonuzu yönetmek için giriş yapın.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
           {error && (
             <motion.div
               className="login-error"
+              role="alert"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
             >
@@ -90,6 +107,7 @@ export default function AdminLogin() {
                   className="input-field with-icon"
                   placeholder="admin@example.com"
                   value={email}
+                  autoComplete="username"
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoFocus
@@ -107,6 +125,7 @@ export default function AdminLogin() {
                 className="input-field"
                 placeholder={useSupabase ? "Şifrenizi girin" : "Admin şifresi"}
                 value={password}
+                autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 autoFocus={!useSupabase}
@@ -131,7 +150,7 @@ export default function AdminLogin() {
               <span className="loading-spinner"></span>
             ) : (
               <>
-                Giriş Yap
+                Çalışma alanına gir
                 <ArrowRight size={18} />
               </>
             )}
@@ -146,10 +165,9 @@ export default function AdminLogin() {
           )}
         </div>
       </motion.div>
-
-      {/* Background decoration */}
-      <div className="login-bg-orb login-bg-orb-1"></div>
-      <div className="login-bg-orb login-bg-orb-2"></div>
+      <p className="login-copyright">© {new Date().getFullYear()} MHL Studio · Portfolyo yönetim alanı</p>
+      </div>
+      </div>
     </div>
   )
 }

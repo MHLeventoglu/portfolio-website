@@ -8,12 +8,13 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Save, ArrowLeft, Eye, Edit3, Trash2, Plus, X, Loader, Upload, ImageIcon } from 'lucide-react'
 import { useData } from '../../context/DataContext'
 import { uploadImage, deleteImage } from '../../lib/storage'
+import MarkdownEditor from '../../components/admin/MarkdownEditor'
 import './BlogEditor.css'
 
 export default function BlogEditor() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { posts, addPost, updatePost, deletePost, getPostById } = useData()
+  const { addPost, updatePost, deletePost, getPostById } = useData()
   
   const [isPreview, setIsPreview] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
@@ -21,6 +22,7 @@ export default function BlogEditor() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [imageUploading, setImageUploading] = useState(false)
+  const [contentImageUploading, setContentImageUploading] = useState(false)
   const coverInputRef = useRef(null)
   const [formData, setFormData] = useState({
     title: '',
@@ -46,7 +48,8 @@ export default function BlogEditor() {
   }, [existingPost])
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleAddTag = (e) => {
@@ -98,6 +101,7 @@ export default function BlogEditor() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (imageUploading || contentImageUploading) return
     setLoading(true)
     setError('')
     
@@ -143,6 +147,7 @@ export default function BlogEditor() {
           <ArrowLeft size={20} />
           Yazılara Dön
         </Link>
+        <h1 className="admin-sr-only">{isEditing ? 'Blog yazısını düzenle' : 'Yeni blog yazısı'}</h1>
         
         <div className="editor-actions">
           <button
@@ -157,6 +162,7 @@ export default function BlogEditor() {
             type="button"
             className={`btn btn-secondary toggle-btn ${isPreview ? 'active' : ''}`}
             onClick={() => setIsPreview(true)}
+            disabled={contentImageUploading}
           >
             <Eye size={18} />
             Önizleme
@@ -168,13 +174,13 @@ export default function BlogEditor() {
         {!isPreview ? (
           <form onSubmit={handleSubmit} className="editor-form">
             <div className="form-group">
-              <label htmlFor="title">Title</label>
+              <label htmlFor="title">Yazı başlığı</label>
               <input
                 type="text"
                 id="title"
                 name="title"
                 className="input-field"
-                placeholder="Enter post title..."
+                placeholder="Yazınıza bir başlık verin…"
                 value={formData.title}
                 onChange={handleChange}
                 required
@@ -237,12 +243,12 @@ export default function BlogEditor() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="excerpt">Excerpt</label>
+              <label htmlFor="excerpt">Kısa açıklama</label>
               <textarea
                 id="excerpt"
                 name="excerpt"
                 className="input-field"
-                placeholder="Brief description of the post..."
+                placeholder="Okuyucularınıza yazınızın konusunu anlatın…"
                 rows="2"
                 value={formData.excerpt}
                 onChange={handleChange}
@@ -250,21 +256,23 @@ export default function BlogEditor() {
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="content">Content (Markdown)</label>
-              <textarea
-                id="content"
-                name="content"
-                className="input-field content-editor"
-                placeholder="Write your post content in Markdown..."
-                value={formData.content}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            <MarkdownEditor
+              key={id || 'new'}
+              id="content"
+              name="content"
+              label="Yazı içeriği (Markdown)"
+              className="content-editor"
+              placeholder="Hikâyenizi Markdown ile yazın…"
+              value={formData.content}
+              onChange={content => setFormData(prev => ({ ...prev, content }))}
+              uploadFolder="blog"
+              onUploadingChange={setContentImageUploading}
+              disabled={loading}
+              required
+            />
 
             <div className="form-group">
-              <label>Tags</label>
+              <label>Etiketler</label>
               <div className="tags-input-container">
                 <div className="tags-list">
                   {formData.tags.map(tag => (
@@ -280,7 +288,7 @@ export default function BlogEditor() {
                   <input
                     type="text"
                     className="input-field tag-input"
-                    placeholder="Add a tag..."
+                    placeholder="Etiket ekle…"
                     value={tagInput}
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleAddTag(e)}
@@ -293,7 +301,7 @@ export default function BlogEditor() {
             </div>
 
             <div className="form-actions">
-              <button type="submit" className="btn btn-primary" disabled={loading}>
+              <button type="submit" className="btn btn-primary" disabled={loading || imageUploading || contentImageUploading}>
                 {loading ? <Loader size={18} className="spin" /> : <Save size={18} />}
                 {isEditing ? 'Güncelle' : 'Yayınla'}
               </button>
@@ -303,7 +311,7 @@ export default function BlogEditor() {
                   type="button" 
                   className="btn btn-danger"
                   onClick={() => setShowDeleteConfirm(true)}
-                  disabled={loading}
+                  disabled={loading || imageUploading || contentImageUploading}
                 >
                   <Trash2 size={18} />
                   Sil
@@ -313,7 +321,7 @@ export default function BlogEditor() {
           </form>
         ) : (
           <div className="preview-container glass-card">
-            <h1>{formData.title || 'Untitled Post'}</h1>
+            <h1>{formData.title || 'Başlıksız yazı'}</h1>
             <p className="preview-excerpt">{formData.excerpt}</p>
             <div className="preview-tags">
               {formData.tags.map(tag => (
@@ -343,40 +351,12 @@ export default function BlogEditor() {
                   }
                 }}
               >
-                {formData.content || '*No content yet...*'}
+                {formData.content || '*Henüz içerik yok…*'}
               </ReactMarkdown>
             </div>
           </div>
         )}
       </div>
-
-      {/* Post List for non-editing mode */}
-      {!id && (
-        <section className="posts-list-section">
-          <h2>All Blog Posts</h2>
-          <div className="posts-list">
-            {posts.length === 0 ? (
-              <p className="no-posts">No posts yet. Create your first one!</p>
-            ) : (
-              posts.map((post) => (
-                <Link to={`/admin/blog/${post.id}`} key={post.id} className="post-item glass-card">
-                  <div className="post-info">
-                    <h3>{post.title}</h3>
-                    <span className="post-date">
-                      {new Date(post.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <div className="post-tags">
-                    {post.tags.slice(0, 2).map(tag => (
-                      <span key={tag} className="tag">{tag}</span>
-                    ))}
-                  </div>
-                </Link>
-              ))
-            )}
-          </div>
-        </section>
-      )}
 
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
@@ -387,14 +367,14 @@ export default function BlogEditor() {
             animate={{ scale: 1, opacity: 1 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h3>Delete Post?</h3>
-            <p>Are you sure you want to delete "{existingPost?.title}"? This action cannot be undone.</p>
+            <h3>Yazı silinsin mi?</h3>
+            <p>“{existingPost?.title}” silinecek. Bu işlem geri alınamaz.</p>
             <div className="modal-actions">
               <button className="btn btn-secondary" onClick={() => setShowDeleteConfirm(false)}>
-                Cancel
+                İptal
               </button>
               <button className="btn btn-danger" onClick={handleDelete}>
-                Delete
+                Sil
               </button>
             </div>
           </motion.div>

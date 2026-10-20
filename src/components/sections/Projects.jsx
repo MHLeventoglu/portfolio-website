@@ -5,6 +5,7 @@ import { useData } from '../../context/DataContext'
 import { useLang } from '../../context/LanguageContext'
 import { SkeletonBox } from '../ui/Skeleton'
 import SectionHeader from '../ui/SectionHeader'
+import ProjectDescription from '../ui/ProjectDescription'
 import './Projects.css'
 
 export default function Projects() {
@@ -45,7 +46,7 @@ export default function Projects() {
               <div className="proj-content">
                 <span className="proj-index">{String(i + 1).padStart(2, '0')} — {project.category}</span>
                 <h3 className="proj-title">{project.title}</h3>
-                <p className="proj-desc">{project.description}</p>
+                <ProjectDescription className="proj-desc">{project.description}</ProjectDescription>
                 <div className="proj-tags">
                   {project.tags.slice(0, 5).map(tag => (
                     <span key={tag} className="tag">{tag}</span>
