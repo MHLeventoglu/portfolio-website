@@ -1,10 +1,11 @@
 import { createElement, useEffect, useRef, useState } from 'react'
 import { Outlet, NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, FileText, FolderKanban, Layers, User, LogOut, ArrowUpRight, Briefcase, Command, Search, Menu, X, ChevronRight, Plus, Sparkles } from 'lucide-react'
+import { LayoutDashboard, FileText, FolderKanban, Layers, User, LogOut, ArrowUpRight, Briefcase, Search, Menu, X, ChevronRight, Plus } from 'lucide-react'
 import { useData } from '../../context/DataContext'
 import { MotionConfig } from 'framer-motion'
 import AdminThemeToggle from './AdminThemeToggle'
-import AmbientBackground from '../ui/AmbientBackground'
+import Logo from '../common/Logo'
+import AdminAtmosphere from './AdminAtmosphere'
 import './AdminLayout.css'
 
 const navigation = [
@@ -98,14 +99,13 @@ export default function AdminLayout() {
   return (
     <MotionConfig reducedMotion="user">
     <div className="admin-layout admin-theme">
-      <AmbientBackground className="admin-ambient" />
+      <AdminAtmosphere />
       <a className="admin-skip-link" href="#admin-content">İçeriğe geç</a>
       {menuOpen && <div className="admin-menu-backdrop" onClick={() => setMenuOpen(false)} aria-hidden="true" />}
       <aside ref={menuRef} id="admin-navigation" className={`admin-sidebar ${menuOpen ? 'is-open' : ''}`} aria-label="Yönetim menüsü" role={menuOpen ? 'dialog' : undefined} aria-modal={menuOpen || undefined}>
         <div className="admin-brand-row">
           <Link to="/admin" className="admin-brand" onClick={() => setMenuOpen(false)}>
-            <span className="admin-brand-mark"><Command size={21} /></span>
-            <span>MHL <strong>STUDIO</strong><small>PORTFOLYO YÖNETİMİ</small></span>
+            <Logo />
           </Link>
           <button type="button" className="admin-menu-close admin-icon-button" onClick={() => setMenuOpen(false)} aria-label="Menüyü kapat"><X size={20} /></button>
         </div>
@@ -125,12 +125,6 @@ export default function AdminLayout() {
           ))}
         </nav>
         <div className="admin-sidebar-bottom">
-          <div className="admin-sidebar-note">
-            <span className="admin-note-icon"><Sparkles size={19} /></span>
-            <h3>Bir sonraki fikrin?</h3>
-            <p>Bilgini paylaş, yeni bir hikâye yaz.</p>
-            <Link to="/admin/blog/new" onClick={() => setMenuOpen(false)}>Yeni yazı oluştur <ArrowUpRight size={15} /></Link>
-          </div>
           <a href="/" target="_blank" rel="noopener noreferrer" className="admin-site-link">Portfolyoyu görüntüle <ArrowUpRight size={16} /></a>
           <div className="admin-sidebar-account">
             <Link to="/admin/profile" className="admin-account-link" onClick={() => setMenuOpen(false)}>
@@ -175,7 +169,7 @@ export default function AdminLayout() {
         </header>
         <main className="admin-content" id="admin-content" tabIndex={-1}><div className="admin-route" key={pathname}><Outlet /></div></main>
         <footer className="admin-footer">
-          <p>© {new Date().getFullYear()} <strong>MHL Studio</strong><span> · Portfolyo yönetim alanı</span></p>
+          <p>© {new Date().getFullYear()} <strong>MHL</strong><span> · Portfolyo yönetim alanı</span></p>
           <span className={`admin-connection ${useSupabase ? 'connected' : ''}`}><i />{useSupabase ? 'Supabase bağlantısı etkin' : 'Yerel çalışma alanı'}</span>
         </footer>
       </div>

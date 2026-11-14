@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, Mail, ShieldCheck, Info, Command, ArrowUpRight } from 'lucide-react'
+import { motion as Motion, useReducedMotion } from 'framer-motion'
+import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, Mail, ShieldCheck, Info, ArrowUpRight } from 'lucide-react'
 import { useData } from '../../context/DataContext'
 import AdminThemeToggle from '../../components/admin/AdminThemeToggle'
-import AmbientBackground from '../../components/ui/AmbientBackground'
+import Logo from '../../components/common/Logo'
+import AdminAtmosphere from '../../components/admin/AdminAtmosphere'
 import './Login.css'
 
 export default function AdminLogin() {
@@ -15,6 +16,7 @@ export default function AdminLogin() {
   const [isLoading, setIsLoading] = useState(false)
   const { login, isAuthenticated, useSupabase } = useData()
   const navigate = useNavigate()
+  const reduceMotion = useReducedMotion()
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -55,46 +57,40 @@ export default function AdminLogin() {
 
   return (
     <div className="login-page admin-theme">
-      <AmbientBackground className="admin-ambient" />
+      <AdminAtmosphere />
       <header className="login-topbar">
-        <Link to="/" className="login-brand"><Command size={22} /><span>MHL <strong>STUDIO</strong></span></Link>
+        <Link to="/" className="login-brand"><Logo /></Link>
         <div className="login-topbar-actions"><AdminThemeToggle /><Link to="/">Portfolyoya dön <ArrowUpRight size={14} /></Link></div>
       </header>
       <div className="login-layout">
-      <section className="login-story">
-        <span className="login-story-label">SİZİN HİKÂYENİZ. SİZİN ALANINIZ.</span>
-        <h2>Fikirlerini büyüt.<br /><span>İzini bırak.</span></h2>
-        <p>Projelerin, deneyimlerin ve paylaşmaya değer<br />hikâyelerin için tek bir çalışma alanı.</p>
-        <div className="login-planet" aria-hidden="true"><span /><i /><i /><b /></div>
-        <span className="login-story-footer"><span />Üretmek için tasarlandı.</span>
-      </section>
-      <div className="login-form-area">
-      <motion.div
-        className="login-card glass-card"
-        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.4 }}
+      <Motion.section
+        className="login-form-area"
+        aria-labelledby="login-title"
+        initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: reduceMotion ? 0 : 0.5 }}
       >
+      <div className="login-card">
         <div className="login-header">
           <div className="login-icon">
             <Lock size={28} />
           </div>
           <span className="login-welcome">ÇALIŞMA ALANINIZA HOŞ GELDİNİZ</span>
-          <h1>Tekrar merhaba<span>.</span></h1>
+          <h1 id="login-title">Tekrar merhaba<span>.</span></h1>
           <p>Portfolyonuzu yönetmek için giriş yapın.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
           {error && (
-            <motion.div
+            <Motion.div
               className="login-error"
               role="alert"
-              initial={{ opacity: 0, y: -10 }}
+              initial={reduceMotion ? false : { opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
             >
               <AlertCircle size={18} />
               {error}
-            </motion.div>
+            </Motion.div>
           )}
 
           {useSupabase && (
@@ -165,9 +161,9 @@ export default function AdminLogin() {
             <p><Info size={15} /> İpucu: Varsayılan şifre <code>admin123</code></p>
           )}
         </div>
-      </motion.div>
-      <p className="login-copyright">© {new Date().getFullYear()} MHL Studio · Portfolyo yönetim alanı</p>
       </div>
+      <p className="login-copyright">© {new Date().getFullYear()} MHL · Portfolyo yönetim alanı</p>
+      </Motion.section>
       </div>
     </div>
   )

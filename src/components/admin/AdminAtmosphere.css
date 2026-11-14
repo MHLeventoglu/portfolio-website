@@ -1,0 +1,46 @@
+.admin-atmosphere {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  contain: strict;
+  background: radial-gradient(ellipse at 48% 0, var(--admin-sky), transparent 65%);
+}
+/* Broad mesh lights stay behind every surface; only their transforms animate. */
+.admin-aura { position: absolute; width: 105vw; height: 125vh; border-radius: 50%; animation: admin-haze-drift 32s ease-in-out infinite alternate; }
+.admin-aura-blue { left: -32%; top: -26%; background: radial-gradient(ellipse, var(--admin-blue-haze), transparent 65%); }
+.admin-aura-warm { right: -32%; top: -8%; background: radial-gradient(ellipse, var(--admin-warm-haze), transparent 66%); animation-delay: -16s; animation-duration: 38s; }
+
+/* Localized, offset lights leave the center and opposing corners near black. */
+[data-theme='dark'] .admin-atmosphere {
+  background: radial-gradient(ellipse 25% 32% at 46% -10%, var(--admin-sky), transparent 75%);
+}
+[data-theme='dark'] .admin-aura-blue {
+  width: 76vw;
+  height: 112vh;
+  left: -19%;
+  top: -37%;
+  background: radial-gradient(ellipse, var(--admin-blue-haze) 0%, color-mix(in srgb, var(--admin-blue-haze) 62%, transparent) 24%, transparent 63%);
+}
+[data-theme='dark'] .admin-aura-warm {
+  width: 66vw;
+  height: 90vh;
+  right: -17%;
+  top: 19%;
+  background: radial-gradient(ellipse, var(--admin-warm-haze) 0%, color-mix(in srgb, var(--admin-warm-haze) 55%, transparent) 22%, transparent 62%);
+}
+@keyframes admin-haze-drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(0.98); }
+  to { transform: translate3d(3%, 3%, 0) scale(1.04); }
+}
+@media (max-width: 760px) {
+  .admin-aura { width: 170vw; height: 110vh; }
+  .admin-aura-blue { left: -85%; top: -20%; }
+  .admin-aura-warm { right: -85%; top: 5%; }
+  [data-theme='dark'] .admin-aura-blue { width: 125vw; height: 70vh; left: -65%; top: -20%; }
+  [data-theme='dark'] .admin-aura-warm { width: 140vw; height: 84vh; right: -85%; top: 36%; }
+}
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .admin-aura { animation: none; }
+}

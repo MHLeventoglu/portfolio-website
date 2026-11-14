@@ -19,25 +19,7 @@
 .admin-layout .neutral { color: var(--ink-2); background: linear-gradient(135deg, var(--admin-tint), var(--admin-clear)); }
 .admin-layout .dash-stat-arrow { position: absolute; right: 12px; top: 10px; color: var(--ink-2); opacity: 0; transition: opacity 0.2s; }
 .admin-layout .dash-stat:hover .dash-stat-arrow { opacity: 1; }
-.admin-layout .dash-intro-grid { display: grid; grid-template-columns: 1.45fr 1fr 1.12fr; gap: 22px; margin-bottom: 22px; }
-.admin-layout .dash-welcome { position: relative; overflow: hidden; min-height: 264px; background: linear-gradient(135deg, var(--admin-tint), var(--admin-clear)); }
-.admin-layout .dash-welcome-content { position: relative; z-index: 1; padding: 27px 28px; }
-.admin-layout .dash-welcome-label { display: inline-flex; align-items: center; gap: 6px; font-size: 9px; letter-spacing: 1.6px; color: var(--ink-2); margin-bottom: 21px; }
-.admin-layout .dash-welcome-content > p:first-of-type { color: var(--ink-2); font-size: 13px; }
-.admin-layout .dash-welcome-content h2 { font-size: 31px; line-height: 1.3; margin: 2px 0 12px; max-width: 72%; overflow-wrap: anywhere; }
-.admin-layout .dash-welcome-content h2 span { color: var(--ink); font-size: 21px; margin-left: 6px; }
-.admin-layout .dash-welcome-content > p:last-of-type { font-size: 12px; color: var(--ink-2); line-height: 1.9; }
-.admin-layout .dash-welcome-content a { display: inline-flex; align-items: center; gap: 12px; color: var(--ink-2); font-size: 11px; font-weight: 550; margin-top: 22px; }
-.admin-layout .dash-welcome-content a:hover { gap: 18px; }
-.admin-layout .dash-orbit-art { position: absolute; width: 235px; height: 235px; right: -35px; top: 27px; transform: rotate(-23deg); pointer-events: none; }
-.admin-layout .dash-orbit-art::before { content: ''; position: absolute; width: 145px; height: 145px; right: 22px; top: 39px; border-radius: 50%; background: linear-gradient(135deg, var(--admin-tint), var(--admin-clear)); box-shadow: var(--admin-shadow); }
-.admin-layout .dash-orbit-art::after { content: ''; position: absolute; width: 70px; height: 70px; border-radius: 50%; background: var(--admin-clear); right: 60px; top: 70px; filter: blur(55px); }
-.admin-layout .dash-orbit-art i { position: absolute; left: 0; top: 79px; width: 240px; height: 77px; border: 1px solid var(--line); border-bottom: 3px solid var(--line); border-radius: 50%; transform: rotate(-8deg); box-shadow: var(--admin-shadow); }
-.admin-layout .dash-orbit-art i:nth-child(2) { width: 265px; height: 98px; left: -12px; top: 69px; opacity: 0.55; border-bottom-width: 1px; }
-.admin-layout .dash-orbit-art i:nth-child(3) { width: 285px; height: 115px; left: -22px; top: 60px; opacity: 0.18; border-bottom-width: 1px; }
-.admin-layout .dash-orbit-art span, .admin-layout .dash-orbit-art b, .admin-layout .dash-orbit-art em { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--admin-clear); box-shadow: var(--admin-shadow); top: 22px; left: 43px; }
-.admin-layout .dash-orbit-art b { width: 3px; height: 3px; left: 178px; top: 200px; }
-.admin-layout .dash-orbit-art em { width: 4px; height: 4px; left: 10px; top: 170px; }
+.admin-layout .dash-intro-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-bottom: 22px; }
 .admin-layout .dash-profile, .admin-layout .dash-collection { padding: 24px; }
 .admin-layout .dash-card-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .admin-layout .dash-card-title h2 { font-size: 14px; font-weight: 600; }
@@ -139,25 +121,18 @@
 .admin-layout .admin-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
 @media (max-width: 1350px) and (min-width: 1101px) {
-  .admin-layout .dash-intro-grid { grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; }
+  .admin-layout .dash-intro-grid { gap: 16px; }
   .admin-layout .dash-stats { gap: 15px; }
   .admin-layout .dash-stat { padding: 19px 16px; }
   .admin-layout .dash-stat-icon { width: 37px; height: 37px; border-radius: 11px; }
   .admin-layout .dash-profile, .admin-layout .dash-collection { padding: 21px 18px; }
   .admin-layout .dash-collection-legend { flex-wrap: wrap; }
-  .admin-layout .dash-orbit-art { opacity: 0.6; right: -75px; }
   .admin-layout .dash-middle-grid, .admin-layout .dash-bottom-grid { grid-template-columns: 1.6fr 1fr; gap: 16px; }
   .admin-layout .dash-publications, .admin-layout .dash-shortcuts, .admin-layout .dash-projects, .admin-layout .dash-recent-posts { padding: 22px; }
   .admin-layout .dash-today { display: none; }
 }
 @media (max-width: 900px) {
   .admin-layout .dash-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .admin-layout .dash-intro-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .admin-layout .dash-welcome { grid-column: 1 / -1; min-height: 245px; }
-  .admin-layout .dash-orbit-art { right: 25px; top: 5px; width: 280px; transform: scale(1.15) rotate(-23deg); }
-  .admin-layout .dash-welcome-content { padding: 25px 28px; }
-  .admin-layout .dash-welcome-label { margin-bottom: 12px; }
-  .admin-layout .dash-welcome-content a { margin-top: 16px; }
   .admin-layout .dash-middle-grid, .admin-layout .dash-bottom-grid { grid-template-columns: 1fr; }
   .admin-layout .dash-today { display: none; }
   .admin-layout .dash-shortcuts .dash-shortcut-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
@@ -179,9 +154,6 @@
   .admin-layout .dash-stat-icon svg { width: 16px; }
   .admin-layout .dash-intro-grid, .admin-layout .dash-middle-grid, .admin-layout .dash-bottom-grid { gap: 16px; margin-bottom: 16px; }
   .admin-layout .dash-intro-grid { grid-template-columns: 1fr; }
-  .admin-layout .dash-welcome { grid-column: auto; }
-  .admin-layout .dash-welcome-content { padding: 23px; }
-  .admin-layout .dash-orbit-art { right: -60px; opacity: 0.8; transform: rotate(-23deg); }
   .admin-layout .dash-profile, .admin-layout .dash-collection { padding: 23px; }
   .admin-layout .dash-gauge { margin: 17px auto; }
   .admin-layout .dash-gauge-footer { font-size: 12px; }

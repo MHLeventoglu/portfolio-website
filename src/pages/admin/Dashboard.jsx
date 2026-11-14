@@ -122,11 +122,6 @@ export default function AdminDashboard() {
       </section>
 
       <div className="dash-intro-grid">
-        <section className="dash-welcome admin-panel">
-          <div className="dash-orbit-art" aria-hidden="true"><i /><i /><i /><span /><b /><em /></div>
-          <div className="dash-welcome-content"><span className="dash-welcome-label"><Sparkles size={13} /> ÜRETMEYE DEVAM</span><p>Tekrar merhaba,</p><h2>{profile.name?.split(' ')[0] || 'Yönetici'} <span>✦</span></h2><p>Bir sonraki harika fikriniz<br />burada hayat bulsun.</p><Link to="/admin/blog/new">Yeni bir hikâye yaz <ArrowRight size={16} /></Link></div>
-        </section>
-
         <section className="dash-profile admin-panel">
           <div className="dash-card-title"><h2>Profil durumu</h2><UserRound size={16} /></div>
           <p className="dash-card-subtitle">İyi bir ilk izlenim için</p>
