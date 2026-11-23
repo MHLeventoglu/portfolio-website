@@ -94,8 +94,7 @@ export default function ExperienceManager() {
     <div className="experience-manager">
       <header className="manager-header">
         <div>
-          <h1>Deneyim Yöneticisi</h1>
-          <p>Eğitim ve iş deneyimlerinizi yönetin</p>
+          <h1>Deneyimler</h1>
         </div>
         <button
           className="btn btn-primary"
@@ -288,7 +287,7 @@ export default function ExperienceManager() {
       {experiences.length === 0 && (
         <div className="empty-state glass-card">
           <Briefcase size={40} />
-          <p>Henüz deneyim eklenmemiş. İlk deneyiminizi ekleyin!</p>
+          <p>Henüz deneyim eklenmemiş.</p>
         </div>
       )}
 

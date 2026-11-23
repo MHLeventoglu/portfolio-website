@@ -117,15 +117,6 @@
     text-transform: uppercase;
 }
 
-.nav-burger {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    color: var(--ink);
-}
-
 /* Scroll progress */
 .nav-progress {
     position: absolute;
@@ -137,82 +128,9 @@
     transform-origin: 0%;
 }
 
-/* ---- Mobile menu ---- */
-.mobile-menu {
-    position: fixed;
-    inset: 0;
-    z-index: 1100;
-    background: var(--paper);
-    display: flex;
-    flex-direction: column;
-    padding: var(--spacing-xl);
-}
-
-.mobile-menu-top {
-    height: calc(var(--nav-h) - var(--spacing-xl));
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.mobile-menu-top button {
-    color: var(--ink);
-}
-
-.mobile-links {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--spacing-sm);
-}
-
-.mobile-link {
-    display: flex;
-    align-items: baseline;
-    gap: var(--spacing-lg);
-    font-family: var(--font-display);
-    font-size: clamp(2.4rem, 12vw, 4.5rem);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    color: var(--ink);
-    line-height: 1.05;
-    transition: color var(--transition-fast);
-}
-
-.mobile-link:hover {
-    color: var(--accent);
-}
-
-.mobile-link-index {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--ink-3);
-}
-
-.mobile-menu-foot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--line);
-}
-
-.mobile-menu-controls {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-}
-
 @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .nav-burger { display: flex; }
-    .nav-cta { display: none; }
-    .nav-right > .lang-toggle,
-    .nav-right > .theme-toggle { display: none; }
-}
-
-@media (min-width: 901px) {
-    .mobile-menu { display: none; }
+    .nav-links, .nav-cta { display: none; }
+    .navbar-inner { padding-inline: 22px; }
+    .nav-right { gap: 10px; }
+    .portfolio-content { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
 }

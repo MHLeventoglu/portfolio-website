@@ -59,3 +59,9 @@
   .login-page .login-header h1 { font-size: 32px; }
   .login-page .login-topbar-actions { gap: 6px; }
 }
+
+@media (max-width: 1100px) {
+  .login-page { padding-bottom: calc(106px + env(safe-area-inset-bottom, 0px)); }
+  .liquid-nav--login { max-width: 340px; }
+  .liquid-nav--login .liquid-nav__label { font-size: .75rem; }
+}

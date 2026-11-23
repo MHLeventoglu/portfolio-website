@@ -25,3 +25,5 @@ dist-ssr
 *.sql
 *.env
 *.env.local
+# Version the reviewed Supabase migrations; keep other ad-hoc SQL files ignored.
+!supabase/migrations/*.sql

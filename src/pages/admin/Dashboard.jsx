@@ -101,21 +101,21 @@ export default function AdminDashboard() {
   const stats = [
     { label: 'Blog yazıları', value: posts.length, hint: `Bu ay ${currentMonth.posts} yeni yazı`, icon: FileText, color: 'teal', to: '/admin/blog', loading: useSupabase && postsLoading },
     { label: 'Projeler', value: projects.length, hint: `${featured} proje öne çıkarılıyor`, icon: FolderKanban, color: 'ink', to: '/admin/projects', loading: useSupabase && projectsLoading },
-    { label: 'Yetenekler', value: skills.length, hint: 'Teknik yetenek koleksiyonu', icon: Layers, color: 'mint', to: '/admin/skills', loading: useSupabase && skillsLoading },
-    { label: 'Deneyimler', value: experiences.length, hint: 'Kariyer ve eğitim yolculuğu', icon: Briefcase, color: 'neutral', to: '/admin/experiences', loading: useSupabase && experiencesLoading }
+    { label: 'Yetenekler', value: skills.length, icon: Layers, color: 'mint', to: '/admin/skills', loading: useSupabase && skillsLoading },
+    { label: 'Deneyimler', value: experiences.length, icon: Briefcase, color: 'neutral', to: '/admin/experiences', loading: useSupabase && experiencesLoading }
   ]
 
   return (
     <div className="dashboard">
       <div className="dash-heading">
-        <div><span className="dash-eyebrow">ÇALIŞMA ALANINIZA HOŞ GELDİNİZ</span><h1>Portfolyonuza bir bakış<span>.</span></h1><p>Fikirlerinizi, projelerinizi ve hikâyelerinizi tek bir yerden yönetin.</p></div>
+        <div><span className="dash-eyebrow">ÇALIŞMA ALANINIZA HOŞ GELDİNİZ</span><h1>Genel Bakış</h1></div>
         <span className="dash-today"><CalendarDays size={15} />{new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
       </div>
 
       <section className="dash-stats" aria-label="Portfolyo istatistikleri">
         {stats.map(({ icon: Icon, ...stat }) => (
           <Link to={stat.to} className="dash-stat admin-panel" key={stat.label}>
-            <div><p>{stat.label}</p><strong>{stat.loading ? '—' : stat.value}</strong><span>{stat.loading ? 'Yükleniyor…' : stat.hint}</span></div>
+            <div><p>{stat.label}</p><strong>{stat.loading ? '—' : stat.value}</strong>{(stat.loading || stat.hint) && <span>{stat.loading ? 'Yükleniyor…' : stat.hint}</span>}</div>
             <span className={`dash-stat-icon ${stat.color}`}>{createElement(Icon, { size: 21 })}</span><ArrowUpRight className="dash-stat-arrow" size={14} />
           </Link>
         ))}
@@ -124,13 +124,12 @@ export default function AdminDashboard() {
       <div className="dash-intro-grid">
         <section className="dash-profile admin-panel">
           <div className="dash-card-title"><h2>Profil durumu</h2><UserRound size={16} /></div>
-          <p className="dash-card-subtitle">İyi bir ilk izlenim için</p>
           <div className="dash-gauge" style={{ '--completion': `${completion}%` }} role="img" aria-label={`Profiliniz yüzde ${completion} tamamlandı`}><div><CheckCircle2 size={19} /><strong>%{completion}</strong><span>tamamlandı</span></div></div>
           <div className="dash-gauge-footer"><span>{completed} / {checklist.length} alan hazır</span><Link to="/admin/profile">Profili düzenle <ChevronRight size={13} /></Link></div>
         </section>
 
         <section className="dash-collection admin-panel">
-          <div className="dash-card-title"><h2>İçerik koleksiyonu</h2><Layers size={16} /></div><p className="dash-card-subtitle">Biriken fikirler, büyüyen portfolyo</p>
+          <div className="dash-card-title"><h2>İçerikler</h2><Layers size={16} /></div>
           <div className="dash-collection-total"><strong>{total}</strong><span>toplam içerik</span><span className="dash-collection-icon"><FolderKanban size={29} strokeWidth={1.2} /></span></div>
           <div className="dash-collection-bar" aria-hidden="true"><span style={{ width: `${total ? posts.length / total * 100 : 0}%` }} /><i style={{ width: `${total ? projects.length / total * 100 : 0}%` }} /></div>
           <div className="dash-collection-legend"><span><i />Blog yazıları <strong>{posts.length}</strong></span><span><i />Projeler <strong>{projects.length}</strong></span></div>
@@ -143,33 +142,33 @@ export default function AdminDashboard() {
           <div className="dash-panel-heading"><div><h2>İçerik üretimi</h2><p>Son {months} ayda <strong>{periodTotal} içerik</strong> eklendi</p></div><div className="dash-period-toggle" role="group" aria-label="Grafik dönemi">{[6, 12].map(value => <button type="button" aria-pressed={months === value} className={months === value ? 'active' : ''} key={value} onClick={() => setMonths(value)}>{value} ay</button>)}</div></div>
           <div className="dash-chart-legend"><span><i />Blog yazıları</span><span><i />Projeler</span></div>
           <PublicationChart key={months} series={series} />
-          {!periodTotal && <p className="dash-chart-empty">{loading ? 'İçerikler yükleniyor…' : 'Bu dönemde henüz içerik eklenmemiş. İlk içeriğinizle başlayın.'}</p>}
+          {!periodTotal && <p className="dash-chart-empty">{loading ? 'İçerikler yükleniyor…' : 'Bu dönemde içerik eklenmemiş.'}</p>}
         </section>
 
         <section className="dash-shortcuts admin-panel">
-          <div className="dash-panel-heading"><div><h2>Bir adım ileri</h2><p>Bugün ne üzerinde çalışıyoruz?</p></div><span className="dash-shortcut-heading-icon"><Sparkles size={18} /></span></div>
+          <div className="dash-panel-heading"><div><h2>Hızlı İşlemler</h2></div><span className="dash-shortcut-heading-icon"><Sparkles size={18} /></span></div>
           <div className="dash-shortcut-list">
-            <Link to="/admin/blog/new"><span className="dash-shortcut-icon teal"><PenLine size={19} /></span><span><strong>Yeni bir yazı paylaş</strong><small>Düşüncelerine bir alan aç.</small></span><Plus size={17} /></Link>
-            <Link to="/admin/projects?new=1"><span className="dash-shortcut-icon ink"><FolderKanban size={19} /></span><span><strong>Bir proje ekle</strong><small>Ürettiklerin görünür olsun.</small></span><Plus size={17} /></Link>
-            <Link to="/admin/profile"><span className="dash-shortcut-icon mint"><UserRound size={19} /></span><span><strong>Profilini güncelle</strong><small>Hikâyenin en güncel hâli.</small></span><ChevronRight size={17} /></Link>
+            <Link to="/admin/blog/new"><span className="dash-shortcut-icon teal"><PenLine size={19} /></span><span><strong>Yazı ekle</strong></span><Plus size={17} /></Link>
+            <Link to="/admin/projects?new=1"><span className="dash-shortcut-icon ink"><FolderKanban size={19} /></span><span><strong>Proje ekle</strong></span><Plus size={17} /></Link>
+            <Link to="/admin/profile"><span className="dash-shortcut-icon mint"><UserRound size={19} /></span><span><strong>Profili düzenle</strong></span><ChevronRight size={17} /></Link>
           </div>
-          <div className="dash-next-step">{missing.length ? <><span className="dash-next-dot" /><p>Sıradaki küçük adım: <Link to={missing[0].to || '/admin/profile'}>{missing[0].label.toLocaleLowerCase('tr')} ekleyin <ArrowUpRight size={12} /></Link></p></> : <><CheckCircle2 size={15} /><p>Profilinizin tüm temel alanları hazır.</p></>}</div>
+          <div className="dash-next-step">{missing.length ? <><span className="dash-next-dot" /><p>Eksik alan: <Link to={missing[0].to || '/admin/profile'}>{missing[0].label} <ArrowUpRight size={12} /></Link></p></> : <><CheckCircle2 size={15} /><p>Profil bilgileri tamamlandı.</p></>}</div>
         </section>
       </div>
 
       <div className="dash-bottom-grid">
         <section className="dash-projects admin-panel">
-          <div className="dash-panel-heading"><div><h2>Son projeler</h2><p><Check size={13} />{projects.length} proje · fikirden gerçeğe</p></div><Link className="dash-see-all" to="/admin/projects">Tüm projeler <ArrowUpRight size={14} /></Link></div>
+          <div className="dash-panel-heading"><div><h2>Son projeler</h2><p><Check size={13} />{projects.length} proje</p></div><Link className="dash-see-all" to="/admin/projects">Tüm projeler <ArrowUpRight size={14} /></Link></div>
           {recentProjects.length ? <div className="dash-table-scroll"><table className="dash-project-table"><thead><tr><th>PROJE</th><th>KATEGORİ</th><th>İÇERİK TAMAMLIĞI</th><th><span className="admin-sr-only">Düzenle</span></th></tr></thead><tbody>{recentProjects.map(project => {
             const progress = projectCompleteness(project)
             return <tr key={project.id}><td><Link to={`/admin/projects?edit=${encodeURIComponent(project.id)}`} className="dash-project-name"><span className="dash-project-thumb">{project.image ? <img src={project.image} alt="" loading="lazy" /> : <FolderKanban size={17} />}</span><span><strong>{project.title}</strong><small>{project.featured ? <><Star size={10} /> Öne çıkan</> : `${project.tags?.length || 0} teknoloji`}</small></span></Link></td><td><span className="dash-category">{project.category || 'Diğer'}</span></td><td><div className={`dash-project-progress ${progress === 100 ? 'complete' : ''}`}><span>%{progress}</span><div><i style={{ width: `${progress}%` }} /></div></div></td><td><Link className="dash-table-action" to={`/admin/projects?edit=${encodeURIComponent(project.id)}`} aria-label={`${project.title} projesini düzenle`}><ArrowUpRight size={16} /></Link></td></tr>
-          })}</tbody></table><p className="dash-table-note">Tamamlık: başlık, açıklama, görsel, etiketler ve proje bağlantısı.</p></div> : <div className="dash-empty"><FolderKanban size={27} /><h3>{loading ? 'Projeler yükleniyor…' : 'İlk projenizle başlayın'}</h3><p>Ürettiğiniz işleri portfolyonuzda bir araya getirin.</p><Link to="/admin/projects?new=1">Proje ekle <Plus size={14} /></Link></div>}
+          })}</tbody></table><p className="dash-table-note">Tamamlık: başlık, açıklama, görsel, etiketler ve proje bağlantısı.</p></div> : <div className="dash-empty"><FolderKanban size={27} /><h3>{loading ? 'Projeler yükleniyor…' : 'Henüz proje yok'}</h3><Link to="/admin/projects?new=1">Proje ekle <Plus size={14} /></Link></div>}
         </section>
 
         <section className="dash-recent-posts admin-panel">
-          <div className="dash-panel-heading"><div><h2>Son yazılar</h2><p>Paylaştığınız son hikâyeler</p></div><Link className="dash-see-all" to="/admin/blog" aria-label="Tüm blog yazıları"><ArrowUpRight size={17} /></Link></div>
-          {recentPosts.length ? <div className="dash-post-timeline">{recentPosts.map(post => <Link to={`/admin/blog/${post.id}`} key={post.id} className="dash-post-entry"><span className="dash-post-dot"><FileText size={13} /></span><div><h3>{post.title}</h3><p>{formatDate(post.created_at || post.createdAt)}</p>{post.tags?.[0] && <span>{post.tags[0]}</span>}</div><ArrowUpRight size={14} /></Link>)}</div> : <div className="dash-empty"><FileText size={27} /><h3>{loading ? 'Yazılar yükleniyor…' : 'Hikâyeniz burada başlasın'}</h3><p>Bir fikir, bir deneyim, yeni bir yazı.</p><Link to="/admin/blog/new">Yazı oluştur <ArrowRight size={14} /></Link></div>}
-          <Link to="/admin/blog" className="dash-timeline-footer">Yazı alanına git <ArrowDownLeft size={14} /></Link>
+          <div className="dash-panel-heading"><div><h2>Son yazılar</h2></div><Link className="dash-see-all" to="/admin/blog" aria-label="Tüm blog yazıları"><ArrowUpRight size={17} /></Link></div>
+          {recentPosts.length ? <div className="dash-post-timeline">{recentPosts.map(post => <Link to={`/admin/blog/${post.id}`} key={post.id} className="dash-post-entry"><span className="dash-post-dot"><FileText size={13} /></span><div><h3>{post.title}</h3><p>{formatDate(post.created_at || post.createdAt)}</p>{post.tags?.[0] && <span>{post.tags[0]}</span>}</div><ArrowUpRight size={14} /></Link>)}</div> : <div className="dash-empty"><FileText size={27} /><h3>{loading ? 'Yazılar yükleniyor…' : 'Henüz yazı yok'}</h3><Link to="/admin/blog/new">Yazı ekle <ArrowRight size={14} /></Link></div>}
+          <Link to="/admin/blog" className="dash-timeline-footer">Blog yazılarına git <ArrowDownLeft size={14} /></Link>
         </section>
       </div>
     </div>

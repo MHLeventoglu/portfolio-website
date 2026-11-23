@@ -92,3 +92,32 @@ delete its image, so other posts can continue using the same URL.
 
 **Muaz Hamza Leventoğlu**
 - LinkedIn: [Muaz Hamza Leventoğlu](https://www.linkedin.com/in/muazhamza-leventoğlu-860109249)
+
+## Kişisel finans — mevcut Supabase projesi
+
+Finans aynı Supabase istemcisini ve mevcut admin Auth hesabını kullanır. Kurulum
+`supabase/migrations/202611210001_finance_workspace.sql` dosyasındadır. SQL Editor'de
+çalıştırmadan önce yalnızca `owner_email` değerini mevcut giriş e-postasıyla değiştirin.
+Portfolyo tabloları değiştirilmez; tekrar çalıştırmak finans verisini sıfırlamaz.
+
+`finance_workspace` tek kişisel çalışma alanını JSONB olarak saklar. Okuma RLS ile
+sahibe sınırlıdır; yazma sadece `finance_save_workspace` RPC'sinden, revision ve
+mutation kimliği kontrolüyle yapılır. Bir diğer sekme/cihazın yeni kaydı sessizce
+ezilmez. Başarı yalnızca sunucu yanıtı doğrulandıktan sonra gösterilir. Belge sınırı
+10 MB, her koleksiyonun sınırı 50.000 kayıttır; çok büyük arşivler için tablolar
+ayrıştırılabilir. Veri modeli ve sonraki aşamalar `docs/finance-supabase-launch-plan.md`
+belgesinde açıklanır.
+
+İlk gerçek alan boş ve sıfır bakiyelidir. Hesaplar sayfasında hesap adı, başlangıç
+bakiyesi ve başlangıç tarihi düzenlenebilir. PDF cihazda okunur; yalnızca onaylanan
+işlemler ve import metadatası saklanır. Mevcut yerel demo verileri otomatik yüklenmez.
+Yatırımlar ve tarihli değerlemeler kalıcıdır; piyasa fiyatları bu sürümde elle girilir.
+
+Bağlantı yapılandırılmışsa hata halinde yerel demoya düşülmez. Yerel demo yalnızca
+Supabase ayarları olmayan geliştirme ortamında kullanılabilir; üretimde varsayılan
+`admin123` girişi kapalıdır. Public Supabase URL/anon anahtarı mevcut Vite ayarlarıdır;
+service-role veya secret key tarayıcıya konmamalıdır.
+
+`npm test` içindeki `financeSupabase.test.mjs`, SQL migration'ını PGlite üzerinde
+çalıştırarak RLS, doğrudan yazma engeli, veri doğrulaması, eşzamanlı kayıt çatışması ve
+idempotency davranışını gerçek PostgreSQL kurallarıyla doğrular.

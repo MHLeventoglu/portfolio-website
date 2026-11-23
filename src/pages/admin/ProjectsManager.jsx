@@ -125,8 +125,7 @@ export default function ProjectsManager() {
     <div className="projects-manager">
       <header className="manager-header">
         <div>
-          <h1>Proje Yöneticisi</h1>
-          <p>Portfolyonuzdaki projeleri yönetin</p>
+          <h1>Projeler</h1>
         </div>
         <button 
           className="btn btn-primary"
@@ -369,7 +368,7 @@ export default function ProjectsManager() {
 
       {projects.length === 0 && (
         <div className="empty-state glass-card">
-          <p>Henüz proje yok. İlk projenizi ekleyin.</p>
+          <p>Henüz proje eklenmemiş.</p>
         </div>
       )}
 

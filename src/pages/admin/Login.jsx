@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion as Motion, useReducedMotion } from 'framer-motion'
-import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, Mail, ShieldCheck, Info, ArrowUpRight } from 'lucide-react'
+import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, Mail, ShieldCheck, Info, ArrowUpRight, House } from 'lucide-react'
 import { useData } from '../../context/DataContext'
 import AdminThemeToggle from '../../components/admin/AdminThemeToggle'
 import Logo from '../../components/common/Logo'
+import LiquidGlassNav from '../../components/common/LiquidGlassNav'
 import AdminAtmosphere from '../../components/admin/AdminAtmosphere'
 import './Login.css'
 
@@ -17,6 +18,7 @@ export default function AdminLogin() {
   const { login, isAuthenticated, useSupabase } = useData()
   const navigate = useNavigate()
   const reduceMotion = useReducedMotion()
+  const configurationMissing = !useSupabase && !import.meta.env.DEV
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -27,6 +29,7 @@ export default function AdminLogin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (configurationMissing) return
     setError('')
     setIsLoading(true)
 
@@ -141,13 +144,13 @@ export default function AdminLogin() {
           <button 
             type="submit" 
             className="btn btn-primary login-btn"
-            disabled={isLoading}
+            disabled={isLoading || configurationMissing}
           >
             {isLoading ? (
               <span className="loading-spinner"></span>
             ) : (
               <>
-                Çalışma alanına gir
+                Giriş yap
                 <ArrowRight size={18} />
               </>
             )}
@@ -157,6 +160,8 @@ export default function AdminLogin() {
         <div className="login-hint">
           {useSupabase ? (
             <p><ShieldCheck size={15} /> Supabase kimlik doğrulama aktif</p>
+          ) : configurationMissing ? (
+            <p role="alert"><AlertCircle size={15} /> Supabase bağlantı ayarları eksik. Yönetici girişi kapalı.</p>
           ) : (
             <p><Info size={15} /> İpucu: Varsayılan şifre <code>admin123</code></p>
           )}
@@ -165,6 +170,10 @@ export default function AdminLogin() {
       <p className="login-copyright">© {new Date().getFullYear()} MHL · Portfolyo yönetim alanı</p>
       </Motion.section>
       </div>
+      <LiquidGlassNav label="Giriş alt menüsü" variant="login" activeId="login" items={[
+        { id: 'portfolio', to: '/', label: 'Portfolyo', icon: House },
+        { id: 'login', to: '/admin/login', label: 'Admin girişi', icon: Lock }
+      ]} />
     </div>
   )
 }

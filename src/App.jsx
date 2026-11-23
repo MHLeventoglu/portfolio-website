@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Home from './pages/Home'
@@ -16,6 +17,8 @@ import AdminLayout from './components/admin/AdminLayout'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import PortfolioLayout from './components/common/PortfolioLayout'
 
+const Finance = lazy(() => import('./pages/finance/Finance'))
+
 function App() {
   return (
     <>
@@ -31,6 +34,7 @@ function App() {
         
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/finance" element={<ProtectedRoute><Suspense fallback={<div className="admin-theme" style={{ minHeight: '100vh', display: 'grid', placeItems: 'center' }} role="status">Finans yükleniyor…</div>}><Finance /></Suspense></ProtectedRoute>} />
         <Route path="/admin" element={
           <ProtectedRoute>
             <AdminLayout />
@@ -52,4 +56,3 @@ function App() {
 }
 
 export default App
-

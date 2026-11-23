@@ -86,8 +86,7 @@ export default function SkillsManager() {
     <div className="skills-manager">
       <header className="manager-header">
         <div>
-          <h1>Yetenekler Yöneticisi</h1>
-          <p>Portfolyonuzdaki yeteneklerinizi yönetin</p>
+          <h1>Yetenekler</h1>
         </div>
         <button 
           className="btn btn-primary"
@@ -263,7 +262,7 @@ export default function SkillsManager() {
 
       {profile.skills.length === 0 && (
         <div className="empty-state glass-card">
-          <p>Henüz yetenek eklenmemiş. İlk yeteneğinizi ekleyin!</p>
+          <p>Henüz yetenek eklenmemiş.</p>
         </div>
       )}
 

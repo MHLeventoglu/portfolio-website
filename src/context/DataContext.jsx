@@ -33,7 +33,7 @@ export function DataProvider({ children }) {
   const [postsLoading, setPostsLoading] = useState(true)
   const [skillsLoading, setSkillsLoading] = useState(true)
   const [experiencesLoading, setExperiencesLoading] = useState(true)
-  const [useSupabase, setUseSupabase] = useState(false)
+  const [useSupabase, setUseSupabase] = useState(isSupabaseConfigured)
 
   // ============================================
   // LOAD FROM SUPABASE
@@ -141,11 +141,13 @@ export function DataProvider({ children }) {
     setPosts([])
     // Profile stays empty - all data must come from Supabase
     // profileLoading stays true to show skeletons permanently when no Supabase
-    setIsAuthenticated(savedAuth === 'true')
+    setIsAuthenticated(import.meta.env.DEV && savedAuth === 'true')
   }
 
   // Check if Supabase is configured and load data
   useEffect(() => {
+    let active = true
+    let authSubscription
     const initializeData = async () => {
       setLoading(true)
 
@@ -154,16 +156,20 @@ export function DataProvider({ children }) {
 
         // Check auth session
         const { data: { session } } = await supabase.auth.getSession()
+        if (!active) return
         if (session) {
           setIsAuthenticated(true)
           setUser(session.user)
         }
 
         // Listen for auth changes
-        supabase.auth.onAuthStateChange((event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+          if (!active) return
           setIsAuthenticated(!!session)
           setUser(session?.user || null)
         })
+
+        authSubscription = subscription
 
         // Load data from Supabase
         await loadFromSupabase()
@@ -172,11 +178,11 @@ export function DataProvider({ children }) {
         loadFromLocalStorage()
       }
 
-      setLoading(false)
+      if (active) setLoading(false)
     }
 
-    initializeData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    void initializeData().catch(() => { if (active) { setIsAuthenticated(false); setUser(null); setLoading(false) } })
+    return () => { active = false; authSubscription?.unsubscribe() }
   }, [])
 
 
@@ -199,7 +205,7 @@ export function DataProvider({ children }) {
       return true
     } else {
       // Fallback: simple password check
-      if (password === 'admin123') {
+      if (import.meta.env.DEV && password === 'admin123') {
         setIsAuthenticated(true)
         localStorage.setItem('portfolio_auth', 'true')
         return true
@@ -210,7 +216,8 @@ export function DataProvider({ children }) {
 
   const logout = async () => {
     if (useSupabase) {
-      await supabase.auth.signOut()
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
     }
     setIsAuthenticated(false)
     setUser(null)
@@ -540,6 +547,7 @@ export function DataProvider({ children }) {
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- Context and its consumer hook share this module.
 export function useData() {
   const context = useContext(DataContext)
   if (!context) {

@@ -26,10 +26,6 @@
 .portfolio-shell .lang-toggle { border-color: var(--surface-edge); background: var(--surface-clear); border-radius: 11px; }
 .portfolio-shell .lang-opt, .portfolio-shell .lang-pill { border-radius: 9px; }
 .portfolio-shell .lang-pill { border-color: transparent; }
-.portfolio-shell .mobile-menu { background: var(--surface-raised); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); overflow-y: auto; }
-.portfolio-shell .mobile-link { font-weight: 500; }
-.portfolio-shell .mobile-link-index { color: var(--accent-deep); }
-.portfolio-shell .mobile-menu-top button { width: 44px; height: 44px; border: 1px solid var(--surface-edge); border-radius: 12px; display: grid; place-items: center; background: var(--surface-clear); }
 
 /* Buttons stay distinct from the quieter glass surfaces. */
 .portfolio-shell .btn { border-radius: 12px; transition: background 220ms, color 220ms, border-color 220ms, box-shadow 220ms, transform 220ms; }
@@ -237,5 +233,5 @@
   .portfolio-shell *, .portfolio-shell *::before, .portfolio-shell *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .portfolio-shell :is(.navbar.scrolled, .mobile-menu, .hero-portrait, .hero-stats, .about-meta, .exp-list, .skill-cat, .proj-block, .post-row, .hover-row, .contact-box, .share-section, .page-filters, .blog-post-content) { background: color-mix(in srgb, var(--paper-3) 85%, transparent); }
+  .portfolio-shell :is(.navbar.scrolled, .hero-portrait, .hero-stats, .about-meta, .exp-list, .skill-cat, .proj-block, .post-row, .hover-row, .contact-box, .share-section, .page-filters, .blog-post-content) { background: color-mix(in srgb, var(--paper-3) 85%, transparent); }
 }

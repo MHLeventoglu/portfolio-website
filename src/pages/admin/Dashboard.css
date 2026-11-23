@@ -2,9 +2,7 @@
 @keyframes admin-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .admin-layout .dash-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 25px; }
 .admin-layout .dash-eyebrow { display: block; color: var(--ink-2); font-size: 10px; font-weight: 600; letter-spacing: 1.9px; margin-bottom: 8px; }
-.admin-layout .dash-heading h1 { font-size: 27px; font-weight: 650; margin-bottom: 8px; }
-.admin-layout .dash-heading h1 > span { color: var(--ink); }
-.admin-layout .dash-heading p { font-size: 13px; color: var(--ink-2); }
+.admin-layout .dash-heading h1 { font-size: 27px; font-weight: 650; margin-bottom: 0; }
 .admin-layout .dash-today { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-2); flex-shrink: 0; padding: 8px 11px; border: 1px solid var(--line); border-radius: 9px; background: var(--admin-clear); }
 .admin-layout .dash-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 19px; margin-bottom: 22px; }
 .admin-layout .dash-stat { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 21px 21px 19px; transition: border-color 0.2s, transform 0.2s; }
@@ -24,7 +22,6 @@
 .admin-layout .dash-card-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .admin-layout .dash-card-title h2 { font-size: 14px; font-weight: 600; }
 .admin-layout .dash-card-title > svg { color: var(--ink-2); }
-.admin-layout .dash-card-subtitle { font-size: 11px; color: var(--ink-2); margin-top: 4px; }
 .admin-layout .dash-gauge { width: 148px; height: 148px; margin: 17px auto 13px; padding: 8px; border-radius: 50%; background: conic-gradient(from -90deg, var(--accent) var(--completion), var(--admin-track) 0); box-shadow: var(--admin-shadow); }
 .admin-layout .dash-gauge > div { width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, var(--admin-tint), var(--admin-clear)); display: flex; align-items: center; justify-content: center; flex-direction: column; border: 7px solid var(--line); }
 .admin-layout .dash-gauge svg { color: var(--ink-2); margin-bottom: 2px; }
@@ -71,7 +68,6 @@
 .admin-layout .dash-shortcut-icon { display: grid; place-items: center; flex-shrink: 0; width: 38px; height: 38px; border-radius: 12px; }
 .admin-layout .dash-shortcut-list > a > span:nth-child(2) { flex: 1; }
 .admin-layout .dash-shortcut-list strong { display: block; color: var(--ink); font-size: 12px; font-weight: 550; }
-.admin-layout .dash-shortcut-list small { display: block; color: var(--ink-2); font-size: 10px; margin-top: 2px; }
 .admin-layout .dash-shortcut-list > a > svg { color: var(--ink-2); }
 .admin-layout .dash-next-step { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 12px 10px; background: var(--admin-clear); border-radius: 10px; font-size: 10px; color: var(--ink-2); }
 .admin-layout .dash-next-step > svg { color: var(--ink-2); flex-shrink: 0; }
@@ -143,7 +139,6 @@
 }
 @media (max-width: 550px) {
   .admin-layout .dash-heading h1 { font-size: 23px; }
-  .admin-layout .dash-heading p { font-size: 12px; line-height: 1.8; }
   .admin-layout .dash-eyebrow { font-size: 9px; letter-spacing: 1.4px; }
   .admin-layout .dash-stats { gap: 12px; margin-bottom: 16px; }
   .admin-layout .dash-stat { padding: 17px 14px; }

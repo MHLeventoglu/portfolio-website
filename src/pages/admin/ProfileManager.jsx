@@ -143,8 +143,7 @@ export default function ProfileManager() {
     <div className="profile-manager">
       <header className="manager-header">
         <div>
-          <h1>Profil Yönetimi</h1>
-          <p>Kişisel bilgilerinizi düzenleyin</p>
+          <h1>Profil</h1>
         </div>
         <button 
           className={`btn ${saved ? 'btn-success' : 'btn-primary'}`}

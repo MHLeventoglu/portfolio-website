@@ -147,7 +147,7 @@
 .admin-theme .markdown-editor-error { color: var(--admin-danger); }
 .admin-theme .skeleton-box { background: linear-gradient(90deg, var(--admin-track) 25%, var(--admin-tint) 50%, var(--admin-track) 75%); background-size: 200% 100%; }
 .admin-layout .manager-header { margin-bottom: 26px; align-items: center; }
-.admin-layout .manager-header h1 { font-size: 30px; letter-spacing: -0.045em; margin-bottom: 6px; }
+.admin-layout .manager-header h1 { font-size: 30px; letter-spacing: -0.045em; margin-bottom: 0; }
 .admin-layout .manager-header p { font-size: 13px; color: var(--ink-3); }
 .admin-layout :is(.profile-manager, .skills-manager, .projects-manager, .experience-manager, .blog-editor) { width: 100%; max-width: none; }
 .admin-layout :is(.project-form-container, .skill-form-container, .experience-form-container) { padding: 28px; }
@@ -268,8 +268,6 @@
 .admin-layout .dashboard { animation: none; }
 .admin-layout .dash-heading { margin-bottom: 30px; }
 .admin-layout .dash-heading h1 { font-weight: 600; font-size: clamp(28px, 2.7vw, 38px); letter-spacing: -0.045em; }
-.admin-layout .dash-heading p { font-size: 13px; line-height: 1.8; }
-.admin-layout .dash-heading h1 > span { color: var(--accent-deep); }
 .admin-layout .dash-today { background: transparent; border-color: var(--admin-edge); }
 .admin-layout .dash-stat { padding-top: 24px; padding-bottom: 24px; animation: admin-surface-in 550ms var(--ease-out) backwards; transition: transform 260ms, box-shadow 260ms, border-color 260ms, background 260ms; }
 .admin-layout .dash-stat:nth-child(2) { animation-delay: 45ms; }
@@ -287,7 +285,6 @@
 .admin-layout .mint { color: var(--accent-deep); background: color-mix(in srgb, var(--accent-bright) 13%, transparent); }
 .admin-layout .neutral { color: var(--ink-2); background: var(--admin-clear); }
 .admin-layout .dash-card-title h2, .admin-layout .dash-panel-heading h2 { color: var(--ink); font-size: 17px; font-weight: 500; }
-.admin-layout .dash-card-subtitle { font-size: 12px; }
 .admin-layout .dash-gauge { position: relative; background: none; box-shadow: none; }
 .admin-layout .dash-gauge::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from -90deg, var(--accent) var(--completion), var(--admin-track) 0); mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)); }
 .admin-layout .dash-gauge > div { background: var(--admin-clear); border: 1px solid var(--admin-edge); }
@@ -308,7 +305,6 @@
 .admin-layout .dash-shortcut-list > a > svg { transition: transform 220ms, color 220ms; }
 .admin-layout .dash-shortcut-list > a:hover > svg { transform: translateX(3px); color: var(--accent-deep); }
 .admin-layout .dash-shortcut-list strong { color: var(--ink); font-size: 13px; }
-.admin-layout .dash-shortcut-list small { font-size: 11px; }
 .admin-layout .dash-project-table tbody tr, .admin-layout .blog-library-table tbody tr { transition: background 220ms; }
 .admin-layout .dash-project-table tbody tr:hover, .admin-layout .blog-library-table tbody tr:hover { background: var(--admin-tint); }
 .admin-layout .dash-project-progress > div { background: var(--admin-track); }
