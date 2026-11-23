@@ -4,9 +4,9 @@ import { readFile } from 'node:fs/promises'
 import { pwaManifest, pwaWorkbox } from '../src/lib/pwaConfig.js'
 import { adminDestination } from '../src/lib/authDestination.js'
 
-test('PWA has a stable identity, standalone launch, root scope and install icons', async () => {
+test('PWA has a stable identity, fullscreen launch, root scope and install icons', async () => {
   assert.equal(pwaManifest.id, '/')
-  assert.equal(pwaManifest.display, 'standalone')
+  assert.equal(pwaManifest.display, 'fullscreen')
   assert.equal(pwaManifest.scope, '/')
   assert.ok(pwaManifest.icons.some(icon => icon.sizes === '192x192' && icon.purpose === 'any'))
   assert.ok(pwaManifest.icons.some(icon => icon.sizes === '512x512' && icon.purpose === 'maskable'))

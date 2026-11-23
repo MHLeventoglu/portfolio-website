@@ -6,7 +6,9 @@ export const pwaManifest = {
   lang: 'tr',
   start_url: '/',
   scope: '/',
-  display: 'standalone',
+  // Installed Android apps should let the page fill the system-bar regions too.
+  // Unsupported browsers fall back to standalone via the manifest display chain.
+  display: 'fullscreen',
   background_color: '#f4f3ef',
   theme_color: '#f4f3ef',
   icons: [

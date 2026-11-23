@@ -86,8 +86,14 @@ There is no in-app installation button or instruction dialog.
 The HTML/body canvas and browser theme color follow both the selected theme and
 the active portfolio/workspace palette. Safe-area padding protects controls around
 camera cutouts and the home indicator, while the background fills those areas.
-Standalone mode keeps system indicators under OS control; it does not force an
-immersive fullscreen session.
+The manifest requests fullscreen mode for installed apps. On supporting Android
+browsers this uses immersive mode, hiding the system status/navigation bars so the
+page can fill their regions. Existing safe-area styles cover both fullscreen and
+standalone fallback. The OS can reveal system bars temporarily; browsers that do
+not support fullscreen fall back to standalone. Ordinary browser tabs keep their
+normal browser UI. Existing installations may need a manifest update before the
+launch mode changes. This behavior must be checked on an actual installed app;
+desktop responsive previews do not reproduce Android's system-bar rendering.
 
 The portfolio, admin, and finance bottom navigation support taps and hold-to-drag
 selection. The glass indicator follows the pointer with a raised spring effect;
