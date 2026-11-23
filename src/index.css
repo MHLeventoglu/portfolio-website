@@ -7,6 +7,8 @@
   --paper: #f4f3ef;
   --paper-2: #eae8e1;
   --paper-3: #ffffff;
+  --workspace-canvas: #cbd2da;
+  --app-canvas: var(--paper);
   --ink: #0a0a0a;
   --ink-2: #45443f;
   --ink-3: #86847b;
@@ -85,6 +87,7 @@
   --paper: #0a0a0a;
   --paper-2: #141414;
   --paper-3: #1b1b1b;
+  --workspace-canvas: #050910;
   --ink: #f4f3ef;
   --ink-2: #b7b6ae;
   --ink-3: #78766e;
@@ -126,19 +129,25 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   overflow-x: hidden;
-  background: var(--paper);
+  min-height: 100%;
+  background: var(--app-canvas);
 }
+
+html[data-app-surface='workspace'] { --app-canvas: var(--workspace-canvas); }
 
 body {
   font-family: var(--font-sans);
-  background: transparent;
+  background: var(--app-canvas);
   color: var(--ink);
   line-height: 1.55;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+#root { min-height: 100vh; min-height: 100dvh; }
 
 /* Subtle paper grain for warmth */
 body::before {

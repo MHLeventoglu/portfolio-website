@@ -1,19 +1,17 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useLayoutEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { applyAppAppearance, readSavedTheme } from '../lib/appAppearance'
 
 const ThemeContext = createContext()
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
-    // Load saved theme or default to dark
-    const saved = localStorage.getItem('portfolio_theme')
-    return saved || 'light'
-  })
+  const [theme, setTheme] = useState(readSavedTheme)
+  const { pathname } = useLocation()
 
-  useEffect(() => {
-    // Apply theme to document
-    document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('portfolio_theme', theme)
-  }, [theme])
+  useLayoutEffect(() => {
+    applyAppAppearance(theme, pathname)
+    try { localStorage.setItem('portfolio_theme', theme) } catch { /* Theme still works when storage is unavailable. */ }
+  }, [theme, pathname])
 
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark')

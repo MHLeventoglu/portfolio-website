@@ -83,6 +83,12 @@ by the service worker. Reading current data and saving changes still require a
 connection. New versions show a refresh notice instead of reloading an open form.
 There is no in-app installation button or instruction dialog.
 
+The HTML/body canvas and browser theme color follow both the selected theme and
+the active portfolio/workspace palette. Safe-area padding protects controls around
+camera cutouts and the home indicator, while the background fills those areas.
+Standalone mode keeps system indicators under OS control; it does not force an
+immersive fullscreen session.
+
 The portfolio, admin, and finance bottom navigation support taps and hold-to-drag
 selection. The glass indicator follows the pointer with a raised spring effect;
 navigation happens once on release. Releasing outside the bar or pressing Escape

@@ -1,7 +1,7 @@
 /* Admin-only frost palette. Public portfolio tokens stay independent. */
 .admin-theme {
   color-scheme: light;
-  --paper: #cbd2da;
+  --paper: var(--workspace-canvas);
   --paper-2: #bec8d2;
   --paper-3: #e1e7ed;
   --ink: #132c40;
@@ -60,7 +60,7 @@
 
 [data-theme='dark'] .admin-theme {
   color-scheme: dark;
-  --paper: #050910;
+  --paper: var(--workspace-canvas);
   --paper-2: #0b1521;
   --paper-3: #101c2b;
   --ink: #f0f6fc;

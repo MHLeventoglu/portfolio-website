@@ -7,12 +7,24 @@
 .pwa-inline-action { display: block; color: var(--accent-deep); min-height: 40px; text-align: left; font-size: 13px; font-weight: 600; margin-top: 5px; }
 .pwa-notice .pwa-error { color: var(--admin-danger); }
 @media (min-width: 1101px) { .pwa-notice.admin-theme { bottom: 24px; } }
-@media (display-mode: standalone) {
+@media (display-mode: standalone), (display-mode: fullscreen) {
   .navbar { padding-top: env(safe-area-inset-top, 0px); }
   .portfolio-shell .portfolio-content { padding-top: env(safe-area-inset-top, 0px); }
   .portfolio-shell .portfolio-content [id] { scroll-margin-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 40px); }
   .admin-layout .admin-main { padding-top: calc(20px + env(safe-area-inset-top, 0px)); }
   .finance-app .fin-main { padding-top: calc(14px + env(safe-area-inset-top, 0px)); }
   .login-page { padding-top: calc(20px + env(safe-area-inset-top, 0px)); }
+}
+@media (display-mode: standalone) and (max-width: 1100px), (display-mode: fullscreen) and (max-width: 1100px) {
+  .admin-layout .admin-main { padding-left: calc(26px + env(safe-area-inset-left, 0px)); padding-right: calc(26px + env(safe-area-inset-right, 0px)); }
+}
+@media (display-mode: standalone) and (max-width: 650px), (display-mode: fullscreen) and (max-width: 650px) {
+  .admin-layout .admin-main { padding-left: calc(16px + env(safe-area-inset-left, 0px)); padding-right: calc(16px + env(safe-area-inset-right, 0px)); }
+}
+@media (display-mode: standalone) and (max-width: 600px), (display-mode: fullscreen) and (max-width: 600px) {
+  .finance-app .fin-main { padding-left: calc(16px + env(safe-area-inset-left, 0px)); padding-right: calc(16px + env(safe-area-inset-right, 0px)); }
+}
+@media (display-mode: standalone) and (max-width: 760px), (display-mode: fullscreen) and (max-width: 760px) {
+  .admin-layout .admin-topbar { top: calc(8px + env(safe-area-inset-top, 0px)); }
 }
 
