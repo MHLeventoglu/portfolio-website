@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion as Motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
-import { ArrowUpRight, House, UserRound, Code2, FolderKanban, BookOpen, Mail } from 'lucide-react'
+import { ArrowUpRight, House, UserRound, Code2, FolderKanban, BookOpen, Mail, LayoutDashboard, Wallet } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 import LanguageToggle from './LanguageToggle'
 import Logo from './Logo'
 import LiquidGlassNav from './LiquidGlassNav'
 import { useLang } from '../../context/LanguageContext'
+import { useData } from '../../context/DataContext'
 import './Navbar.css'
 
 const navLinks = [
@@ -27,6 +28,7 @@ export default function Navbar() {
   const reduce = useReducedMotion()
   const isHome = location.pathname === '/'
   const { t } = useLang()
+  const { isAuthenticated } = useData()
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
 
@@ -130,6 +132,10 @@ export default function Navbar() {
           </nav>
 
           <div className="nav-right">
+            {isAuthenticated && <nav className="nav-workspace-links" aria-label={t('nav.workspace')}>
+              <Link to="/admin" aria-label={t('nav.admin')} title={t('nav.admin')}><LayoutDashboard size={16} aria-hidden="true" /><span>{t('nav.admin')}</span></Link>
+              <Link to="/finance" aria-label={t('nav.finance')} title={t('nav.finance')}><Wallet size={16} aria-hidden="true" /><span>{t('nav.finance')}</span></Link>
+            </nav>}
             <LanguageToggle />
             <ThemeToggle />
             <a href={hrefFor('#contact')} onClick={(e) => handleNavClick(e, '#contact')} className="nav-cta" aria-current={isHome && activeSection === 'contact' ? 'location' : undefined}>

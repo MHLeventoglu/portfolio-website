@@ -4,7 +4,7 @@ const LanguageContext = createContext()
 
 const translations = {
   tr: {
-    nav: { home: 'Ana Sayfa', about: 'Hakkımda', skills: 'Yetenekler', projects: 'Projeler', blog: 'Blog', contact: 'İletişim', cta: 'İletişim', menu: 'Menü', tagline: 'Digital by design', langLabel: 'Dil' },
+    nav: { home: 'Ana Sayfa', about: 'Hakkımda', skills: 'Yetenekler', projects: 'Projeler', blog: 'Blog', contact: 'İletişim', cta: 'İletişim', menu: 'Menü', tagline: 'Digital by design', langLabel: 'Dil', admin: 'Admin', finance: 'Finans', workspace: 'Çalışma alanları' },
     hero: { eyebrow: 'Bilgisayar Mühendisi', status: 'Fırsatlara açık', cta: 'Projelerimi Gör', scroll: 'Kaydır', avail: 'açık', gpa: 'GPA', ai: 'AI Proje', exp: 'Deneyim' },
     about: { eyebrow: 'Hakkımda', title: 'Yapay zeka, havacılık ve otomasyon', exp: 'Deneyim', university: 'Üniversite', degree: 'Bölüm', grad: 'Mezuniyet', gpa: 'GPA', location: 'Konum' },
     skills: { eyebrow: 'Yetenekler', title: 'Fikirleri hayata döndüren teknolojiler.' },
@@ -18,7 +18,7 @@ const translations = {
     common: { back: 'Ana Sayfa' },
   },
   en: {
-    nav: { home: 'Home', about: 'About', skills: 'Skills', projects: 'Projects', blog: 'Blog', contact: 'Contact', cta: 'Contact', menu: 'Menu', tagline: 'Digital by design', langLabel: 'Language' },
+    nav: { home: 'Home', about: 'About', skills: 'Skills', projects: 'Projects', blog: 'Blog', contact: 'Contact', cta: 'Contact', menu: 'Menu', tagline: 'Digital by design', langLabel: 'Language', admin: 'Admin', finance: 'Finance', workspace: 'Workspace' },
     hero: { eyebrow: 'Computer Engineer', status: 'Open to opportunities', cta: 'View My Work', scroll: 'Scroll', avail: 'open', gpa: 'GPA', ai: 'AI Projects', exp: 'Experience' },
     about: { eyebrow: 'About', title: 'AI, Aviation & Automation.', exp: 'Experience', university: 'University', degree: 'Field', grad: 'Graduation', gpa: 'GPA', location: 'Location' },
     skills: { eyebrow: 'Skills', title: 'Technologies that brings ideas into life.' },

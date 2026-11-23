@@ -2,6 +2,7 @@ import { createElement, useCallback, useEffect, useId, useLayoutEffect, useRef, 
 import { Link, useNavigate } from 'react-router-dom'
 import { motion as Motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
 import { createHoldDragController, navDragFrame } from '../../lib/liquidNavGesture'
+import { createNavHaptics } from '../../lib/navHaptics'
 import './LiquidGlassNav.css'
 
 const MotionLink = Motion.create(Link)
@@ -13,11 +14,12 @@ export default function LiquidGlassNav({ items, activeId, label, variant = 'port
   const [keyboardOpen, setKeyboardOpen] = useState(false), [drag, setDrag] = useState(null)
   const nav = useRef(null), track = useRef(null), callbacks = useRef({}), initialized = useRef(false), suppressClick = useRef(false), capturedPointer = useRef(null)
   const x = useSpring(0, glide), width = useSpring(0, glide), lift = useSpring(0, glide), scaleX = useSpring(1, glide), scaleY = useSpring(1, glide), opacity = useMotionValue(0)
-  const gesture = useRef(null)
+  const gesture = useRef(null), haptics = useRef(null)
   useLayoutEffect(() => {
+    haptics.current = createNavHaptics()
     const controller = createHoldDragController({ onStart: point => callbacks.current.start?.(point), onMove: point => callbacks.current.move?.(point), onEnd: (point, cancelled) => callbacks.current.end?.(point, cancelled) })
     gesture.current = controller
-    return () => { controller.dispose(); gesture.current = null }
+    return () => { controller.dispose(); gesture.current = null; haptics.current?.end(); haptics.current = null }
   }, [])
 
   const geometry = useCallback(() => {
@@ -42,6 +44,7 @@ export default function LiquidGlassNav({ items, activeId, label, variant = 'port
       if (!frame) return null
       x.jump(frame.x); width.jump(frame.width); opacity.set(1)
       const candidateId = frame.index === null ? null : measured.elements[frame.index].dataset.liquidId
+      haptics.current?.move(candidateId)
       setDrag(previous => previous?.candidateId === candidateId ? previous : { candidateId })
       return { ...frame, candidateId }
     }
@@ -60,6 +63,7 @@ export default function LiquidGlassNav({ items, activeId, label, variant = 'port
       move: preview,
       end(point, cancelled) {
         const frame = cancelled ? null : preview(point)
+        haptics.current?.end()
         setDrag(null); lift.set(0); scaleX.set(1); scaleY.set(1)
         releaseCapture()
         if (!frame?.candidateId) { syncLens(); return }
@@ -109,7 +113,7 @@ export default function LiquidGlassNav({ items, activeId, label, variant = 'port
       suppressClick.current = false
       if (!event.isPrimary) { gesture.current?.cancel(); return }
       if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey || !event.target.closest('[data-liquid-id]')) return
-      gesture.current?.down(pointFrom(event))
+      if (gesture.current?.down(pointFrom(event))) haptics.current?.start(event.target.closest('[data-liquid-id]').dataset.liquidId, event.pointerType)
     }}
     onPointerMove={event => { const result = gesture.current?.move(pointFrom(event)); if (result === 'drag') event.preventDefault(); if (result === 'cancelled') suppressClick.current = true }}
     onPointerUp={event => { if (gesture.current?.isActive()) { event.preventDefault(); suppressClick.current = true }; gesture.current?.up(pointFrom(event)) }}

@@ -97,9 +97,15 @@ desktop responsive previews do not reproduce Android's system-bar rendering.
 
 The portfolio, admin, and finance bottom navigation support taps and hold-to-drag
 selection. The glass indicator follows the pointer with a raised spring effect;
-navigation happens once on release. Releasing outside the bar or pressing Escape
+touch/pen dragging gives a short vibration when crossing into a new tab on devices
+with the Vibration API. Repeated moves within one tab and mouse input stay silent;
+unsupported or denied vibration does not affect navigation. Navigation happens
+once on release. Releasing outside the bar or pressing Escape
 cancels the selection. Keyboard navigation and reduced-motion preferences remain
 supported. Finance page actions sit alongside their headings on small screens.
+The public header shows Admin and Finance shortcuts only while authenticated;
+the existing protected routes still validate access. On small screens these
+shortcuts use labelled icons to keep the header compact.
 
 ## Markdown image uploads
 
