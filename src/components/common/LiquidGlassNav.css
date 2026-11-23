@@ -28,7 +28,7 @@
   backdrop-filter: blur(22px);
   box-shadow: 0 8px 24px -12px rgb(0 10 25 / 20%);
 }
-.liquid-nav__items { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 2px; }
+.liquid-nav__items { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 2px; }
 .liquid-nav .liquid-nav__item {
   position: relative;
   display: flex;
@@ -46,7 +46,10 @@
   text-decoration: none;
   font-family: var(--font-sans);
   line-height: 1.2;
-  touch-action: manipulation;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
   cursor: pointer;
   transition: color 220ms;
 }
@@ -55,7 +58,15 @@
 .liquid-nav__icon { display: inline-flex; }
 .liquid-nav__label { font-size: .625rem; font-weight: 500; letter-spacing: -.025em; white-space: nowrap; }
 .liquid-nav__item.is-active .liquid-nav__label { font-weight: 650; }
-.liquid-nav__lens { position: absolute; inset: 0; border-radius: 18px; background: var(--glass-lens); pointer-events: none; }
+.liquid-nav__lens { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 18px; background: var(--glass-lens); pointer-events: none; transform-origin: center; will-change: transform; }
+.liquid-nav, .finance-app .liquid-nav :is(a, button) { touch-action: none; }
+.liquid-nav.is-dragging { --glass-lens: color-mix(in srgb, var(--accent) 18%, var(--glass-fill)); }
+.liquid-nav.is-dragging .liquid-nav__lens { box-shadow: 0 5px 16px -10px rgb(0 10 30 / 28%); }
+.liquid-nav.is-dragging .liquid-nav__item { color: var(--ink-2); }
+.liquid-nav.is-dragging .liquid-nav__item.is-preview { color: var(--accent-deep); }
+.liquid-nav__icon { transition: transform 180ms; }
+.liquid-nav.is-dragging .is-preview .liquid-nav__icon { transform: translateY(-2px) scale(1.08); }
+.liquid-nav__hint { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .liquid-nav.is-keyboard-open { opacity: 0; translate: 0 120%; pointer-events: none; }
 .liquid-nav .liquid-nav__item:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 2px; }
 @media (max-width: 900px) { .liquid-nav--portfolio { display: block; } }

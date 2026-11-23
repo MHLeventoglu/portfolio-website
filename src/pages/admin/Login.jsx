@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion as Motion, useReducedMotion } from 'framer-motion'
 import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, Mail, ShieldCheck, Info, ArrowUpRight, House } from 'lucide-react'
 import { useData } from '../../context/DataContext'
@@ -8,6 +8,7 @@ import Logo from '../../components/common/Logo'
 import LiquidGlassNav from '../../components/common/LiquidGlassNav'
 import AdminAtmosphere from '../../components/admin/AdminAtmosphere'
 import './Login.css'
+import { adminDestination } from '../../lib/authDestination'
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
@@ -17,15 +18,17 @@ export default function AdminLogin() {
   const [isLoading, setIsLoading] = useState(false)
   const { login, isAuthenticated, useSupabase } = useData()
   const navigate = useNavigate()
+  const location = useLocation()
+  const destination = adminDestination(location.state?.from)
   const reduceMotion = useReducedMotion()
   const configurationMissing = !useSupabase && !import.meta.env.DEV
 
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/admin')
+      navigate(destination, { replace: true })
     }
-  }, [isAuthenticated, navigate])
+  }, [isAuthenticated, navigate, destination])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -37,14 +40,14 @@ export default function AdminLogin() {
       if (useSupabase) {
         // Supabase email/password login
         await login(email, password)
-        navigate('/admin')
+        navigate(destination, { replace: true })
       } else {
         // Fallback: simple password check
         await new Promise(resolve => setTimeout(resolve, 500))
         const success = await login(email, password)
         
         if (success) {
-          navigate('/admin')
+          navigate(destination, { replace: true })
         } else {
           setError('Geçersiz şifre. "admin123" deneyin.')
           setPassword('')

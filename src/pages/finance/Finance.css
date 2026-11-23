@@ -483,14 +483,19 @@
 @media (max-width: 600px) {
   .fin-sidebar { display: none; }
   .fin-main { margin-left: 0; padding: 14px 16px calc(106px + env(safe-area-inset-bottom, 0px)); }
-  .fin-topbar { margin-bottom: 25px; }
+  .fin-topbar { margin-bottom: 18px; }
   .fin-breadcrumb { font-size: 10px; gap: 8px; }
   .fin-breadcrumb > a { font-size: 0; }
   .fin-breadcrumb > a::before { content: '← Admin'; font-size: 10px; }
   .fin-topbar > div:last-child { gap: 9px; }
-  .fin-page-heading { flex-wrap: wrap; gap: 20px; margin-bottom: 23px; }
-  .finance-app .fin-page-heading h1 { font-size: 32px; }
-  .fin-page-actions { width: 100%; justify-content: space-between; }
+  .fin-page-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 12px; margin-bottom: 18px; }
+  .fin-page-heading > div:first-child { grid-column: 1; grid-row: 1; min-width: 0; }
+  .finance-app .fin-page-heading h1 { font-size: clamp(26px, 7.7vw, 32px); }
+  .fin-page-actions { display: contents; }
+  .fin-page-actions > .fin-button { grid-column: 2; grid-row: 1; padding: 10px 12px; min-height: 40px; }
+  .fin-page-actions > .fin-month-select { grid-column: 1 / -1; grid-row: 2; justify-self: start; }
+  .fin-page-actions > .fin-month-select:only-child { grid-column: 2; grid-row: 1; }
+  .fin-topbar > div:last-child { gap: 6px; }
   .fin-button { padding: 10px 16px; }
   .fin-stats { gap: 12px; margin-bottom: 16px; }
   .fin-stat { padding: 17px 15px 12px; }
@@ -572,9 +577,10 @@
   .fin-toast { bottom: calc(100px + env(safe-area-inset-bottom, 0px)); font-size: 11px; padding: 12px 15px; }
   .fin-skip { left: 16px; }
   .fin-goal-tools .fin-icon-button { width: 28px; }
-  .fin-investment-source { gap: 10px; }
-  .fin-investment-source > p { width: 100%; flex-basis: 100%; order: 3; font-size: 9px; }
-  .fin-investment-source > button { font-size: 10px; }
+  .fin-investment-source { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 10px; padding-bottom: 16px; }
+  .fin-investment-source > span { grid-column: 1; grid-row: 1; }
+  .fin-investment-source > button { grid-column: 2; grid-row: 1; font-size: 11px; min-height: 36px; }
+  .fin-investment-source > p { grid-column: 1 / -1; grid-row: 2; min-width: 0; font-size: 11px; line-height: 1.65; }
   .fin-investment-stats .fin-stat > strong { font-size: clamp(17px, 4.6vw, 23px); }
   .fin-investment-stats .fin-stat > div { min-height: 31px; align-items: flex-start; }
   .fin-investment-charts .fin-panel-heading { flex-wrap: wrap; }

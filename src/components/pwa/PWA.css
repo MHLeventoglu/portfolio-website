@@ -1,0 +1,18 @@
+.pwa-close { position: absolute; right: 12px; top: 12px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: var(--ink-2); }
+.pwa-close:hover { background: var(--admin-tint); color: var(--accent-deep); }
+.pwa-notice.admin-theme { position: fixed; z-index: 1400; bottom: calc(100px + env(safe-area-inset-bottom, 0px)); left: 16px; right: 16px; max-width: 430px; margin-inline: auto; display: flex; gap: 12px; padding: 18px 42px 18px 18px; border: 1px solid var(--line); border-radius: 18px; background: var(--admin-raised); box-shadow: var(--admin-shadow); }
+.pwa-notice > svg { flex-shrink: 0; color: var(--accent-deep); margin-top: 2px; }
+.pwa-notice strong { font-size: 14px; font-weight: 600; }
+.pwa-notice p { color: var(--ink-2); font-size: 13px; line-height: 1.7; margin-top: 4px; }
+.pwa-inline-action { display: block; color: var(--accent-deep); min-height: 40px; text-align: left; font-size: 13px; font-weight: 600; margin-top: 5px; }
+.pwa-notice .pwa-error { color: var(--admin-danger); }
+@media (min-width: 1101px) { .pwa-notice.admin-theme { bottom: 24px; } }
+@media (display-mode: standalone) {
+  .navbar { padding-top: env(safe-area-inset-top, 0px); }
+  .portfolio-shell .portfolio-content { padding-top: env(safe-area-inset-top, 0px); }
+  .portfolio-shell .portfolio-content [id] { scroll-margin-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 40px); }
+  .admin-layout .admin-main { padding-top: calc(20px + env(safe-area-inset-top, 0px)); }
+  .finance-app .fin-main { padding-top: calc(14px + env(safe-area-inset-top, 0px)); }
+  .login-page { padding-top: calc(20px + env(safe-area-inset-top, 0px)); }
+}
+

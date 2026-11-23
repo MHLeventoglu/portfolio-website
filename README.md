@@ -63,7 +63,7 @@ disable decorative animation, and touch layouts keep the ambient background stat
 The admin panel uses translucent surfaces and the portfolio’s shared paper, ink, and teal palette. It follows the public site’s light/dark preference and includes a theme switch.
 The overview shows actual portfolio totals, a 6/12-month content chart, profile
 completion, recent projects, and recent posts. Select or focus a month on the chart to inspect its exact counts. Global search links directly to
-management pages and individual content. The navigation supports a mobile drawer.
+management pages and individual content. Mobile layouts use the shared bottom navigation.
 
 - `/admin` — overview
 - `/admin/blog` — searchable blog library with tag filters
@@ -73,6 +73,21 @@ management pages and individual content. The navigation supports a mobile drawer
 
 Admin styles are scoped to the workspace. No additional dependencies or database
 migrations are required for the redesign.
+
+## PWA and mobile navigation
+
+Production builds generate a web manifest, standalone app icons, and a service
+worker with `vite-plugin-pwa`. Only the built app shell and static assets are
+precached; Supabase responses, financial records, and uploaded PDFs are not cached
+by the service worker. Reading current data and saving changes still require a
+connection. New versions show a refresh notice instead of reloading an open form.
+There is no in-app installation button or instruction dialog.
+
+The portfolio, admin, and finance bottom navigation support taps and hold-to-drag
+selection. The glass indicator follows the pointer with a raised spring effect;
+navigation happens once on release. Releasing outside the bar or pressing Escape
+cancels the selection. Keyboard navigation and reduced-motion preferences remain
+supported. Finance page actions sit alongside their headings on small screens.
 
 ## Markdown image uploads
 
