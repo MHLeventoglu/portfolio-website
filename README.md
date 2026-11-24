@@ -107,6 +107,11 @@ The public header shows Admin and Finance shortcuts only while authenticated;
 the existing protected routes still validate access. On small screens these
 shortcuts use labelled icons to keep the header compact.
 
+The mobile bar uses a Chromium SVG backdrop-refraction layer, a capsule material,
+contact illumination and a velocity-sensitive selection lens. Research sources,
+accessibility behaviour and native/web differences are documented in
+[`docs/liquid-glass-navigation.md`](docs/liquid-glass-navigation.md).
+
 ## Markdown image uploads
 
 In the admin panel, use **Görsel yükle** above a blog's content or a project's description.

@@ -13,6 +13,28 @@ export function navDragFrame(bounds, rectangles, point, tolerance = 36) {
   return { index: outside ? null : index, width, x: constrained + clamp((raw - constrained) * 0.16, -10, 10), targetX: rectangles[index].left - bounds.left }
 }
 
+// These are tuned web interaction values, not Apple's private spring constants.
+export function navDragVisuals(bounds, rectangles, point, previous = null) {
+  if (!rectangles.length) return null
+  const centers = rectangles.map(rectangle => rectangle.left + rectangle.width / 2)
+  let progress = 0
+  if (point.x <= centers[0]) progress = Math.max(-0.35, (point.x - centers[0]) / rectangles[0].width)
+  else if (point.x >= centers.at(-1)) progress = centers.length - 1 + Math.min(0.35, (point.x - centers.at(-1)) / rectangles.at(-1).width)
+  else {
+    const next = centers.findIndex(center => center >= point.x)
+    progress = next - 1 + (point.x - centers[next - 1]) / (centers[next] - centers[next - 1])
+  }
+  const dt = previous ? clamp((point.time || 0) - (previous.time || 0), 8, 64) : 16
+  const velocity = previous ? clamp((point.x - previous.x) / dt, -1.6, 1.6) : 0
+  return {
+    progress,
+    scaleX: 1.055 + Math.abs(velocity) * 0.035,
+    scaleY: 1.065 - Math.abs(velocity) * 0.022,
+    y: -2 + clamp((point.y - (bounds.top + bounds.bottom) / 2) * 0.2, -9, 9),
+    rotate: velocity * 1.1
+  }
+}
+
 // No navigation is performed here. A held drag commits exactly once, at release.
 export function createHoldDragController({ onStart, onMove, onEnd, delay = 180, slop = 9, setTimer = setTimeout, clearTimer = clearTimeout }) {
   let press = null, timer = null
